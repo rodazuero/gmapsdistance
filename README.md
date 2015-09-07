@@ -5,7 +5,7 @@ The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://
 
 Four different modes of transportation are allowed: "bicycling", "walking", "driving", "transport". 
 
-## Example
+## Example 1
 
 In this example we will compute the driving distance between Washington DC, and New York City. 
 
@@ -30,3 +30,30 @@ The code returns the Time, the Distance and the Status of the query (OK if it wa
 > results$Status
 [1] OK
 Levels: OK
+
+
+## Example 2
+
+In this example we will compute the driving distance between the Greek cities of 
+Marathon and Athens. We show that the function is able to handle LAT-LONG coordinates. 
+
+```{r}
+
+
+results=gmapsdistance("38.1621328+24.0029257","37.9908372,23.7383394","walking","INSERT-KEY-HERE")
+
+``` 
+The code returns the Time, the Distance and the Status of the query (OK if it was successful)
+```
+> results$Time
+[1] 30024
+
+
+> results$Distance
+[1] 39507
+
+
+> results$Status
+[1] OK
+Levels: OK
+
