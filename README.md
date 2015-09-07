@@ -39,13 +39,8 @@ Marathon and Athens. We show that the function is able to handle LAT-LONG coordi
 ``` 
 
 ```{r}
-
-
 results=gmapsdistance("38.1621328+24.0029257","37.9908372,23.7383394","walking","INSERT-KEY-HERE")
 
-``` 
-The code returns the Time, the Distance and the Status of the query (OK if it was successful)
-```
 > results$Time
 [1] 30024
 
