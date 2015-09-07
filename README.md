@@ -31,11 +31,12 @@ The code returns the Time, the Distance and the Status of the query (OK if it wa
 [1] OK
 Levels: OK
 
-
+``` 
 ## Example 2
 
 In this example we will compute the driving distance between the Greek cities of 
 Marathon and Athens. We show that the function is able to handle LAT-LONG coordinates. 
+``` 
 
 ```{r}
 
