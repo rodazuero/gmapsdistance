@@ -1,0 +1,9 @@
+#. travis.yml for gmapsdistance
+
+language: r
+# Be strict when checking our package
+warnings_are_errors: true
+
+#Dp:
+-XML
+-RCurl
