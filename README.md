@@ -18,7 +18,7 @@ results=gmapsdistance("Washington+DC","New+York+City+NY","driving","INSERT-KEY-H
 
 ``` 
 The code returns the Time, the Distance and the Status of the query (OK if it was successful)
-```
+```{r}
 > results$Time
 [1] 13906
 
