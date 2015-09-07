@@ -20,7 +20,6 @@
 #' "transit" or "driving". 
 #' @param key In order to use the Google Maps Distance Matrix API
 #' it is necessary to have an API key. The key should be inside of quotes. Example: "THISISMYKEY".
-#' 
 #' @export
 gmapsdistance<-function(origin,destination,mode,key){
   
@@ -55,7 +54,9 @@ gmapsdistance<-function(origin,destination,mode,key){
   
   
   if (initstat=="REQUEST_DENIED"){
-    stop("Request denied by google maps. Check key")
+    message=(first$error_message[1]$text)
+    message=as(message,"character")
+    stop(message)
   }
   
   
