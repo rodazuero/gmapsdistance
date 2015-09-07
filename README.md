@@ -38,7 +38,6 @@ In this example we will compute the driving distance between the Greek cities of
 Marathon and Athens. We show that the function is able to handle LAT-LONG coordinates. 
 ``` 
 
-```{r}
 results=gmapsdistance("38.1621328+24.0029257","37.9908372,23.7383394","walking","INSERT-KEY-HERE")
 
 > results$Time
