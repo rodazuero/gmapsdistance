@@ -12,6 +12,10 @@ Four different modes of transportation are allowed: "bicycling", "walking", "dri
 
 
 ```{r}
+#CRAN install
+install.packages("gmapsdistance")
+
+#Github installation
 install.packages("devtools")
 library("devtools")
 install_github("rodazuero/gmapsdistance")
