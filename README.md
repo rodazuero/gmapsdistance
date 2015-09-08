@@ -7,6 +7,17 @@ The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://
 
 Four different modes of transportation are allowed: "bicycling", "walking", "driving", "transit". 
 
+### Installation
+
+
+```{r}
+install.packages("devtools")
+library("devtools")
+install_github("rodazuero/gmapsdistance")
+library("gmapsdistance")
+```
+
+
 ## Example 1
 
 In this example we will compute the driving distance between Washington DC, and New York City. 
