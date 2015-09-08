@@ -3,3 +3,4 @@
 export(gmapsdistance)
 import(RCurl)
 import(XML)
+importFrom("methods", "as")

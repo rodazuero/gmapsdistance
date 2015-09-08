@@ -1,11 +1,11 @@
 Package: gmapsdistance
 Type: Package
-Title: R function to get distance between two points from google maps. 
+Title: Distance and Travel Time Between Two Points from Google Maps
 Version: 1.0
 Date: 2015-09-07
 Author: Rodrigo Azuero Melo
 URL: https://github.com/rodazuero/gmapsdistance
 Maintainer: Rodrigo Azuero Melo <rodazuero@gmail.com>
-Description: R function to get distance between two points from google maps by four possible modes of transportation (bicycling, walking, driving and public transportation)
+Description: Get distance and travel time between two points from Google Maps.  Four possible modes of transportation (bicycling, walking, driving and public transportation)
 License: GPL (>= 2)
-Imports: RCurl, XML
+Imports: RCurl, XML, methods

@@ -33,4 +33,25 @@ https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key
 For more information about the Google Maps Distance Matrix API go to
 https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 }
+\examples{
+library("gmapsdistance")
+\dontrun{
+
+#In order to run the following examples
+#you will need an API key. 
+
+#Find the distance and the travel time
+#if driving between Washington, DC and
+#New York City
+results=gmapsdistance("Washington+DC","New+York+City+NY","driving","INSERT-KEY-HERE")
+
+#Find the walking distance and travel
+#time if walking between the Greek
+#cities of Marathon and Athens. 
+#This example shows that the function can support LAT-LONG coordinates
+
+results=gmapsdistance("38.1621328+24.0029257","37.9908372+23.7383394","walking","INSERT-KEY-HERE")
+
+}
+}
 
