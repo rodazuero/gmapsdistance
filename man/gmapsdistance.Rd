@@ -24,13 +24,13 @@ inside of double quotes (",") and one of the following: "bicycling", "walking",
 it is necessary to have an API key. The key should be inside of quotes. Example: "THISISMYKEY".}
 }
 \description{
-The function gmapsdistance uses the Google Maps Distance Matrix
-API in order to compute the distance between two points.
-In order to be able to use the function you will need an API
-key and enable the Distance Matrix API in the Google Developers Console
+gmapsdistance uses the Google Maps Distance Matrix
+API in order to compute the distance and travel time between two points.
+In order to be able to use the function, you will need an API
+key and you must enable the Distance Matrix API in the Google Developers Console. 
 For more information about how to get a key, go to
-https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key
-For more information about the Google Maps Distance Matrix API go to
+https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key . 
+For more information about the Google Maps Distance Matrix API, go to
 https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 }
 \examples{
