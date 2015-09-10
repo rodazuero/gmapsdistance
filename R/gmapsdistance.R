@@ -22,24 +22,40 @@
 #' it is necessary to have an API key. The key should be inside of quotes. Example: "THISISMYKEY".
 #' @export
 gmapsdistance<-function(origin,destination,mode,key){
+
   
-  #Extracting type of key
-  typeKEY=class(key)
-  if (typeKEY!="character"){
-    stop("Key should be string")
-  }
   
   #If mode of transportation not recognized:
   if (mode!="driving" & mode!="walking" & mode!="bicycling" & mode!="transit"){
     stop("Mode of transportation not recognized. Mode should be one of 'bicycling', 'transit', 'driving', 'walking' ")
+  }  
+  
+  if (missing(key)){
+    url0="http://maps.googleapis.com/maps/api/distancematrix/xml?origins="
+    modeT=paste0("|&mode=",mode,"&language=fr-FR&sensor=false")
+    urlfin=paste0(url0,origin,"|&destinations=",destination,modeT,"&units=metric")
   }
   
-  #Now going to do the query in google maps. The first step is 
-  #to generate the necessary url concatenating the corresopnding 
-  #inputs
-  url0="https://maps.googleapis.com/maps/api/distancematrix/xml?origins="
-  modeT=paste0("|&mode=",mode,"&language=fr-FR")
-  urlfin=paste0(url0,origin,"|&destinations=",destination,modeT,"&key=",key)
+  
+  else{
+    
+    #Extracting type of key
+    typeKEY=class(key)
+    if (typeKEY!="character"){
+      stop("Key should be string")
+    }
+  
+
+  
+    #Now going to do the query in google maps. The first step is 
+    #to generate the necessary url concatenating the corresopnding 
+    #inputs
+    url0="https://maps.googleapis.com/maps/api/distancematrix/xml?origins="
+    modeT=paste0("|&mode=",mode,"&language=fr-FR")
+    urlfin=paste0(url0,origin,"|&destinations=",destination,modeT,"&key=",key)
+  }
+  
+  
   webpageXML <- getURL(urlfin)
   #Read lines
   webpageXML2 <- readLines(tc <- textConnection(webpageXML)); 
