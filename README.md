@@ -4,7 +4,7 @@ gmapsdistance
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gmapsdistance)](http://cran.r-project.org/web/packages/gmapsdistance)
 
 
-The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance and time between two points. In order to be able to use the function you will need an [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) and enable the Distance Matrix API in the Google Developers Console. Google maps should be able to find both, the origin and the destination in order for the function to run. If the origin or destination contains multiple words, they should be separated by a plus sign (+). The distance is returned in meters and the time in seconds. 
+The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance and time between two points. An [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) is not necessary to perform the query but the function supports it's usage. If an API key is being used the Distance Matrix API should be enabled in the Google Developers Console. Google maps should be able to find both, the origin and the destination in order for the function to run. If the origin or destination contains multiple words, they should be separated by a plus sign (+). The distance is returned in meters and the time in seconds. 
 
 Four different modes of transportation are allowed: "bicycling", "walking", "driving", "transit". 
 
@@ -31,7 +31,7 @@ In this example we will compute the driving distance between Washington DC, and 
 # load package
 library("gmapsdistance")
 
-results=gmapsdistance("Washington+DC","New+York+City+NY","driving","INSERT-KEY-HERE")
+results=gmapsdistance("Washington+DC","New+York+City+NY","driving")
 
 
 ``` 
@@ -54,6 +54,7 @@ Levels: OK
 
 In this example we will compute the driving distance between the Greek cities of 
 Marathon and Athens. We show that the function is able to handle LAT-LONG coordinates. 
+In this case, if you are using a key it should be used as the last input of the function. 
 ```{r} 
 # load package
 library("gmapsdistance")

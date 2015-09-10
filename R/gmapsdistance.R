@@ -7,7 +7,7 @@
 #' For more information about the Google Maps Distance Matrix API go to
 #' https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en 
 #' @title gmapsdistance
-#' @usage gmapsdistance(origin,destination,mode,key)
+#' @usage gmapsdistance(origin,destination,mode,key=NULL)
 #' @param origin  A string containing the description of the 
 #' starting point. Should be inside of quoutes (""). If 
 #' more than one word is used, they should be separated by a plus 
