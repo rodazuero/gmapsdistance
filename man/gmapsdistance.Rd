@@ -22,13 +22,16 @@ inside of double quotes (",") and one of the following: "bicycling",
 
 \item{key}{In order to use the Google Maps Distance Matrix API it is
 necessary to have an API key. The key should be inside of quotes. Example:
-"THISISMYKEY". This key an also be set using \code{set.api.key("my key")}.}
+"THISISMYKEY". This key an also be set using \code{set.api.key("THISISMYKEY")}.}
 }
 \value{
 a list with the traveling time and distance between origin and
   destination and the status
 }
 \description{
+Compute Distance with Google Maps
+}
+\details{
 The function gmapsdistance uses the Google Maps Distance Matrix API in order
 to compute the distance between two points. In order to be able to use the
 function you will need an API key and enable the Distance Matrix API in the
@@ -36,5 +39,9 @@ Google Developers Console For more information about how to get a key, go to
 https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key
 For more information about the Google Maps Distance Matrix API go to
 https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
+}
+\examples{
+results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
+results
 }
 

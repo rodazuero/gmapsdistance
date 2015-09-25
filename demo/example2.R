@@ -2,7 +2,7 @@ library(gmapsdistance)
 
 # Compute the travel distance and time between the city of  Marathon, Greece and
 # Athens, Greece. This example shows that the function is able to handle
-# LAT-LONG coordinates
+# LAT-LONG coordinates and a Google Maps API Key
 
 set.api.key("Your Google Maps API Key")
 

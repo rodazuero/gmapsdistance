@@ -13,4 +13,8 @@ set.api.key(key)
 This function stores a user's Google Maps API key as the package's
 environmental variable
 }
+\examples{
+#DONTRUN
+set.api.key("MY-GOOGLE-MAPS-API-KEY")
+}
 

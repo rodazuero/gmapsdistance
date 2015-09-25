@@ -4,7 +4,7 @@
 \name{pkg.env}
 \alias{pkg.env}
 \title{Define package environment}
-\format{\preformatted{<environment: 0x3f1e250> 
+\format{\preformatted{<environment: 0x57722a0> 
 }}
 \usage{
 pkg.env

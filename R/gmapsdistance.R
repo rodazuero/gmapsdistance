@@ -11,6 +11,8 @@ assign("api.key", NULL, envir = pkg.env)
 #' \code{set.api.key}.
 #'
 #' @return the user's api key
+#' @examples
+#' get.api.key()
 get.api.key = function() {
     get("api.key", envir = pkg.env)
 }
@@ -21,10 +23,15 @@ get.api.key = function() {
 #' environmental variable
 #'
 #' @param key is the user's Google Maps API key
+#' @examples
+#' #DONTRUN
+#' set.api.key("MY-GOOGLE-MAPS-API-KEY")
 set.api.key = function(key) {
     assign("api.key", key, envir = pkg.env)
 }
 
+#' Compute Distance with Google Maps
+#'
 #' The function gmapsdistance uses the Google Maps Distance Matrix API in order
 #' to compute the distance between two points. In order to be able to use the
 #' function you will need an API key and enable the Distance Matrix API in the
@@ -46,9 +53,12 @@ set.api.key = function(key) {
 #'   "walking", "transit" or "driving".
 #' @param key In order to use the Google Maps Distance Matrix API it is
 #'   necessary to have an API key. The key should be inside of quotes. Example:
-#'   "THISISMYKEY". This key an also be set using \code{set.api.key("my key")}.
+#'   "THISISMYKEY". This key an also be set using \code{set.api.key("THISISMYKEY")}.
 #' @return a list with the traveling time and distance between origin and
 #'   destination and the status
+#' @examples
+#' results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
+#' results
 gmapsdistance = function(origin, destination, mode, key = get.api.key()) {
 
     # If mode of transportation not recognized:
@@ -61,14 +71,15 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key()) {
 
     # Set up URL
     url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", origin,
-                    "&destinations=", destination,
-                    "&mode=", mode,
-                    "&sensor=", "false",
-                    "&units=", "metric")
+                 "&destinations=", destination,
+                 "&mode=", mode,
+                 "&sensor=", "false",
+                 "&units=", "metric")
 
     # Add Google Maps API key if it exists
     if (!is.null(key)) {
-        # use https and google maps key
+        # use https and google maps key (after replacing spaces just in case)
+        key = gsub(" ", "", key)
         url = paste0("https://", url, "&key=", key)
     } else {
         # use http otherwise
@@ -91,7 +102,7 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key()) {
         stop(as(results$error_message[1]$text, "character"))
     }
 
-    # Extrat results from results$row
+    # Extract results from results$row
     Status = as(xmlChildren(results$row[[1]])$status[1]$text, "character")
 
     if (Status == "ZERO_RESULTS") {
@@ -105,7 +116,7 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key()) {
     Time = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
     Distance = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
 
-    # make a list with the results
+    # Make a list with the results
     output = list(Time = Time,
                   Distance = Distance,
                   Status = Status)

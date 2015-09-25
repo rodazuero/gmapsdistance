@@ -13,4 +13,7 @@ the user's api key
 This function returns the user's Google Maps API key that was defined with
 \code{set.api.key}.
 }
+\examples{
+get.api.key()
+}
 
