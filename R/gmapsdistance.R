@@ -50,68 +50,62 @@ set.api.key = function(key) {
 #' @return a list with the traveling time and distance between origin and
 #'   destination and the status
 gmapsdistance = function(origin, destination, mode, key = get.api.key()) {
+
     # If mode of transportation not recognized:
-    if (mode != "driving" &
-        mode != "walking" &
-        mode != "bicycling" & mode != "transit") {
+    if (!(mode %in% c("driving",  "walking",  "bicycling",  "transit"))) {
         stop(
             "Mode of transportation not recognized. Mode should be one of ",
             "'bicycling', 'transit', 'driving', 'walking' "
         )
     }
 
-    if (is.null(key)) {
-        url0 = "http://maps.googleapis.com/maps/api/distancematrix/xml?origins="
-        modeT = paste0("|&mode=",mode,"&language=fr-FR&sensor=false")
-        urlfin = paste0(url0, origin, "|&destinations=", destination, modeT, "&units=metric")
+    # Set up URL
+    url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", origin,
+                    "&destinations=", destination,
+                    "&mode=", mode,
+                    "&sensor=", "false",
+                    "&units=", "metric")
+
+    # Add Google Maps API key if it exists
+    if (!is.null(key)) {
+        # use https and google maps key
+        url = paste0("https://", url, "&key=", key)
     } else {
-        # Extracting type of key
-        typeKEY = class(key)
-        if (typeKEY != "character") {
-            stop("Key should be string")
-        }
-
-        # Now going to do the query in google maps. The first step is
-        # to generate the necessary url concatenating the corresopnding
-        # inputs
-        url0 = "https://maps.googleapis.com/maps/api/distancematrix/xml?origins="
-        modeT = paste0("|&mode=",mode,"&language=fr-FR")
-        urlfin = paste0(url0, origin, "|&destinations=", destination, modeT, "&key=",key)
+        # use http otherwise
+        url = paste0("http://", url)
     }
 
-    # Read lines
-    webpageXML = getURL(urlfin)
-    tc = textConnection(webpageXML)
-    webpageXML2 = readLines(tc);
+    # Call the Google Maps Webservice and store the XML output in webpageXML
+    tc = textConnection(getURL(url))
+    webpageXML = xmlParse(readLines(tc));
     close(tc)
-    # XMLparse
-    webpageXMLA = xmlParse(webpageXML2)
-    # And extract the necessary values
-    root = xmlRoot(webpageXMLA)
-    child = xmlChildren(root)
-    initstat = as(child$status[[1]], "character")
 
-    if (initstat == "REQUEST_DENIED") {
-        message = (child$error_message[1]$text)
-        message = as(message, "character")
-        stop(message)
+    # Extract the results from webpageXML
+    results = xmlChildren(xmlRoot(webpageXML))
+
+    # Check the status of the request and throw an error if the request was denied
+    request.status = as(unlist(results$status[[1]]), "character")
+
+    if (request.status == "REQUEST_DENIED") {
+        set.api.key(NULL)
+        stop(as(results$error_message[1]$text, "character"))
     }
 
-    two = child[[4]]
-
-    Status = as(xmlChildren(two[[1]])$status[1]$text, "character")
+    # Extrat results from results$row
+    Status = as(xmlChildren(results$row[[1]])$status[1]$text, "character")
 
     if (Status == "ZERO_RESULTS") {
-        stop("Google maps is not able to find a route between origin and destination")
+        stop("Google Maps is not able to find a route between origin and destination")
     }
 
     if (Status == "NOT_FOUND") {
-        stop("Google maps is not able to find the origin or destination")
+        stop("Google Maps is not able to find the origin or destination")
     }
 
-    Time = as(xmlChildren(two[[1]])$duration[1]$value[1]$text, "numeric")
-    Distance = as(xmlChildren(two[[1]])$distance[1]$value[1]$text, "numeric")
+    Time = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
+    Distance = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
 
+    # make a list with the results
     output = list(Time = Time,
                   Distance = Distance,
                   Status = Status)
