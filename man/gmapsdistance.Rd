@@ -4,54 +4,44 @@
 \alias{gmapsdistance}
 \title{gmapsdistance}
 \usage{
-gmapsdistance(origin,destination,mode,key)
+gmapsdistance(origin, destination, mode, key)
 }
 \arguments{
-\item{origin}{A string containing the description of the
-starting point. Should be inside of quoutes (""). If
-more than one word is used, they should be separated by a plus
-sign e.g. "Bogota+Colombia". Coordinates in LAT-LONG format
-are also a valid input as long as they can be identified by Google Maps}
+\item{origin}{A string containing the description of the starting point.
+Should be inside of quoutes (""). If more than one word is used, they
+should be separated by a plus sign e.g. "Bogota+Colombia". Coordinates in
+LAT-LONG format are also a valid input as long as they can be identified by
+Google Maps}
 
-\item{destination}{A string containing the description of the
-end point. Should be the same format as the variable "origin".}
+\item{destination}{A string containing the description of the end point.
+Should be the same format as the variable "origin".}
 
 \item{mode}{A string containing the mode of transportation desired. Should be
-inside of double quotes (",") and one of the following: "bicycling", "walking",
-"transit" or "driving".}
+inside of double quotes (",") and one of the following: "bicycling",
+"walking", "transit" or "driving".}
 
-\item{key}{In order to use the Google Maps Distance Matrix API
-it is necessary to have an API key. The key should be inside of quotes. Example: "THISISMYKEY".}
+\item{key}{In order to use the Google Maps Distance Matrix API it is
+necessary to have an API key. The key should be inside of quotes. Example:
+"THISISMYKEY". This key an also be set using \code{set.api.key("THISISMYKEY")}.}
+}
+\value{
+a list with the traveling time and distance between origin and
+  destination and the status
 }
 \description{
-gmapsdistance uses the Google Maps Distance Matrix
-API in order to compute the distance and travel time between two points.
-In order to be able to use the function, you will need an API
-key and you must enable the Distance Matrix API in the Google Developers Console. 
-For more information about how to get a key, go to
-https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key . 
-For more information about the Google Maps Distance Matrix API, go to
+Compute Distance with Google Maps
+}
+\details{
+The function gmapsdistance uses the Google Maps Distance Matrix API in order
+to compute the distance between two points. In order to be able to use the
+function you will need an API key and enable the Distance Matrix API in the
+Google Developers Console For more information about how to get a key, go to
+https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key
+For more information about the Google Maps Distance Matrix API go to
 https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 }
 \examples{
-library("gmapsdistance")
-\dontrun{
-
-#In order to run the following examples
-#you will need an API key. 
-
-#Find the distance and the travel time
-#if driving between Washington, DC and
-#New York City
-results=gmapsdistance("Washington+DC","New+York+City+NY","driving","INSERT-KEY-HERE")
-
-#Find the walking distance and travel
-#time if walking between the Greek
-#cities of Marathon and Athens. 
-#This example shows that the function can support LAT-LONG coordinates
-
-results=gmapsdistance("38.1621328+24.0029257","37.9908372+23.7383394","walking","INSERT-KEY-HERE")
-
-}
+results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
+results
 }
 

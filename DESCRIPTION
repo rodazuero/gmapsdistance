@@ -6,6 +6,8 @@ Date: 2015-09-07
 Author: Rodrigo Azuero Melo
 URL: https://github.com/rodazuero/gmapsdistance
 Maintainer: Rodrigo Azuero Melo <rodazuero@gmail.com>
-Description: Get distance and travel time between two points from Google Maps.  Four possible modes of transportation (bicycling, walking, driving and public transportation).
+Description: Get distance and travel time between two points from Google Maps.
+    Four possible modes of transportation (bicycling, walking, driving and
+    public transportation).
 License: GPL (>= 2)
-Imports: RCurl, XML, methods
+Imports: RCurl, XML
