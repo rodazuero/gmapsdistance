@@ -1,2 +1,5 @@
 example1		Example for driving between Washington DC and New York City
 example2		Example for walking between Marathon, Greece to Athens, Greece
+example3		Example for bicycling between two vectors of cities in the US in wide format (default)
+example4		Example for driving between two vectors of cities in the US in long format
+example5		Example for bicycling between two vectors of cities given in coordinates

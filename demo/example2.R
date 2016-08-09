@@ -4,10 +4,8 @@ library(gmapsdistance)
 # Athens, Greece. This example shows that the function is able to handle
 # LAT-LONG coordinates and a Google Maps API Key
 
-set.api.key("Your Google Maps API Key")
-
 results = gmapsdistance("38.1621328+24.0029257",
-                      "37.9908372,23.7383394",
+                      "37.9908372+23.7383394",
                       "walking")
 results$Time
 results$Distance

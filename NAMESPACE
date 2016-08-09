@@ -1,3 +1,5 @@
 exportPattern("^[[:alpha:]]+")
 import(RCurl)
 import(XML)
+importFrom("methods", "as")
+importFrom("stats", "reshape")

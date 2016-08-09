@@ -4,16 +4,16 @@
 \alias{gmapsdistance}
 \title{gmapsdistance}
 \usage{
-gmapsdistance(origin, destination, mode, key)
+gmapsdistance(origin, destination, mode, key, shape)
 }
 \arguments{
-\item{origin}{A string containing the description of the starting point.
-Should be inside of quoutes (""). If more than one word is used, they
+\item{origin}{A string or vector of strings containing the description of the starting point(s).
+Should be inside of quoutes (""). If more than one word for a same location is used, they
 should be separated by a plus sign e.g. "Bogota+Colombia". Coordinates in
 LAT-LONG format are also a valid input as long as they can be identified by
-Google Maps}
+Google Maps. }
 
-\item{destination}{A string containing the description of the end point.
+\item{destination}{A string or vector of strings containing the description of the end point(s).
 Should be the same format as the variable "origin".}
 
 \item{mode}{A string containing the mode of transportation desired. Should be
@@ -23,17 +23,22 @@ inside of double quotes (",") and one of the following: "bicycling",
 \item{key}{In order to use the Google Maps Distance Matrix API it is
 necessary to have an API key. The key should be inside of quotes. Example:
 "THISISMYKEY". This key an also be set using \code{set.api.key("THISISMYKEY")}.}
+
+\item{shape}{A string that specifies the shape of the distance and time matrices to be returned. Should be
+inside of double quotes (",") and one of the following: "long" or "wide". 
+
+If the function is used to find the distance/time for one origin and one destination, the shape does not matter. If there is more than one city as origin or destination, "long" will return a matrix in long format and "wide" will return a matrix in wide format. The shape is set as wide be default.}
 }
 \value{
-a list with the traveling time and distance between origin and
-  destination and the status
+A list with the traveling time(s) and distance(s) between origin(s) and
+  destination(s) and the status
 }
 \description{
 Compute Distance with Google Maps
 }
 \details{
 The function gmapsdistance uses the Google Maps Distance Matrix API in order
-to compute the distance between two points. In order to be able to use the
+to compute the distance(s) and time(s) between two points. In order to be able to use the
 function you will need an API key and enable the Distance Matrix API in the
 Google Developers Console For more information about how to get a key, go to
 https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key
@@ -41,7 +46,29 @@ For more information about the Google Maps Distance Matrix API go to
 https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 }
 \examples{
+# Example 1
 results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
 results
+
+# Example 2
+results = gmapsdistance("38.1621328+24.0029257",
+                      "37.9908372+23.7383394",
+                      "walking")
+results
+
+# Example 3
+origin = c("Washington+DC", "New+York+NY", "Seattle+WA", "Miami+FL")
+destination = c("Los+Angeles+CA", "Austin+TX", "Chicago+IL")
+results = gmapsdistance(origin, destination, "bicycling")
+
+# Example 4
+origin = c("Washington+DC", "New+York+NY", "Seattle+WA", "Miami+FL")
+destination = c("Los+Angeles+CA", "Austin+TX", "Chicago+IL")
+results = gmapsdistance(origin, destination, "driving", shape = "long")
+
+# Example 5
+origin = c("40.431478+-80.0505401", "33.7678359+-84.4906438")
+destination = c("43.0995629+-79.0437609", "41.7096483+-86.9093986")
+results = gmapsdistance(origin, destination, "bicycling", shape="long")
 }
 

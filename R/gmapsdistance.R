@@ -59,7 +59,7 @@ set.api.key = function(key) {
 #' @examples
 #' results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
 #' results
-gmapsdistance = function(origin, destination, mode, key = get.api.key()) {
+gmapsdistance = function(origin, destination, mode, key = get.api.key(), shape = "wide") {
 
     # If mode of transportation not recognized:
     if (!(mode %in% c("driving",  "walking",  "bicycling",  "transit"))) {
@@ -68,54 +68,89 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key()) {
             "'bicycling', 'transit', 'driving', 'walking' "
         )
     }
-
-    # Set up URL
-    url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", origin,
-                 "&destinations=", destination,
-                 "&mode=", mode,
-                 "&sensor=", "false",
-                 "&units=", "metric")
-
-    # Add Google Maps API key if it exists
-    if (!is.null(key)) {
+  
+    data = expand.grid(or = origin, de = destination)
+    
+    n = dim(data)
+    n = n[1]
+    
+    data$Time = NA
+    data$Distance = NA
+    
+    for (i in 1:1:n){
+      
+      # Set up URL
+      url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", data$or[i],
+                   "&destinations=", data$de[i],
+                   "&mode=", mode,
+                   "&sensor=", "false",
+                   "&units=", "metric")
+      
+      # Add Google Maps API key if it exists
+      if (!is.null(key)) {
         # use https and google maps key (after replacing spaces just in case)
         key = gsub(" ", "", key)
         url = paste0("https://", url, "&key=", key)
-    } else {
+      } else {
         # use http otherwise
         url = paste0("http://", url)
-    }
-
-    # Call the Google Maps Webservice and store the XML output in webpageXML
-    tc = textConnection(getURL(url))
-    webpageXML = xmlParse(readLines(tc));
-    close(tc)
-
-    # Extract the results from webpageXML
-    results = xmlChildren(xmlRoot(webpageXML))
-
-    # Check the status of the request and throw an error if the request was denied
-    request.status = as(unlist(results$status[[1]]), "character")
-
-    if (request.status == "REQUEST_DENIED") {
+      }
+      
+      # Call the Google Maps Webservice and store the XML output in webpageXML
+      tc = textConnection(getURL(url))
+      webpageXML = xmlParse(readLines(tc));
+      close(tc)
+      
+      # Extract the results from webpageXML
+      results = xmlChildren(xmlRoot(webpageXML))
+      
+      # Check the status of the request and throw an error if the request was denied
+      request.status = as(unlist(results$status[[1]]), "character")
+      
+      if (request.status == "REQUEST_DENIED") {
         set.api.key(NULL)
         stop(as(results$error_message[1]$text, "character"))
+      }
+      
+      # Extract results from results$row
+      Status = as(xmlChildren(results$row[[1]])$status[1]$text, "character")
+      
+      if (Status == "ZERO_RESULTS") {
+        stop(paste0("Google Maps is not able to find a route between ", data$or[i]," and ", data$de[i]))
+      }
+      
+      if (Status == "NOT_FOUND") {
+        stop("Google Maps is not able to find the origin (", data$or[i],") or destination (", data$de[i], ")")
+      }
+      
+      data$Time[i] = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
+      data$Distance[i] = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
+      
     }
+    
+    datadist = data[c("or", "de", "Distance")]
+    datatime = data[c("or", "de", "Time")]
 
-    # Extract results from results$row
-    Status = as(xmlChildren(results$row[[1]])$status[1]$text, "character")
-
-    if (Status == "ZERO_RESULTS") {
-        stop("Google Maps is not able to find a route between origin and destination")
+    if(n > 1){
+      if(shape == "wide"){
+        Distance = reshape(datadist, 
+                          timevar = "de",
+                          idvar = c("or"),
+                          direction = "wide")
+        
+        Time = reshape(datatime, 
+                        timevar = "de",
+                        idvar = c("or"),
+                        direction = "wide")
+      } else if(shape == "long"){
+        Distance = datadist
+        Time = datatime
+      }
+    } else{
+      Distance = data$Distance[i]
+      Time = data$Time[i]
     }
-
-    if (Status == "NOT_FOUND") {
-        stop("Google Maps is not able to find the origin or destination")
-    }
-
-    Time = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
-    Distance = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
-
+    
     # Make a list with the results
     output = list(Time = Time,
                   Distance = Distance,
