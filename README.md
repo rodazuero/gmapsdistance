@@ -1,6 +1,7 @@
 gmapsdistance
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
+![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gmapsdistance)](http://cran.r-project.org/web/packages/gmapsdistance)
 
 
