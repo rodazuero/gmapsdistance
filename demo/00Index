@@ -1,5 +1,7 @@
 example1		Example for driving between Washington DC and New York City
 example2		Example for walking between Marathon, Greece to Athens, Greece
-example3		Example for bicycling between two vectors of cities in the US in wide format (default)
+example3		Example for bicycling between two vectors of cities in the US in wide format (default) fixing a departure date and time
 example4		Example for driving between two vectors of cities in the US in long format
 example5		Example for bicycling between two vectors of cities given in coordinates
+example6		Examples that work only with a Google Maps API key, to find distance/times with different traffic models ('optimistic', 'pessimistic') and with the option to avoid 'tolls', 'highways', 'indoor' and 'ferries'.
+example7		Examples that work only with a Google Maps API key, to find distance/times with different traffic models ('optimistic', 'pessimistic') and with the option to avoid 'tolls', 'highways', 'indoor' and 'ferries'.

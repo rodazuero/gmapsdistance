@@ -59,7 +59,11 @@ set.api.key = function(key) {
 #' @examples
 #' results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
 #' results
-gmapsdistance = function(origin, destination, mode, key = get.api.key(), shape = "wide") {
+gmapsdistance = function(origin, destination, combinations = "all", mode, key = get.api.key(), shape = "wide", 
+                         avoid = "", 
+                         departure = "now", dep_date = "", dep_time = "", 
+                         traffic_model = "best_guess",
+                         arrival = "", arr_date = "", arr_time = "") {
 
     # If mode of transportation not recognized:
     if (!(mode %in% c("driving",  "walking",  "bicycling",  "transit"))) {
@@ -68,14 +72,123 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key(), shape =
             "'bicycling', 'transit', 'driving', 'walking' "
         )
     }
-  
-    data = expand.grid(or = origin, de = destination)
     
+    # If combinations not recognized:
+    if (!(combinations %in% c("all",  "pairwise"))) {
+      stop(
+        "Combinations between origin and destination not recognized. Combinations should be one of ",
+        "'all', 'pairwise' "
+      )
+    }
+
+    # If 'avoid' parameter is not recognized:
+    if (!(avoid %in% c("", "tolls",  "highways",  "ferries",  "indoor"))) {
+      stop(
+        "Avoid parameters not recognized. Avoid should be one of ",
+        "'tolls', 'highways', 'ferries', 'indoor' "
+      )
+    }
+
+    # If traffic_model is not recognized:
+    if (!(traffic_model %in% c("best_guess",  "pessimistic", "optimistic"))) {
+      stop(
+        "Traffic model not recognized. Traffic model should be one of ",
+        "'best_guess', 'pessimistic', 'optimistic'"
+      )
+    }
+  
+    seconds = "now"
+    seconds_arrival = ""
+    
+    UTCtime = strptime("1970-01-01 00:00:00", "%Y-%m-%d %H:%M:%OS", tz="GMT")
+    min_secs = round(as.numeric(difftime(as.POSIXlt(Sys.time(), "GMT"), UTCtime, units="secs")))
+    
+    # DEPARTURE TIMES:
+    # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
+    if(dep_date != "" && dep_time != ""){
+      depart = strptime(paste(dep_date, dep_time), "%Y-%m-%d %H:%M:%OS", tz="GMT")
+      seconds = round(as.numeric(difftime(depart, UTCtime, units = "secs")))
+    } 
+    
+    # Give priority to 'departure' time, over date and hour
+    if(departure != "now"){
+      seconds = departure
+    }
+    
+    # Exceptions when inputs are incorrect
+    if(departure != "now" && departure < min_secs){
+      stop("The departure time has to be some time in the future!")
+    }
+    
+    if(dep_date != "" && dep_time == ""){
+      stop("You should also specify a departure time in the format HH:MM:SS UTC")
+    }
+    
+    if(dep_date == "" && dep_time != ""){
+      stop("You should also specify a departure date in the format YYYY-MM-DD UTC")
+    }
+    
+    if(dep_date != "" && dep_time != "" && seconds < min_secs){
+      stop("The departure time has to be some time in the future!")
+    }
+    
+    
+    # ARRIVAL TIMES:
+    # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
+    if(arr_date != "" && arr_time != ""){
+      arriv = strptime(paste(arr_date, arr_time), "%Y-%m-%d %H:%M:%OS", tz="GMT")
+      seconds_arrival = round(as.numeric(difftime(arriv, UTCtime, units = "secs")))
+    } 
+    
+    # Give priority to 'arrival' time, over date and hour
+    if(arrival != ""){
+      seconds_arrival = arrival
+    }
+    
+    # Exceptions when inputs are incorrect
+    if(arrival != "" && arrival < min_secs){
+      stop("The arrival time has to be some time in the future!")
+    }
+    
+    if(arr_date != "" && arr_time == ""){
+      stop("You should also specify an arrival time in the format HH:MM:SS UTC")
+    }
+    
+    if(arr_date == "" && arr_time != ""){
+      stop("You should also specify an arrival date in the format YYYY-MM-DD UTC")
+    }
+    
+    if(arr_date != "" && arr_time != "" && seconds_arrival < min_secs){
+      stop("The arrival time has to be some time in the future!")
+    }
+    
+    
+    if((dep_date != "" || dep_time != "" || departure != "now") && (arr_date != "" || arr_time != "" || arrival != "")){
+      stop("Cannot input departure and arrival times. Only one can be used at a time. ")
+    }
+    
+    if(combinations == "pairwise" && length(origin) != length(destination)){
+      stop("Size of origin and destination vectors must be the same when using the option: combinations == 'pairwise'")
+    }
+    
+    if(combinations == "all"){
+      data = expand.grid(or = origin, de = destination)
+    } else if(combinations == "pairwise"){
+      data = data.frame(or = origin, de = destination)
+    }
+  
     n = dim(data)
     n = n[1]
     
     data$Time = NA
     data$Distance = NA
+    data$status = "OK"
+    
+    avoidmsg = ""
+    
+    if(avoid !=""){
+      avoidmsg = paste0("&avoid=", avoid)
+    }
     
     for (i in 1:1:n){
       
@@ -84,7 +197,10 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key(), shape =
                    "&destinations=", data$de[i],
                    "&mode=", mode,
                    "&sensor=", "false",
-                   "&units=", "metric")
+                   "&units=metric",
+                   "&departure_time=", seconds,
+                   "&traffic_model=", traffic_model,
+                   avoidmsg)
       
       # Add Google Maps API key if it exists
       if (!is.null(key)) {
@@ -109,30 +225,40 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key(), shape =
       
       if (request.status == "REQUEST_DENIED") {
         set.api.key(NULL)
-        stop(as(results$error_message[1]$text, "character"))
+        data$status[i] = "REQUEST_DENIED"
+        # stop(as(results$error_message[1]$text, "character"))
       }
       
       # Extract results from results$row
       Status = as(xmlChildren(results$row[[1]])$status[1]$text, "character")
       
       if (Status == "ZERO_RESULTS") {
-        stop(paste0("Google Maps is not able to find a route between ", data$or[i]," and ", data$de[i]))
+        # stop(paste0("Google Maps is not able to find a route between ", data$or[i]," and ", data$de[i]))
+        data$status[i] = "ROUTE_NOT_FOUND"
       }
       
       if (Status == "NOT_FOUND") {
-        stop("Google Maps is not able to find the origin (", data$or[i],") or destination (", data$de[i], ")")
+        # stop("Google Maps is not able to find the origin (", data$or[i],") or destination (", data$de[i], ")")
+        data$status[i] = "PLACE_NOT_FOUND"
       }
       
-      data$Time[i] = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
-      data$Distance[i] = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
-      
+      if(data$status[i] == "OK"){
+        data$Distance[i] = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
+        
+        if(is.null(key) || mode != "driving"){
+          data$Time[i] = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
+        } else{
+          data$Time[i] = as(xmlChildren(results$row[[1]])$duration_in_traffic[1]$value[1]$text, "numeric")
+        }
+      }
     }
     
     datadist = data[c("or", "de", "Distance")]
     datatime = data[c("or", "de", "Time")]
-
+    datastat = data[c("or", "de", "status")]
+    
     if(n > 1){
-      if(shape == "wide"){
+      if(shape == "wide" && combinations == "all"){
         Distance = reshape(datadist, 
                           timevar = "de",
                           idvar = c("or"),
@@ -142,19 +268,27 @@ gmapsdistance = function(origin, destination, mode, key = get.api.key(), shape =
                         timevar = "de",
                         idvar = c("or"),
                         direction = "wide")
-      } else if(shape == "long"){
+        
+        Stat = reshape(datastat, 
+                       timevar = "de",
+                       idvar = c("or"),
+                       direction = "wide")
+        
+      } else{
         Distance = datadist
         Time = datatime
+        Stat = datastat
       }
     } else{
       Distance = data$Distance[i]
       Time = data$Time[i]
+      Stat = data$status[i]
     }
     
     # Make a list with the results
     output = list(Time = Time,
                   Distance = Distance,
-                  Status = Status)
+                  Status = Stat)
 
     return(output)
 }

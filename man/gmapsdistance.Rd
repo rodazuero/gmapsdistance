@@ -4,7 +4,9 @@
 \alias{gmapsdistance}
 \title{gmapsdistance}
 \usage{
-gmapsdistance(origin, destination, mode, key, shape)
+gmapsdistance(origin, destination, combinations, mode, key,
+			 shape, avoid, departure, dep_date, dep_time, 
+			 traffic_model, arrival, arr_date, arr_time)
 }
 \arguments{
 \item{origin}{A string or vector of strings containing the description of the starting point(s).
@@ -15,6 +17,11 @@ Google Maps. }
 
 \item{destination}{A string or vector of strings containing the description of the end point(s).
 Should be the same format as the variable "origin".}
+
+\item{combinations}{When the origin and destination entries are vectors, the user can specify if the function computes all possible combinations between origins and destinations, or only pairwise distance and times. Should be
+inside of double quotes (",") and one of the following: "all", "pairwise". 
+
+If the combinations is set to "pairwise", the origin and destination vectors must have the same lenght.}
 
 \item{mode}{A string containing the mode of transportation desired. Should be
 inside of double quotes (",") and one of the following: "bicycling",
@@ -28,7 +35,55 @@ necessary to have an API key. The key should be inside of quotes. Example:
 inside of double quotes (",") and one of the following: "long" or "wide". 
 
 If the function is used to find the distance/time for one origin and one destination, the shape does not matter. If there is more than one city as origin or destination, "long" will return a matrix in long format and "wide" will return a matrix in wide format. The shape is set as wide be default.}
+
+
+\item{avoid}{When the mode is set to "driving", the user can find the time and distance of the route by avoiding tolls, highways, indoor and ferries. Should be
+inside of double quotes (",") and one of the following: "tolls", "highways", "ferries", "indoor". 
+
+ONLY works with a Google Maps API key.}
+
+\item{departure}{The time and distance can be comptued at the desired time of departure. The option departure is the number of seconds since January 1, 1970 00:00:00 UCT. Alternatively, the user can use the dep_date and dep_time options to set the departure date and time.
+
+If no value is set for departure, dep_date and dep_time, the departure time is set to the present.
+
+ONLY works with a Google Maps API key AND MUST be according to UCT time.}
+
+\item{dep_date}{Instead of using the departure option, the user can set the departure date and time using dep_date and dep_time options.
+
+If no value is set for departure, dep_date and dep_time, the departure time is set to the present.
+
+ONLY works with a Google Maps API key AND MUST be according to UCT time.}
+
+\item{dep_time}{Instead of using the departure option, the user can set the departure date and time using dep_date and dep_time options.
+
+If no value is set for departure, dep_date and dep_time, the departure time is set to the present.
+
+ONLY works with a Google Maps API key AND MUST be according to UCT time.}
+
+\item{traffic_model}{When the mode is set to "driving", the user can find the times and distances using different traffic models. Should be
+inside of double quotes (",") and one of the following: "optimistic", "pessimistic", "best_guess". 
+
+ONLY works with a Google Maps API key and with a departure time.}
+
+\item{arrival}{The time and distance can be comptued to arrive at a predetermined time. The option arrival is the number of seconds since January 1, 1970 00:00:00 UCT. Alternatively, the user can use the arr_date and arr_time options to set the arrival date and time.
+
+The user cannot input both departure and arrival times. 
+
+ONLY works with a Google Maps API key AND MUST be according to UCT time.}
+
+\item{arr_date}{Instead of using the arrival option, the user can set the arrival date and time using arr_date and arr_time options.
+
+The user cannot input both departure and arrival times. 
+
+ONLY works with a Google Maps API key AND MUST be according to UCT time.}
+
+\item{arr_time}{Instead of using the arrival option, the user can set the arrival date and time using arr_date and arr_time options.
+
+The user cannot input both departure and arrival times. 
+
+ONLY works with a Google Maps API key AND MUST be according to UCT time.}
 }
+
 \value{
 A list with the traveling time(s) and distance(s) between origin(s) and
   destination(s) and the status
@@ -47,28 +102,55 @@ https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 }
 \examples{
 # Example 1
-results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
+results = gmapsdistance(origin = "Washington+DC", 
+                        destination = "New+York+City+NY", 
+                        mode = "driving")
 results
 
 # Example 2
-results = gmapsdistance("38.1621328+24.0029257",
-                      "37.9908372+23.7383394",
-                      "walking")
+results = gmapsdistance(origin = "38.1621328+24.0029257",
+                        destination = "37.9908372+23.7383394",
+                        mode = "walking")
 results
 
 # Example 3
-origin = c("Washington+DC", "New+York+NY", "Seattle+WA", "Miami+FL")
-destination = c("Los+Angeles+CA", "Austin+TX", "Chicago+IL")
-results = gmapsdistance(origin, destination, "bicycling")
+results = gmapsdistance(origin = c("Seattle+WA", "Miami+FL"), 
+                        destination = c("Chicago+IL", "Philadelphia+PA"), 
+                        mode = "bicycling", 
+                        dep_date = "2017-08-16", 
+                        dep_time = "20:40:00")
+
+results
 
 # Example 4
-origin = c("Washington+DC", "New+York+NY", "Seattle+WA", "Miami+FL")
+origin = c("Washington+DC", "Miami+FL")
 destination = c("Los+Angeles+CA", "Austin+TX", "Chicago+IL")
-results = gmapsdistance(origin, destination, "driving", shape = "long")
+results = gmapsdistance(origin, destination, mode = "driving", shape = "long")
+results
 
 # Example 5
 origin = c("40.431478+-80.0505401", "33.7678359+-84.4906438")
 destination = c("43.0995629+-79.0437609", "41.7096483+-86.9093986")
-results = gmapsdistance(origin, destination, "bicycling", shape="long")
-}
+results = gmapsdistance(origin, destination, mode = "bicycling", shape="long")
+results
 
+# Example 6
+# results = gmapsdistance(origin = c("Washington+DC", "New+York+NY"), 
+#                         destination = c("Los+Angeles+CA", "Austin+TX"), 
+#                         mode = "driving", 
+#                         departure = 1514742000,
+#                         traffic_model = "pessimistic", 
+#                         shape = "long",
+#                         key=APIkey)
+# 
+# results
+
+# EXAMPLE 7:
+# results = gmapsdistance(origin = c("Washington+DC", "New+York+NY"), 
+#                         destination = c("Los+Angeles+CA", "Austin+TX"), 
+#                         mode = "driving", 
+#                         avoid = "tolls",
+#                         key=APIkey)
+# 
+# results
+}
