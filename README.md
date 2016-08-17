@@ -1,4 +1,4 @@
-[![Screen Shot 2016-08-17 at 2.30.24 PM.png](https://s4.postimg.org/8pxjx7f5p/Screen_Shot_2016_08_17_at_2_30_24_PM.png)](https://postimg.org/image/80erkuem1/)(https://postimg.org/image/bjts8jcfz/) gmapsdistance
+[![Screen Shot 2016-08-17 at 2.30.24 PM.png](https://s4.postimg.org/8pxjx7f5p/Screen_Shot_2016_08_17_at_2_30_24_PM.png)](https://postimg.org/image/80erkuem1/) gmapsdistance
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
