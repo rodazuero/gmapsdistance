@@ -213,15 +213,18 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       }
       
       # Call the Google Maps Webservice and store the XML output in webpageXML
-
       webpageXML = xmlParse(url);
-
       
       # Extract the results from webpageXML
       results = xmlChildren(xmlRoot(webpageXML))
       
       # Check the status of the request and throw an error if the request was denied
       request.status = as(unlist(results$status[[1]]), "character")
+      
+      # Check for google API errors
+      if (!is.null(results$error_message)) {
+        stop(paste(c("Google API returned an error: ", xmlValue(results$error_message)), sep = ""))
+      }
       
       if (request.status == "REQUEST_DENIED") {
         set.api.key(NULL)
@@ -240,6 +243,11 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       if (Status == "NOT_FOUND") {
         # stop("Google Maps is not able to find the origin (", data$or[i],") or destination (", data$de[i], ")")
         data$status[i] = "PLACE_NOT_FOUND"
+      }
+      
+      # Check whether the user is over their query limit
+      if (Status == "OVER_QUERY_LIMIT") {
+        stop("You have exceeded your allocation of API requests for today.")
       }
       
       if(data$status[i] == "OK"){
