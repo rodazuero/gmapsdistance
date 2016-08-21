@@ -213,8 +213,10 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       }
       
       # Call the Google Maps Webservice and store the XML output in webpageXML
-
-      webpageXML = xmlParse(url);
+    
+      library(RCurl)
+      
+      webpageXML = xmlParse(getURL(url));
 
       
       # Extract the results from webpageXML
