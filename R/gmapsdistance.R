@@ -41,16 +41,15 @@ set.api.key = function(key) {
 #' https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 #' @title gmapsdistance
 #' @usage gmapsdistance(origin, destination, mode, key)
-#' @param origin  A string containing the description of the starting point.
-#'   Should be inside of quoutes (""). If more than one word is used, they
-#'   should be separated by a plus sign e.g. "Bogota+Colombia". Coordinates in
-#'   LAT-LONG format are also a valid input as long as they can be identified by
-#'   Google Maps
-#' @param destination A string containing the description of the end point.
-#'   Should be the same format as the variable "origin".
-#' @param mode A string containing the mode of transportation desired. Should be
-#'   inside of double quotes (",") and one of the following: "bicycling",
-#'   "walking", "transit" or "driving".
+#' @param origin  \code{character} describing the starting point.
+#'   Separate words should be separated by a plus sign, e.g.,
+#'   \code{"Bogota+Colombia"}. Coordinates in
+#'   LAT-LONG (y-x) format are also valid, as long as they can be identified by
+#'   Google Maps.
+#' @param destination \code{character} describing the end point.
+#'   Should be the same format as \code{origin}.
+#' @param mode \code{character} specifying the desired mode of transportation, among 
+#'   \code{"driving"}, \code{"bicycling"}, \code{"walking"}, and \code{"transit"}.
 #' @param key In order to use the Google Maps Distance Matrix API it is
 #'   necessary to have an API key. The key should be inside of quotes. Example:
 #'   "THISISMYKEY". This key an also be set using \code{set.api.key("THISISMYKEY")}.
