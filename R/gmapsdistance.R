@@ -191,30 +191,30 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       avoidmsg = paste0("&avoid=", avoid)
     }
     
+    # Set up URLs
+    urls = paste0("maps.googleapis.com/maps/api/distancematrix/xml?",
+                  "origins=", data$or,
+                  "&destinations=", data$de,
+                  "&mode=", mode,
+                  "&sensor=false",
+                  "&units=metric",
+                  "&departure_time=", seconds,
+                  "&traffic_model=", traffic_model,
+                  avoidmsg)
+    
+    # Add Google Maps API key if it exists
+    if (!is.null(key)) {
+      # use https and google maps key (after replacing spaces just in case)
+      key = gsub(" ", "", key)
+      urls = paste0("https://", urls, "&key=", key)
+    } else {
+      # use http otherwise
+      urls = paste0("http://", urls)
+    }
+    
     for (i in seq_len(n)){
-      
-      # Set up URL
-      url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", data$or[i],
-                   "&destinations=", data$de[i],
-                   "&mode=", mode,
-                   "&sensor=", "false",
-                   "&units=metric",
-                   "&departure_time=", seconds,
-                   "&traffic_model=", traffic_model,
-                   avoidmsg)
-      
-      # Add Google Maps API key if it exists
-      if (!is.null(key)) {
-        # use https and google maps key (after replacing spaces just in case)
-        key = gsub(" ", "", key)
-        url = paste0("https://", url, "&key=", key)
-      } else {
-        # use http otherwise
-        url = paste0("http://", url)
-      }
-      
       # Call the Google Maps Webservice and store the XML output in webpageXML
-      webpageXML = xmlParse(getURL(url));
+      webpageXML = xmlParse(getURL(url[i]));
       
       # Extract the results from webpageXML
       results = xmlChildren(xmlRoot(webpageXML))
