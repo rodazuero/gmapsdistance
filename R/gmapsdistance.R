@@ -173,11 +173,13 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     if(combinations == "all"){
       data = expand.grid(or = origin, de = destination)
     } else if(combinations == "pairwise"){
+      if (length(origin) != length(destination))
+        stop("Requested pairwise distances, but supplied ",
+             "origins/destinations are not paired")
       data = data.frame(or = origin, de = destination)
     }
   
-    n = dim(data)
-    n = n[1]
+    n = nrow(data)
     
     data$Time = NA
     data$Distance = NA
@@ -189,7 +191,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       avoidmsg = paste0("&avoid=", avoid)
     }
     
-    for (i in 1:1:n){
+    for (i in seq_len(n)){
       
       # Set up URL
       url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", data$or[i],
