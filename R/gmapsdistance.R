@@ -233,7 +233,8 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       }
       
       # Extract results from results$row
-      Status = as(xmlChildren(results$row[[1]])$status[1]$text, "character")
+      rowXML = xmlChildren(results$row[[1L]])
+      Status = as(rowXML$status[1]$text, "character")
       
       if (Status == "ZERO_RESULTS") {
         # stop(paste0("Google Maps is not able to find a route between ", data$or[i]," and ", data$de[i]))
@@ -251,13 +252,10 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       }
       
       if(data$status[i] == "OK"){
-        data$Distance[i] = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
+        data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
         
-        if(is.null(key) || mode != "driving"){
-          data$Time[i] = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
-        } else{
-          data$Time[i] = as(xmlChildren(results$row[[1]])$duration_in_traffic[1]$value[1]$text, "numeric")
-        }
+        dur = grep("duration", names(rowXML), value = TRUE)
+        data$Time[i] = as(rowXML[[dur]][1L]$value[1L]$text, "numeric")
       }
     }
     
