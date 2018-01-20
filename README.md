@@ -408,3 +408,10 @@ Please see the file [CODE_OF_CONDUCT.md](https://github.com/rodazuero/gmapsdista
 ## Authors
 This code was developed by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/)
 
+## Where has gmapsdistance be used
+We like to keep track of the projects where gmapsdistance has been used. This will help us identify how to better improve the code. Let us know if you use gmapsditance! Below you will find links to some of the projects and some of the references to gmapsdistance that we have found. 
+
+1. Proximity to pediatric cardiac specialty care for adolescents with congenital heart defects. [Link to article](http://onlinelibrary.wiley.com/doi/10.1002/bdr2.1129/abstract?wol1URL=/doi/10.1002/bdr2.1129/abstract&regionCode=US-DC&identityKey=be6e5bc4-51c2-4785-aa77-110082fd5ad9). 
+
+2. Measuring Accessibility to Rail Transit Stations in Scarborough: Subway vs. LRT. [Link to article](https://www.ryerson.ca/content/dam/tedrogersschool/documents/Measuring%20accessibility%20to%20rail%20transit%20stations%20in%20Scarborough-final.pdf)
+
