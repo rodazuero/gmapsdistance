@@ -382,3 +382,6 @@ You can use a Google Maps API Key (which allows you to make a larger volume of c
 ```{r}
 #set.api.key("your-google-maps-api-key")
 ```
+
+## License
+[GNU General Public License v3.0](LICENSE.md)
