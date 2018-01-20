@@ -385,7 +385,7 @@ You can use a Google Maps API Key (which allows you to make a larger volume of c
 ```
 
 ## Usage limits
-There are a set of limits to the  number of calls that can be done. These limits are established by the [Google Maps Distance Matrix API](https://github.com/rodazuero/gmapsdistance/blob/master/LICENSE.md)
+There are a set of limits to the  number of calls that can be done. These limits are established by the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/usage-limits)
 Currently, in the free version the limits are given by:
 1. 2,500 free elements per day, calculated as the sum of client-side and server-side queries.
 2. Maximum of 25 origins or 25 destinations per request.
