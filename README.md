@@ -399,7 +399,7 @@ Currently, in the free version the limits are given by:
 [Version 3.3 available in CRAN repository](https://cran.r-project.org/web/packages/gmapsdistance/index.html)
 
 ## How to contribute
-
+We encourage any kind of suggestions to improve the quality of this code. You can submit pull requests indicating clearly what is the purpose of the change and why we should accept such pull request. Although not necessary, we encourage you to verify that your suggestions are in accordance with the general guidelines established in the CRAN repository by running the R CMD check command. More information about this is available in [this link.](http://r-pkgs.had.co.nz/check.html). 
 
 ## Authors
 This code was developed by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/)
