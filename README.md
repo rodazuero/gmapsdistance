@@ -388,3 +388,10 @@ You can use a Google Maps API Key (which allows you to make a larger volume of c
 [GNU General Public License v3.0](https://github.com/rodazuero/gmapsdistance/blob/master/LICENSE.md)
 
 [Version 3.3 available in CRAN repository](https://cran.r-project.org/web/packages/gmapsdistance/index.html)
+
+## How to contribute
+
+
+## Authors
+This code was developed by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/)
+
