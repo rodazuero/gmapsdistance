@@ -384,4 +384,4 @@ You can use a Google Maps API Key (which allows you to make a larger volume of c
 ```
 
 ## License
-[GNU General Public License v3.0](LICENSE.md)
+[GNU General Public License v3.0](https://github.com/rodazuero/gmapsdistance/blob/master/LICENSE.md)
