@@ -17,7 +17,7 @@ Four different modes of transportation are allowed: `bicycling`, `walking`, `dri
 ## Installation
 
 ```{r}
-# CRAN install.  [Version 3.3 available in CRAN repository.(https://cran.r-project.org/web/packages/gmapsdistance/index.html)
+# CRAN install.  [Version 3.3 available in CRAN repository.](https://cran.r-project.org/web/packages/gmapsdistance/index.html)
 install.packages("gmapsdistance")
 
 # Github installation
