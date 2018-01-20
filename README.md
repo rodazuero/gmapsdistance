@@ -22,7 +22,7 @@ install.packages("gmapsdistance")
 
 # Github installation
 # install.packages("devtools")
-devtools::install_github("rodazuero/gmapsdistance")
+# devtools::install_github("rodazuero/gmapsdistance")
 ```
 
 
