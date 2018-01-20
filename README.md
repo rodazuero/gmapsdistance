@@ -415,3 +415,12 @@ We like to keep track of the projects where gmapsdistance has been used. This wi
 
 2. Measuring Accessibility to Rail Transit Stations in Scarborough: Subway vs. LRT. [Link to article](https://www.ryerson.ca/content/dam/tedrogersschool/documents/Measuring%20accessibility%20to%20rail%20transit%20stations%20in%20Scarborough-final.pdf)
 
+3. Hyperlinear: Big Data Analytics with R. [Link](http://hyperlinear.com/big-data-analytics-r/)  
+
+4. Social Data Science Course. University of Copenhagen. Department of Economics. [Link](https://sebastianbarfort.github.io/sds_summer/slides/gathering.pdf)
+
+5. R-bloggers. The collaborative innovation landscape in data science. [Link](https://www.r-bloggers.com/the-collaborative-innovation-landscape-in-data-science/)
+
+6. DataHubss. Google maps and R. [Link](https://www.datahubbs.com/google-maps-r/). This blog entry refers to gmapsdistance as the best package in to use Google Maps in R.  
+
+7. Exegetic - Data Science on Demand. A review of gmapsdistance. [Link](http://www.exegetic.biz/blog/2017/08/map-route-direction-asymmetry/)
