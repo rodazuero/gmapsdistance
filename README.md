@@ -14,10 +14,11 @@ The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://
 
 Four different modes of transportation are allowed: `bicycling`, `walking`, `driving`, `transit`. 
 
+
 ## Installation
 
 ```{r}
-# CRAN install.  [Version 3.3 available in CRAN repository.](https://cran.r-project.org/web/packages/gmapsdistance/index.html)
+# CRAN install.  
 install.packages("gmapsdistance")
 
 # Github installation
@@ -385,3 +386,5 @@ You can use a Google Maps API Key (which allows you to make a larger volume of c
 
 ## License
 [GNU General Public License v3.0](https://github.com/rodazuero/gmapsdistance/blob/master/LICENSE.md)
+
+[Version 3.3 available in CRAN repository](https://cran.r-project.org/web/packages/gmapsdistance/index.html)
