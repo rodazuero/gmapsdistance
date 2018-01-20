@@ -95,7 +95,7 @@ results
 results = gmapsdistance(origin = c("Washington+DC", "New+York+NY", "Seattle+WA", "Miami+FL"), 
                         destination = c("Los+Angeles+CA", "Austin+TX", "Chicago+IL", "Philadelphia+PA"), 
                         mode = "bicycling", 
-                        dep_date = "2017-08-16", 
+                        dep_date = "2022-08-16", 
                         dep_time = "20:40:00")
 
 results
