@@ -64,6 +64,8 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
                          departure = "now", dep_date = "", dep_time = "", 
                          traffic_model = "best_guess",
                          arrival = "", arr_date = "", arr_time = "") {
+    
+    
 
     # If mode of transportation not recognized:
     if (!(mode %in% c("driving",  "walking",  "bicycling",  "transit"))) {
@@ -190,7 +192,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       avoidmsg = paste0("&avoid=", avoid)
     }
     
-    for (i in 1:1:n){
+    for (i in 1:n){
       
       # Set up URL
       url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", data$or[i],
@@ -254,7 +256,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       if(data$status[i] == "OK"){
         data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
         
-        dur = grep("duration", names(rowXML), value = TRUE)
+        dur = grep("^duration$", names(rowXML), value = TRUE)
         data$Time[i] = as(rowXML[[dur]][1L]$value[1L]$text, "numeric")
       }
     }

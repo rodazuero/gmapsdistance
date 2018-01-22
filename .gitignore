@@ -1,5 +1,6 @@
 #Personal comments
 *PERSCOMMENTS
 *.Rproj
-
 .Rproj.user
+.*
+test.R
