@@ -99,6 +99,9 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
         traffic_model_string = ''
         duration_key = 'duration'
     } else {
+        if (is.null(key)){
+            stop('You need to provide a Google Maps API key if you want to use `traffic_model`. Use: `set.api.key(YOUR_KEY)`.')
+        }
         traffic_model_string = paste0("&traffic_model=", traffic_model)
         duration_key = 'duration_in_traffic'
     }
