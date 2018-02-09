@@ -134,7 +134,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     
     
     # ARRIVAL TIMES:
-    # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
+    # Convert arrival time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
     if(arr_date != "" && arr_time != ""){
       arriv = strptime(paste(arr_date, arr_time), "%Y-%m-%d %H:%M:%OS", tz="GMT")
       seconds_arrival = round(as.numeric(difftime(arriv, UTCtime, units = "secs")))
@@ -200,6 +200,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
                    "&units=metric",
                    "&departure_time=", seconds,
                    "&traffic_model=", traffic_model,
+                   "&arrival_time=", seconds_arrival, 
                    avoidmsg)
       
       # Add Google Maps API key if it exists
