@@ -255,6 +255,9 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
         data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
         
         dur = grep("duration", names(rowXML), value = TRUE)
+        if(mode == "driving"){
+          dur = "duration_in_traffic"
+        }
         data$Time[i] = as(rowXML[[dur]][1L]$value[1L]$text, "numeric")
       }
     }
