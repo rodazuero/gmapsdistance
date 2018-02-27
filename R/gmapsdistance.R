@@ -305,7 +305,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     Distance = data$Distance[i]
     Time = data$Time[i]
     if(mode == "driving"){
-      Timetraffic = data$Timetraffic[i]
+      Timetraffic = data$Time_traffic[i]
     }
     Stat = data$status[i]
   }
