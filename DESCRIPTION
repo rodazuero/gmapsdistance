@@ -11,3 +11,4 @@ Description: Get distance and travel time between two points from Google Maps.
     public transportation).
 License: GPL (>= 2)
 Imports: RCurl, XML, methods, stats
+RoxygenNote: 6.0.1
