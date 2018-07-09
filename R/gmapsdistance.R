@@ -59,10 +59,10 @@ set.api.key = function(key) {
 #' @examples
 #' results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
 #' results
-gmapsdistance = function(origin, destination, combinations = "all", mode, key = get.api.key(), shape = "wide",
-                         avoid = "",
-                         departure = "now", dep_date = "", dep_time = "",
-                         traffic_model = "None",
+gmapsdistance = function(origin, destination, combinations = "all", mode, key = get.api.key(), shape = "wide", 
+                         avoid = "", 
+                         departure = "now", dep_date = "", dep_time = "", 
+                         traffic_model = "best_guess",
                          arrival = "", arr_date = "", arr_time = "") {
 
     # If mode of transportation not recognized:
@@ -90,20 +90,11 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     }
 
     # If traffic_model is not recognized:
-    if (!(traffic_model %in% c("best_guess",  "pessimistic", "optimistic", "None"))) {
+    if (!(traffic_model %in% c("best_guess",  "pessimistic", "optimistic"))) {
       stop(
         "Traffic model not recognized. Traffic model should be one of ",
         "'best_guess', 'pessimistic', 'optimistic'"
       )
-    } else if (traffic_model == "None") {
-        traffic_model_string = ''
-        duration_key = 'duration'
-    } else {
-        if (is.null(key)){
-            stop('You need to provide a Google Maps API key if you want to use `traffic_model`. Use: `set.api.key(YOUR_KEY)`.')
-        }
-        traffic_model_string = paste0("&traffic_model=", traffic_model)
-        duration_key = 'duration_in_traffic'
     }
   
     seconds = "now"
@@ -208,7 +199,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
                    "&sensor=", "false",
                    "&units=metric",
                    "&departure_time=", seconds,
-                   traffic_model_string,
+                   "&traffic_model=", traffic_model,
                    avoidmsg)
       
       # Add Google Maps API key if it exists
@@ -262,7 +253,9 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       
       if(data$status[i] == "OK"){
         data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
-        data$Time[i] = as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
+        
+        dur = grep("duration", names(rowXML), value = TRUE)
+        data$Time[i] = as(rowXML[[dur]][1L]$value[1L]$text, "numeric")
       }
     }
     
