@@ -190,9 +190,6 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   n = n[1]
   
   data$Time = NA
-  if(is.null(key) == FALSE && mode == "driving"){
-    data$Time_traffic = NA
-  }
   data$Distance = NA
   data$status = "OK"
   
@@ -271,9 +268,6 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   
   datadist        = data[c("or", "de", "Distance")]
   datatime        = data[c("or", "de", "Time")]
-  if(is.null(key) == FALSE && mode == "driving"){
-    datatimetraffic = data[c("or", "de", "Time_traffic")]
-  }
   datastat        = data[c("or", "de", "status")]
   
   if(n > 1){
@@ -288,13 +282,6 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
                      idvar = c("or"),
                      direction = "wide")
       
-      if(is.null(key) == FALSE && mode == "driving"){
-        Timetraffic = reshape(datatimetraffic, 
-                              timevar = "de",
-                              idvar = c("or"),
-                              direction = "wide")
-      }
-      
       Stat = reshape(datastat, 
                      timevar = "de",
                      idvar = c("or"),
@@ -303,31 +290,18 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     } else{
       Distance = datadist
       Time = datatime
-      if(is.null(key) == FALSE && mode == "driving"){
-        Timetraffic = datatimetraffic
-      }
       Stat = datastat
     }
   } else{
     Distance = data$Distance[i]
     Time = data$Time[i]
-    if(is.null(key) == FALSE && mode == "driving"){
-      Timetraffic = data$Time_traffic[i]
-    }
     Stat = data$status[i]
   }
   
   # Make a list with the results
-  if(is.null(key) == TRUE || mode != "driving"){
-    output = list(Time = Time,
-                  Distance = Distance,
-                  Status = Stat)
-  } else{
-    output = list(Time = Time,
-                  Time_traffic = Timetraffic,
-                  Distance = Distance,
-                  Status = Stat)
-  }
+  output = list(Time = Time,
+                Distance = Distance,
+                Status = Stat)
   
   return(output)
 }
