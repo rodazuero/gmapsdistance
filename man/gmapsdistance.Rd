@@ -60,8 +60,7 @@ If no value is set for departure, dep_date and dep_time, the departure time is s
 
 ONLY works with a Google Maps API key AND MUST be according to UCT time.}
 
-\item{traffic_model}{When the mode is set to "driving", the user can find the times and distances using different traffic models. Should be
-inside of double quotes (",") and one of the following: "optimistic", "pessimistic", "best_guess". 
+\item{traffic_model}{When the mode is set to "driving", the user can find the times and distances using different traffic models. Should be a string and one of the following: "optimistic", "pessimistic", "best_guess" or "None" (default).
 
 ONLY works with a Google Maps API key and with a departure time.}
 
