@@ -90,20 +90,20 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   }
   
   # If traffic_model is not recognized:
-    if (!(traffic_model %in% c("best_guess",  "pessimistic", "optimistic", "None"))) {
+  if (!(traffic_model %in% c("best_guess",  "pessimistic", "optimistic", "None"))) {
     stop(
       "Traffic model not recognized. Traffic model should be one of ",
       "'best_guess', 'pessimistic', 'optimistic'"
     )
-    } else if (traffic_model == "None") {
-        traffic_model_string = ''
-        duration_key = 'duration'
-    } else {
-        if (is.null(key)){
-            stop('You need to provide a Google Maps API key if you want to use `traffic_model`. Use: `set.api.key(YOUR_KEY)`.')
-        }
-        traffic_model_string = paste0("&traffic_model=", traffic_model)
-        duration_key = 'duration_in_traffic'
+  } else if (traffic_model == "None") {
+    traffic_model_string = ''
+    duration_key = 'duration'
+  } else {
+    if (is.null(key)){
+        stop('You need to provide a Google Maps API key if you want to use `traffic_model`. Use: `set.api.key(YOUR_KEY)`.')
+    }
+    traffic_model_string = paste0("&traffic_model=", traffic_model)
+    duration_key = 'duration_in_traffic'
   }
   
   seconds = "now"
@@ -266,9 +266,9 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     }
   }
   
-  datadist        = data[c("or", "de", "Distance")]
-  datatime        = data[c("or", "de", "Time")]
-  datastat        = data[c("or", "de", "status")]
+  datadist = data[c("or", "de", "Distance")]
+  datatime = data[c("or", "de", "Time")]
+  datastat = data[c("or", "de", "status")]
   
   if(n > 1){
     if(shape == "wide" && combinations == "all"){
@@ -299,9 +299,11 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   }
   
   # Make a list with the results
-  output = list(Time = Time,
-                Distance = Distance,
-                Status = Stat)
+  output = list(
+    Time = Time,
+    Distance = Distance,
+    Status = Stat
+  )
   
   return(output)
 }
