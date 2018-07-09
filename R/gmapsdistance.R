@@ -44,8 +44,8 @@ set.api.key = function(key) {
 #' @param origin  A string containing the description of the starting point.
 #'   Should be inside of quoutes (""). If more than one word is used, they
 #'   should be separated by a plus sign e.g. "Bogota+Colombia". Coordinates in
-#'   LAT-LONG format are also a valid input as long as they can be identified by
-#'   Google Maps
+#'   LAT+LONG format are also a valid input as long as they can be identified by
+#'   Google Maps; see Examples.
 #' @param destination A string containing the description of the end point.
 #'   Should be the same format as the variable "origin".
 #' @param mode A string containing the mode of transportation desired. Should be
