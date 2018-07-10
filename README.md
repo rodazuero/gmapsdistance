@@ -7,7 +7,7 @@
 
 ***Interface Between R and Google Maps***
 
-[![Screen Shot 2016-08-16 at 7.44.45 PM.png](https://s3.postimg.org/7n5ldmg2b/Screen_Shot_2016_08_16_at_7_44_45_PM.png)](https://postimg.org/image/5il8cjefj/)
+[![Screen Shot 2016-08-16 at 7.44.45 PM.png](https://s3.postimg.org/7n5ldmg2b/Screen_Shot_2016_08_16_at_7_44_45_PM.png)](https://ibb.co/hjJW6o)
 
 
 The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance(s) and time(s) between two points or two vectors of points. An [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) is not necessary to perform the query but the function supports its usage. If an API key is being used the Distance Matrix API should be enabled in the Google Developers Console. Google maps must be able to find both the origin and the destination in order for the function to run. If the origin or destination contains multiple words, they should be separated by a plus sign (+). The distance is returned in meters and the time in seconds. 
@@ -407,7 +407,9 @@ Please see the file [CODE_OF_CONDUCT.md](https://github.com/rodazuero/gmapsdista
 
 ## Authors
 This code was developed originally by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/).
-It is currently maintained by Rodrigo Azuero and Demetrio Rodriguez <demetrio.rodriguez.t@gmail.com>. 
+
+It is currently maintained by Rodrigo Azuero and Demetrio Rodriguez <demetrio.rodriguez.t@gmail.com>.
+
 [AUTHORS.md](AUTHORS.md) have a list of everyone who have contributed to gmapsdistance.
 
 ## Where has gmapsdistance be used
