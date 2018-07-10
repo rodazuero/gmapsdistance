@@ -406,7 +406,9 @@ Please see the file [CODE_OF_CONDUCT.md](https://github.com/rodazuero/gmapsdista
 
 
 ## Authors
-This code was developed by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/)
+This code was developed originally by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/).
+It is currently maintained by Rodrigo Azuero and Demetrio Rodriguez <demetrio.rodriguez.t@gmail.com>. 
+[AUTHORS.md](AUTHORS.md) have a list of everyone who have contributed to gmapsdistance.
 
 ## Where has gmapsdistance be used
 We like to keep track of the projects where gmapsdistance has been used. This will help us identify how to better improve the code. Let us know if you use gmapsditance! Below you will find links to some of the projects and some of the references to gmapsdistance that we have found. 
