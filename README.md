@@ -1,4 +1,4 @@
-[![Screen Shot 2016-08-17 at 2.37.05 PM.png](https://s3.postimg.org/d8smn7gfn/Screen_Shot_2016_08_17_at_2_37_05_PM.png)](https://postimg.org/image/8mwieuuwf/) gmapsdistance
+![Google Maps](https://ibb.co/hfNpM8)) gmapsdistance
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
