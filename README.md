@@ -1,4 +1,5 @@
-[![Foo](https://cdn1.imggmi.com/uploads/2018/7/25/5015131a519097381aab2f588fa1e369-full.png =250x250)](http://google.com.au/) gmapsdistance
+[![Foo](https://cdn1.imggmi.com/uploads/2018/7/25/5015131a519097381aab2f588fa1e369-full.png)](http://google.com.au/) gmapsdistance
+![](https://cdn1.imggmi.com/uploads/2018/7/25/5015131a519097381aab2f588fa1e369-full.png =250x250)
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
