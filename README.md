@@ -7,7 +7,7 @@
 
 ***Interface Between R and Google Maps***
 
-<a href="url"><img src="https://cdn1.imggmi.com/uploads/2018/7/25/6fb46d66b727af406701928b076be1b1-full.png" align="left" height="1000" width="1000" ></a> 
+<a href="url"><img src="https://cdn1.imggmi.com/uploads/2018/7/25/6fb46d66b727af406701928b076be1b1-full.png" align="left" height="500" width="500" ></a> 
 
 
 
