@@ -1,5 +1,5 @@
 ![Foo](https://cdn1.imggmi.com/uploads/2018/7/25/5015131a519097381aab2f588fa1e369-full.png) gmapsdistance
-![Foo3](https://cdn1.imggmi.com/uploads/2018/7/25/5015131a519097381aab2f588fa1e369-full.png) {:height="36px" width="36px"}.
+<a href="url"><img src="https://cdn1.imggmi.com/uploads/2018/7/25/5015131a519097381aab2f588fa1e369-full.png" align="left" height="48" width="48" ></a>
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
