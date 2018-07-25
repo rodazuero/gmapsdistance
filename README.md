@@ -1,4 +1,4 @@
-![Google Maps](https://ibb.co/hfNpM8)) gmapsdistance
+[![Foo](http://www.google.com.au/images/nav_logo7.png)](http://google.com.au/) gmapsdistance
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
