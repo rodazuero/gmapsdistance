@@ -40,7 +40,24 @@ set.api.key = function(key) {
 #' For more information about the Google Maps Distance Matrix API go to
 #' https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 #' @title gmapsdistance
-#' @usage gmapsdistance(origin, destination, mode, key)
+#' @usage
+#' gmapsdistance(
+#'     origin,
+#'     destination,
+#'     combinations = "all",
+#'     mode,
+#'     key = get.api.key(),
+#'     shape = "wide",
+#'     avoid = "",
+#'     departure = "now",
+#'     dep_date = "",
+#'     dep_time = "",
+#'     traffic_model = "None",
+#'     arrival = "",
+#'     arr_date = "",
+#'     arr_time = ""
+#' )
+#'
 #' @param origin A string or vector of strings containing the description of the
 #'     starting point(s). Should be inside of quoutes (""). If more than one word
 #'     for a same location is used, they should be separated by a plus sign e.g.

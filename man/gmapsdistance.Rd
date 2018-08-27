@@ -4,7 +4,22 @@
 \alias{gmapsdistance}
 \title{gmapsdistance}
 \usage{
-gmapsdistance(origin, destination, mode, key)
+gmapsdistance(
+    origin,
+    destination,
+    combinations = "all",
+    mode,
+    key = get.api.key(),
+    shape = "wide",
+    avoid = "",
+    departure = "now",
+    dep_date = "",
+    dep_time = "",
+    traffic_model = "None",
+    arrival = "",
+    arr_date = "",
+    arr_time = ""
+)
 }
 \arguments{
 \item{origin}{A string or vector of strings containing the description of the
