@@ -41,6 +41,6 @@ For more information about the Google Maps Distance Matrix API go to
 https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 }
 \examples{
-results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
+results = gmapsdistance(origin="Washington+DC", destination="New+York+City+NY", mode="driving")
 results
 }
