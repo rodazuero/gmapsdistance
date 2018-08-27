@@ -66,7 +66,7 @@ set.api.key = function(key) {
 #' @param key In order to use the Google Maps Distance Matrix API it is necessary
 #'     to have an API key. The key should be inside of quotes. Example:
 #'     "THISISMYKEY". This key an also be set using
-#'     \code{set.api.key("THISISMYKEY").
+#'     \code{set.api.key("THISISMYKEY")}.
 #'
 #' @param shape A string that specifies the shape of the distance and time
 #'     matrices to be returned. Should be inside of double quotes (",") and one

@@ -29,6 +29,11 @@ the end point(s). Should be the same format as the variable "origin".}
 inside of double quotes (",") and one of the following: "bicycling",
 "walking", "transit" or "driving".}
 
+\item{key}{In order to use the Google Maps Distance Matrix API it is necessary
+to have an API key. The key should be inside of quotes. Example:
+"THISISMYKEY". This key an also be set using
+\code{set.api.key("THISISMYKEY")}.}
+
 \item{shape}{A string that specifies the shape of the distance and time
     matrices to be returned. Should be inside of double quotes (",") and one
     of the following: "long" or "wide".
