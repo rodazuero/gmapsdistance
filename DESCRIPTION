@@ -12,3 +12,4 @@ Description: Get distance and travel time between two points from Google Maps.
 License: GPL (>= 2)
 Imports: RCurl, XML, methods, stats
 RoxygenNote: 6.1.0
+Encoding: UTF-8
