@@ -429,3 +429,5 @@ We like to keep track of the projects where gmapsdistance has been used. This wi
 6. DataHubss. Google maps and R. [Link](https://www.datahubbs.com/google-maps-r/). This blog entry refers to gmapsdistance as the best package in to use Google Maps in R.  
 
 7. Exegetic - Data Science on Demand. A review of gmapsdistance. [Link](http://www.exegetic.biz/blog/2017/08/map-route-direction-asymmetry/)
+
+8. RPubs.  [Link](https://rpubs.com/mattdray/gmapsdistance-test) 
