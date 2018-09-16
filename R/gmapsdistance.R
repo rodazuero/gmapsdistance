@@ -263,14 +263,13 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   seconds = "now"
   seconds_arrival = ""
 
-  UTCtime = strptime("1970-01-01 00:00:00", "%Y-%m-%d %H:%M:%OS", tz="GMT")
-  min_secs = round(as.numeric(difftime(as.POSIXlt(Sys.time(), "GMT"), UTCtime, units="secs")))
+  min_secs = round(as.numeric(Sys.time()))
 
   # DEPARTURE TIMES:
-  # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
-  if(dep_date != "" && dep_time != ""){
-    depart = strptime(paste(dep_date, dep_time), "%Y-%m-%d %H:%M:%OS", tz="GMT")
-    seconds = round(as.numeric(difftime(depart, UTCtime, units = "secs")))
+  # Convert departure time from date and hour to epoch seconds
+  if(nzchar(dep_date) && nzchar(dep_time)){
+    depart = strptime(paste(dep_date, dep_time), "%F %H:%M:%OS", tz="UTC")
+    seconds = round(as.numeric(depart))
   }
 
   # Give priority to 'departure' time, over date and hour
@@ -299,8 +298,8 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   # ARRIVAL TIMES:
   # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
   if(arr_date != "" && arr_time != ""){
-    arriv = strptime(paste(arr_date, arr_time), "%Y-%m-%d %H:%M:%OS", tz="GMT")
-    seconds_arrival = round(as.numeric(difftime(arriv, UTCtime, units = "secs")))
+    arriv = strptime(paste(arr_date, arr_time), "%F %H:%M:%OS", tz="UTC")
+    seconds_arrival = round(as.numeric(arriv))
   }
 
   # Give priority to 'arrival' time, over date and hour
