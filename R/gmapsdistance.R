@@ -40,6 +40,7 @@ set.api.key = function(key) {
 #' For more information about the Google Maps Distance Matrix API go to
 #' https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 #' @title gmapsdistance
+<<<<<<< HEAD
 #' @usage
 #' gmapsdistance(
 #'     origin,
@@ -186,6 +187,25 @@ set.api.key = function(key) {
 #' origin = c("Washington+DC", "Miami+FL")
 #' destination = c("Los+Angeles+CA", "Austin+TX", "Chicago+IL")
 #' results = gmapsdistance(origin, destination, mode = "driving", shape = "long")
+=======
+#' @usage gmapsdistance(origin, destination, mode, key)
+#' @param origin  \code{character} describing the starting point.
+#'   Separate words should be separated by a plus sign, e.g.,
+#'   \code{"Bogota+Colombia"}. Coordinates in
+#'   LAT-LONG (y-x) format are also valid, as long as they can be identified by
+#'   Google Maps.
+#' @param destination \code{character} describing the end point.
+#'   Should be the same format as \code{origin}.
+#' @param mode \code{character} specifying the desired mode of transportation, among 
+#'   \code{"driving"}, \code{"bicycling"}, \code{"walking"}, and \code{"transit"}.
+#' @param key In order to use the Google Maps Distance Matrix API it is
+#'   necessary to have an API key. The key should be inside of quotes. Example:
+#'   "THISISMYKEY". This key an also be set using \code{set.api.key("THISISMYKEY")}.
+#' @return a list with the traveling time and distance between origin and
+#'   destination and the status
+#' @examples
+#' results = gmapsdistance("Washington+DC", "New+York+City+NY", "driving")
+>>>>>>> 129d40f428492dc4d22e4270ee3b317253fbbbeb
 #' results
 #'
 #' # Example 5
@@ -403,6 +423,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       # stop(paste0("Google Maps is not able to find a route between ", data$or[i]," and ", data$de[i]))
       data$status[i] = "ROUTE_NOT_FOUND"
     }
+<<<<<<< HEAD
 
     if (Status == "NOT_FOUND") {
       # stop("Google Maps is not able to find the origin (", data$or[i],") or destination (", data$de[i], ")")
@@ -417,6 +438,99 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     if(data$status[i] == "OK"){
       data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
       data$Time[i] = as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
+=======
+    
+    if(combinations == "all"){
+      data = expand.grid(or = origin, de = destination)
+    } else if(combinations == "pairwise"){
+      if (length(origin) != length(destination))
+        stop("Requested pairwise distances, but supplied ",
+             "origins/destinations are not paired")
+      data = data.frame(or = origin, de = destination)
+    }
+  
+    n = nrow(data)
+    
+    data$Time = NA
+    data$Distance = NA
+    data$status = "OK"
+    
+    avoidmsg = ""
+    
+    if(avoid !=""){
+      avoidmsg = paste0("&avoid=", avoid)
+    }
+    
+    # Set up URLs
+    urls = paste0("maps.googleapis.com/maps/api/distancematrix/xml?",
+                  "origins=", data$or,
+                  "&destinations=", data$de,
+                  "&mode=", mode,
+                  "&sensor=false",
+                  "&units=metric",
+                  "&departure_time=", seconds,
+                  "&traffic_model=", traffic_model,
+                  avoidmsg)
+    
+    # Add Google Maps API key if it exists
+    if (!is.null(key)) {
+      # use https and google maps key (after replacing spaces just in case)
+      key = gsub(" ", "", key)
+      urls = paste0("https://", urls, "&key=", key)
+    } else {
+      # use http otherwise
+      urls = paste0("http://", urls)
+    }
+    
+    for (i in seq_len(n)){
+      # Call the Google Maps Webservice and store the XML output in webpageXML
+      webpageXML = xmlParse(getURL(url[i]));
+      
+      # Extract the results from webpageXML
+      results = xmlChildren(xmlRoot(webpageXML))
+      
+      # Check the status of the request and throw an error if the request was denied
+      request.status = as(unlist(results$status[[1]]), "character")
+      
+      # Check for google API errors
+      if (!is.null(results$error_message)) {
+        stop(paste(c("Google API returned an error: ", xmlValue(results$error_message)), sep = ""))
+      }
+      
+      if (request.status == "REQUEST_DENIED") {
+        set.api.key(NULL)
+        data$status[i] = "REQUEST_DENIED"
+        # stop(as(results$error_message[1]$text, "character"))
+      }
+      
+      # Extract results from results$row
+      Status = as(xmlChildren(results$row[[1]])$status[1]$text, "character")
+      
+      if (Status == "ZERO_RESULTS") {
+        # stop(paste0("Google Maps is not able to find a route between ", data$or[i]," and ", data$de[i]))
+        data$status[i] = "ROUTE_NOT_FOUND"
+      }
+      
+      if (Status == "NOT_FOUND") {
+        # stop("Google Maps is not able to find the origin (", data$or[i],") or destination (", data$de[i], ")")
+        data$status[i] = "PLACE_NOT_FOUND"
+      }
+      
+      # Check whether the user is over their query limit
+      if (Status == "OVER_QUERY_LIMIT") {
+        stop("You have exceeded your allocation of API requests for today.")
+      }
+      
+      if(data$status[i] == "OK"){
+        data$Distance[i] = as(xmlChildren(results$row[[1]])$distance[1]$value[1]$text, "numeric")
+        
+        if(is.null(key) || mode != "driving"){
+          data$Time[i] = as(xmlChildren(results$row[[1]])$duration[1]$value[1]$text, "numeric")
+        } else{
+          data$Time[i] = as(xmlChildren(results$row[[1]])$duration_in_traffic[1]$value[1]$text, "numeric")
+        }
+      }
+>>>>>>> 129d40f428492dc4d22e4270ee3b317253fbbbeb
     }
   }
 
