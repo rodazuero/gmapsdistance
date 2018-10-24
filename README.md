@@ -25,6 +25,10 @@ install.packages("gmapsdistance")
 # Github installation
 # install.packages("devtools")
 # devtools::install_github("rodazuero/gmapsdistance")
+
+#Setting the API key:
+#set.api.key("INSERT-API-KEY")
+
 ```
 
 
