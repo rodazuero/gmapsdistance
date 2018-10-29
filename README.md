@@ -417,7 +417,7 @@ It is currently maintained by Rodrigo Azuero and Demetrio Rodriguez <demetrio.ro
 
 [AUTHORS.md](AUTHORS.md) have a list of everyone who have contributed to gmapsdistance.
 
-## Where has gmapsdistance be used
+## Where has gmapsdistance be used/mentioned.
 We like to keep track of the projects where gmapsdistance has been used. This will help us identify how to better improve the code. Let us know if you use gmapsditance! Below you will find links to some of the projects and some of the references to gmapsdistance that we have found. 
 
 1. Proximity to pediatric cardiac specialty care for adolescents with congenital heart defects. [Link to article](http://onlinelibrary.wiley.com/doi/10.1002/bdr2.1129/abstract?wol1URL=/doi/10.1002/bdr2.1129/abstract&regionCode=US-DC&identityKey=be6e5bc4-51c2-4785-aa77-110082fd5ad9). 
@@ -435,3 +435,9 @@ We like to keep track of the projects where gmapsdistance has been used. This wi
 7. Exegetic - Data Science on Demand. A review of gmapsdistance. [Link](http://www.exegetic.biz/blog/2017/08/map-route-direction-asymmetry/)
 
 8. RPubs.  [Link](https://rpubs.com/mattdray/gmapsdistance-test) 
+
+9. Identifying Partnership Opportunities at Air Force Installations: A Geographic Information Systems Approach [Link](https://scholar.afit.edu/cgi/viewcontent.cgi?article=1809&context=etd) 
+
+10. DataWookie. Review of gmapsdistance. [Link](https://datawookie.netlify.com/blog/2017/08/route-asymmetry-in-google-maps/)
+
+
