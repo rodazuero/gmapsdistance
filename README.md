@@ -7,12 +7,13 @@
 
 ***Interface Between R and Google Maps***
 
-<a href="url"><img src="https://cdn1.imggmi.com/uploads/2018/7/25/b8583388006d169602e55c17e99a7868-full.png" align="left" height="500" width="875" ></a> 
-
+<a href="url"><img src="https://cdn1.imggmi.com/uploads/2018/7/25/b8583388006d169602e55c17e99a7868-full.png" align="left" height="500" width="875" ></a>   
+  
+      
+      
   
   
-
-The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance(s) and time(s) between two points or two vectors of points. An [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) is necessary to perform the query. Google maps must be able to find both the origin and the destination in order for the function to run. If the origin or destination contains multiple words, they should be separated by a plus sign (+). The distance is returned in meters and the time in seconds. 
+  The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance(s) and time(s) between two points or two vectors of points. An [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) is necessary to perform the query. Google maps must be able to find both the origin and the destination in order for the function to run. If the origin or destination contains multiple words, they should be separated by a plus sign (+). The distance is returned in meters and the time in seconds. 
 
 Four different modes of transportation are allowed: `bicycling`, `walking`, `driving`, `transit`. 
 
