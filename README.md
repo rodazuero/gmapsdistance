@@ -1,4 +1,4 @@
-<a href="url"><img src="https://cdn1.imggmi.com/uploads/2019/2/20/ff3c09a459572de4f8865178b6cebe70-full.png" align="left" height="48" width="48" ></a> gmapsdistance
+gmapsdistance
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
@@ -8,7 +8,7 @@
 
 ***Interface Between R and Google Maps***
 
-<a href="url"><img src="https://cdn1.imggmi.com/uploads/2018/7/25/b8583388006d169602e55c17e99a7868-full.png" align="left" height="514.28" width="900" ></a>   
+  
  
   
   The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance(s) and time(s) between two points or two vectors of points. An [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) is necessary to perform the query. Google maps must be able to find both the origin and the destination in order for the function to run. If the origin or destination contains multiple words, they should be separated by a plus sign (+). The distance is returned in meters and the time in seconds. 
