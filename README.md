@@ -1,4 +1,4 @@
-<a href="url"><img src="https://cdn1.imggmi.com/uploads/2018/7/25/5015131a519097381aab2f588fa1e369-full.png" align="left" height="48" width="48" ></a> gmapsdistance
+<a href="url"><img src="https://cdn1.imggmi.com/uploads/2019/2/20/ff3c09a459572de4f8865178b6cebe70-full.png" align="left" height="48" width="48" ></a> gmapsdistance
 =======
 [![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
