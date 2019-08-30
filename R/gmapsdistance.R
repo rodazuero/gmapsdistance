@@ -491,11 +491,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
 #This function ensures that the API call made is a "simple" rather than an "advanced" call. 
 #This is designed to attract the lower Google Maps API Tariff
 
-gmapsdistancesimple = function(origin, destination, combinations = "all", mode, key = get.api.key(), shape = "wide",
-                               avoid = "",
-                               departure = "now", dep_date = "", dep_time = "",
-                               traffic_model = "None",
-                               arrival = "", arr_date = "", arr_time = "") {
+gmapsdistancesimple = function(origin, destination, combinations = "all", mode, key = get.api.key(), shape = "wide") {
   
   # If mode of transportation not recognized:
   if (!(mode %in% c("driving",  "walking",  "bicycling",  "transit"))) {
@@ -513,99 +509,6 @@ gmapsdistancesimple = function(origin, destination, combinations = "all", mode, 
     )
   }
   
-  # If 'avoid' parameter is not recognized:
-  if (!(avoid %in% c("", "tolls",  "highways",  "ferries",  "indoor"))) {
-    stop(
-      "Avoid parameters not recognized. Avoid should be one of ",
-      "'tolls', 'highways', 'ferries', 'indoor' "
-    )
-  }
-  
-  # If traffic_model is not recognized:
-  if (!(traffic_model %in% c("best_guess",  "pessimistic", "optimistic", "None"))) {
-    stop(
-      "Traffic model not recognized. Traffic model should be one of ",
-      "'best_guess', 'pessimistic', 'optimistic'"
-    )
-  } else if (traffic_model == "None") {
-    traffic_model_string = ''
-    duration_key = 'duration'
-  } else {
-    if (is.null(key)){
-      stop('You need to provide a Google Maps API key if you want to use `traffic_model`. Use: `set.api.key(YOUR_KEY)`.')
-    }
-    traffic_model_string = paste0("&traffic_model=", traffic_model)
-    duration_key = 'duration_in_traffic'
-  }
-  
-  seconds = "now"
-  seconds_arrival = ""
-  
-  min_secs = round(as.numeric(Sys.time()))
-  
-  # DEPARTURE TIMES:
-  # Convert departure time from date and hour to epoch seconds
-  if(nzchar(dep_date) && nzchar(dep_time)){
-    depart = strptime(paste(dep_date, dep_time), "%F %H:%M:%OS", tz="UTC")
-    seconds = round(as.numeric(depart))
-  }
-  
-  # Give priority to 'departure' time, over date and hour
-  if(departure != "now"){
-    seconds = departure
-  }
-  
-  # Exceptions when inputs are incorrect
-  if(departure != "now" && departure < min_secs){
-    stop("The departure time has to be some time in the future!")
-  }
-  
-  if(dep_date != "" && dep_time == ""){
-    stop("You should also specify a departure time in the format HH:MM:SS UTC")
-  }
-  
-  if(dep_date == "" && dep_time != ""){
-    stop("You should also specify a departure date in the format YYYY-MM-DD UTC")
-  }
-  
-  if(dep_date != "" && dep_time != "" && seconds < min_secs){
-    stop("The departure time has to be some time in the future!")
-  }
-  
-  
-  # ARRIVAL TIMES:
-  # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
-  if(arr_date != "" && arr_time != ""){
-    arriv = strptime(paste(arr_date, arr_time), "%F %H:%M:%OS", tz="UTC")
-    seconds_arrival = round(as.numeric(arriv))
-  }
-  
-  # Give priority to 'arrival' time, over date and hour
-  if(arrival != ""){
-    seconds_arrival = arrival
-  }
-  
-  # Exceptions when inputs are incorrect
-  if(arrival != "" && arrival < min_secs){
-    stop("The arrival time has to be some time in the future!")
-  }
-  
-  if(arr_date != "" && arr_time == ""){
-    stop("You should also specify an arrival time in the format HH:MM:SS UTC")
-  }
-  
-  if(arr_date == "" && arr_time != ""){
-    stop("You should also specify an arrival date in the format YYYY-MM-DD UTC")
-  }
-  
-  if(arr_date != "" && arr_time != "" && seconds_arrival < min_secs){
-    stop("The arrival time has to be some time in the future!")
-  }
-  
-  
-  if((dep_date != "" || dep_time != "" || departure != "now") && (arr_date != "" || arr_time != "" || arrival != "")){
-    stop("Cannot input departure and arrival times. Only one can be used at a time. ")
-  }
   
   if(combinations == "pairwise" && length(origin) != length(destination)){
     stop("Size of origin and destination vectors must be the same when using the option: combinations == 'pairwise'")
@@ -624,11 +527,6 @@ gmapsdistancesimple = function(origin, destination, combinations = "all", mode, 
   data$Distance = NA
   data$status = "OK"
   
-  avoidmsg = ""
-  
-  if(avoid !=""){
-    avoidmsg = paste0("&avoid=", avoid)
-  }
   
   for (i in 1:1:n){
     
@@ -689,7 +587,7 @@ gmapsdistancesimple = function(origin, destination, combinations = "all", mode, 
     
     if(data$status[i] == "OK"){
       data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
-      data$Time[i] = as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
+      data$Time[i] = as(rowXML[['duration']][1L]$value[1L]$text, "numeric")
     }
   }
   
