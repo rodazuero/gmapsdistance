@@ -6,7 +6,7 @@ gmapsdistance
 ![](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gmapsdistance)](https://cran.r-project.org/package=gmapsdistance)
 
-***Interface Between R and Google Maps***
+***Interface Between R and Google Maps ***
 
   
  
