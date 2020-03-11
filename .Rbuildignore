@@ -1,6 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-^LICENSE\.md$ 
-^CODE_OF_CONDUCT\.md$ 
+^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$
 ^AUTHORS\.md$

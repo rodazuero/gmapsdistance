@@ -58,14 +58,13 @@ set.api.key = function(key) {
 #'     arr_time = ""
 #' )
 #'
-#' @param origin A string or vector of strings containing the description of the
-#'     starting point(s). Should be inside of quoutes (""). If more than one word
-#'     for a same location is used, they should be separated by a plus sign e.g.
-#'     "Bogota+Colombia". Coordinates in LAT-LONG format are also a valid input
-#'     as long as they can be identified by Google Maps.
-#'
-#' @param destination A string or vector of strings containing the description of
-#'     the end point(s). Should be the same format as the variable "origin".
+#' @param origin  \code{character} describing the starting point.
+#'   Separate words should be separated by a plus sign, e.g.,
+#'   \code{"Bogota+Colombia"}. Coordinates in
+#'   LAT-LONG (y-x) format are also valid, as long as they can be identified by
+#'   Google Maps.
+#' @param destination \code{character} describing the end point.
+#'   Should be the same format as \code{origin}.
 #'
 #' @param combinations When the origin and destination entries are vectors, the
 #'     user can specify if the function computes all possible combinations
@@ -76,9 +75,9 @@ set.api.key = function(key) {
 #'     If the combinations is set to "pairwise", the origin and destination vectors
 #'     must have the same lenght.
 #'
-#' @param mode A string containing the mode of transportation desired. Should be
-#'     inside of double quotes (",") and one of the following: "bicycling",
-#'     "walking", "transit" or "driving".
+#' @param mode \code{character} specifying the mode of transportation to use
+#'   for routing; supported are \code{"driving"}, \code{"bicycling"},
+#'   \code{"walking"}, and \code{"transit"}.
 #'
 #' @param key In order to use the Google Maps Distance Matrix API it is necessary
 #'     to have an API key. The key should be inside of quotes. Example:
