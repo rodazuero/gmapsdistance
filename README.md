@@ -6,7 +6,7 @@ gmapsdistance
 ![](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gmapsdistance)](https://cran.r-project.org/package=gmapsdistance)
 
-***Interface Between R and Google Maps ***
+***Interface Between R and Google Maps***
 
   
  
@@ -30,6 +30,17 @@ install.packages("gmapsdistance")
 #set.api.key("INSERT-API-KEY")
 
 ```
+
+#### XML-package dependency
+`XML` package seems to have been removed from CRAN. `gmapsdistance` depends on it, thus the above installation would fail for R 3.5 and above. 
+
+##### Workaround
+```R
+install.packages("XML", repos = "http://www.omegahat.net/R")
+```
+
+##### Dockerfile
+A clean installation including all necessary dependencies can be found in a Dockerfile, which has been tested and should work. See `example_install.dockerfile`.
 
 
 ## Example 1
