@@ -31,6 +31,17 @@ install.packages("gmapsdistance")
 
 ```
 
+#### XML-package dependency
+`XML` package seems to have been removed from CRAN. `gmapsdistance` depends on it, thus the above installation would fail for R 3.5 and above. 
+
+##### Workaround
+```R
+install.packages("XML", repos = "http://www.omegahat.net/R")
+```
+
+##### Dockerfile
+A clean installation including all necessary dependencies can be found in a Dockerfile, which has been tested and should work. See `example_install.dockerfile`.
+
 
 ## Example 1
 In this example we will compute the driving distance between Washington DC, and New York City. The code returns the `Time`, the `Distance` and the `Status` of the query (`OK` if it was successful).
