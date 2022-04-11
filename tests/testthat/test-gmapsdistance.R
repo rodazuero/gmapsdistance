@@ -1,33 +1,43 @@
 
+
 # somewhere in London...
-places <- data.frame(place = c("King's Cross St. Pancras",
-                               "Piccadilly Circus"),
-                     lat = c(51.53061, 51.50979),
-                     long = c(-0.1239491, -0.1344288))
+places <- data.frame(
+  place = c("King's Cross St. Pancras",
+            "Piccadilly Circus"),
+  lat = c(51.53061, 51.50979),
+  long = c(-0.1239491,-0.1344288)
+)
 
 test_that("modes work", {
-
   skip_on_cran() # because API key...
 
-  driving <- gmapsdistance(origin = paste0(places$lat[1], "+", places$long[1]),
-                        destination = paste0(places$lat[2], "+", places$long[2]),
-                        key = Sys.getenv("GOOGLE_API_KEY"),
-                        mode = "driving")
+  driving <- gmapsdistance(
+      origin = paste0(places$lat[1], "+", places$long[1]),
+      destination = paste0(places$lat[2], "+", places$long[2]),
+      key = Sys.getenv("GOOGLE_API_KEY"),
+      mode = "driving"
+    )
 
-  walking <- gmapsdistance(origin = paste0(places$lat[1], "+", places$long[1]),
-                           destination = paste0(places$lat[2], "+", places$long[2]),
-                           key = Sys.getenv("GOOGLE_API_KEY"),
+  walking <- gmapsdistance(
+      origin = paste0(places$lat[1], "+", places$long[1]),
+      destination = paste0(places$lat[2], "+", places$long[2]),
+      key = Sys.getenv("GOOGLE_API_KEY"),
+      mode = "walking"
+    )
 
-              mode = "walking")
-  transit <- gmapsdistance(origin = paste0(places$lat[1], "+", places$long[1]),
-                           destination = paste0(places$lat[2], "+", places$long[2]),
-                           key = Sys.getenv("GOOGLE_API_KEY"),
-                           mode = "transit")
+  transit <- gmapsdistance(
+      origin = paste0(places$lat[1], "+", places$long[1]),
+      destination = paste0(places$lat[2], "+", places$long[2]),
+      key = Sys.getenv("GOOGLE_API_KEY"),
+      mode = "transit"
+    )
 
-  bicycling <- gmapsdistance(origin = paste0(places$lat[1], "+", places$long[1]),
-                           destination = paste0(places$lat[2], "+", places$long[2]),
-                           key = Sys.getenv("GOOGLE_API_KEY"),
-                           mode = "bicycling")
+  bicycling <- gmapsdistance(
+      origin = paste0(places$lat[1], "+", places$long[1]),
+      destination = paste0(places$lat[2], "+", places$long[2]),
+      key = Sys.getenv("GOOGLE_API_KEY"),
+      mode = "bicycling"
+    )
 
   # http status - all modes should return a value
   expect_equal(driving$Status, "OK")
