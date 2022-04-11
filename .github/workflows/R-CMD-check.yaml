@@ -22,6 +22,11 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Create and populate .Renviron file
+        run: |
+          echo GOOGLE_API_KEY="$GOOGLE_API_KEY" >> ~/.Renviron
+        shell: bash
+
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: rcmdcheck
