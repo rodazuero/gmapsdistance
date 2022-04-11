@@ -1,6 +1,6 @@
 gmapsdistance
 =======
-[![Build Status](https://travis-ci.org/rodazuero/gmapsdistance.png)](https://travis-ci.org/rodazuero/gmapsdistance) 
+[![R-CMD-check](https://github.com/jlacko/gmapsdistance/workflows/R-CMD-check/badge.svg)](https://github.com/jlacko/gmapsdistance/actions)
 ![](http://cranlogs.r-pkg.org/badges/gmapsdistance?color=brightgreen)
 ![](https://cranlogs.r-pkg.org/badges/grand-total/gmapsdistance?color=brightgreen)
 ![](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)
