@@ -2,6 +2,9 @@
 #'
 #' \code{pkg.env} is a package environment that contains the variable
 #' \code{api.key} with the user's Google Maps API key
+#'
+#' @export
+#'
 pkg.env = new.env()
 assign("api.key", NULL, envir = pkg.env)
 
@@ -9,6 +12,8 @@ assign("api.key", NULL, envir = pkg.env)
 #'
 #' This function returns the user's Google Maps API key that was defined with
 #' \code{set.api.key}.
+#'
+#' @export
 #'
 #' @return the user's api key
 #' @examples
@@ -21,6 +26,8 @@ get.api.key = function() {
 #'
 #' This function stores a user's Google Maps API key as the package's
 #' environmental variable
+#'
+#' @export
 #'
 #' @param key is the user's Google Maps API key
 #' @examples
@@ -57,6 +64,12 @@ set.api.key = function(key) {
 #'     arr_date = "",
 #'     arr_time = ""
 #' )
+#'
+#' @export
+#' @importFrom methods as
+#' @importFrom stats reshape
+#' @import RCurl
+#' @import XML
 #'
 #' @param origin A string or vector of strings containing the description of the
 #'     starting point(s). Should be inside of quoutes (""). If more than one word

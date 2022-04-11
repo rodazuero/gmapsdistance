@@ -9,7 +9,7 @@ Maintainer: Rodrigo Azuero Melo <rodazuero@gmail.com> & Demetrio Rodriguez T <De
 Description: Get distance and travel time between two points from Google Maps.
     Four possible modes of transportation (bicycling, walking, driving and
     public transportation).
-License: GPL (>= 2)
+License: GPL (>= 3)
 Imports: RCurl, XML, methods, stats
 RoxygenNote: 7.1.2
 Encoding: UTF-8
