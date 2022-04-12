@@ -131,7 +131,7 @@
 #'  }
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # distance from Washington DC to NYC
 #' gmapsdistance(origin = "Washington DC",
 #'               destination = "New York City NY")

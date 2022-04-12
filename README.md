@@ -12,7 +12,7 @@ The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://
 
 While the R package is open source the Distance Matrix API itself is a paid service, requiring registration in all cases. 
 
-A free tier is provided - $200 monthly credit. This is enough for 40,000 [Discance Matrix](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing?w#distance-matrix) calls or 20,000 [Distance Matrix Advanced](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing?w#distance-matrix-advanced) calls, more than sufficient in most individual user use cases.
+A free tier is provided - $200 monthly credit. This is enough for 40,000 [Distance Matrix](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing?w#distance-matrix) calls or 20,000 [Distance Matrix Advanced](https://developers.google.com/maps/documentation/distance-matrix/usage-and-billing?w#distance-matrix-advanced) calls, more than sufficient in most individual user use cases.
 
 Also note that using the API is subject to [Google Maps Platform Terms of Service](https://cloud.google.com/maps-platform/terms/).
 
