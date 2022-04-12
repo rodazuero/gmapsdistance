@@ -319,7 +319,7 @@ gmapsdistance = function(origin,
 
   # QUERY STRING OPTIMIZATION ----
 
-  #
+  # avoid when required
   if(avoid !=""){
     avoidmsg = paste0("&avoid=", avoid)
   } else {
@@ -351,7 +351,7 @@ gmapsdistance = function(origin,
 
     # use https and google maps key (after replacing spaces just in case)
     key = gsub(" ", "", key)
-    url = URLencode(paste0("https://", url, "&key=", key))
+    url = utils::URLencode(paste0("https://", url, "&key=", key))
 
     # Call the Google Maps Webservice and store the XML output in webpageXML
     webpageXML = XML::xmlParse(RCurl::getURL(url));

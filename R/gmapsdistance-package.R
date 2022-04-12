@@ -18,8 +18,6 @@ assign("api.key", NULL, envir = pkg.env)
 #' \code{set.api.key}.
 #'
 #' @return the user's api key
-#' @examples
-#' get.api.key()
 get.api.key = function() {
   get("api.key", envir = pkg.env)
 }
