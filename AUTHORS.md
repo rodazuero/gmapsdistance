@@ -6,8 +6,7 @@
 - David Zarruk <davidzarruk@gmail.com>
 
 ## Maintainers
-- Demetrio Rodriguez <demetrio.rodriguez.t@gmail.com>
-- Rodrigo Azuero <rodazuero@gmail.com>
+- Jindra Lacko <jindra.lacko@gmail.com>
 
 ## Contributors
 

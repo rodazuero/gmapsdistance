@@ -1,42 +1,3 @@
-#' Define package environment
-#'
-#' \code{pkg.env} is a package environment that contains the variable
-#' \code{api.key} with the user's Google Maps API key
-#'
-#' @export
-#'
-pkg.env = new.env()
-assign("api.key", NULL, envir = pkg.env)
-
-#' Get the Google Maps API key
-#'
-#' This function returns the user's Google Maps API key that was defined with
-#' \code{set.api.key}.
-#'
-#' @export
-#'
-#' @return the user's api key
-#' @examples
-#' get.api.key()
-get.api.key = function() {
-  get("api.key", envir = pkg.env)
-}
-
-#' Set the Google Maps API key
-#'
-#' This function stores a user's Google Maps API key as the package's
-#' environmental variable
-#'
-#' @export
-#'
-#' @param key is the user's Google Maps API key
-#' @examples
-#' #DONTRUN
-#' set.api.key("MY-GOOGLE-MAPS-API-KEY")
-set.api.key = function(key) {
-  assign("api.key", key, envir = pkg.env)
-}
-
 #' Compute Distance with Google Maps
 #'
 #' The function gmapsdistance uses the Google Maps Distance Matrix API in order
@@ -66,10 +27,6 @@ set.api.key = function(key) {
 #' )
 #'
 #' @export
-#' @importFrom methods as
-#' @importFrom stats reshape
-#' @import RCurl
-#' @import XML
 #'
 #' @param origin A string or vector of strings containing the description of the
 #'     starting point(s). Should be inside of quoutes (""). If more than one word
@@ -226,12 +183,22 @@ set.api.key = function(key) {
 #' #                         key=APIkey)
 #' #
 #' # results
-gmapsdistance = function(origin, destination, combinations = "all", mode, key = get.api.key(), shape = "wide",
+gmapsdistance = function(origin,
+                         destination,
+                         combinations = "all",
+                         mode,
+                         key = get.api.key(),
+                         shape = "wide",
                          avoid = "",
-                         departure = "now", dep_date = "", dep_time = "",
+                         departure = "now",
+                         dep_date = "",
+                         dep_time = "",
                          traffic_model = "None",
-                         arrival = "", arr_date = "", arr_time = "") {
+                         arrival = "",
+                         arr_date = "",
+                         arr_time = "") {
 
+  ## INPUT VALIDATION ----
   # If mode of transportation not recognized:
   if (!(mode %in% c("driving",  "walking",  "bicycling",  "transit"))) {
     stop(
@@ -262,15 +229,6 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
       "Traffic model not recognized. Traffic model should be one of ",
       "'best_guess', 'pessimistic', 'optimistic'"
     )
-  } else if (traffic_model == "None") {
-    traffic_model_string = ''
-    duration_key = 'duration'
-  } else {
-    if (is.null(key)){
-        stop('You need to provide a Google Maps API key if you want to use `traffic_model`. Use: `set.api.key(YOUR_KEY)`.')
-    }
-    traffic_model_string = paste0("&traffic_model=", traffic_model)
-    duration_key = 'duration_in_traffic'
   }
 
   seconds = "now"
@@ -278,7 +236,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
 
   min_secs = round(as.numeric(Sys.time()))
 
-  # DEPARTURE TIMES:
+  # DEPARTURE TIMES ----
   # Convert departure time from date and hour to epoch seconds
   if(nzchar(dep_date) && nzchar(dep_time)){
     depart = strptime(paste(dep_date, dep_time), "%F %H:%M:%OS", tz="UTC")
@@ -308,7 +266,7 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   }
 
 
-  # ARRIVAL TIMES:
+  # ARRIVAL TIMES ----
   # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
   if(arr_date != "" && arr_time != ""){
     arriv = strptime(paste(arr_date, arr_time), "%F %H:%M:%OS", tz="UTC")
@@ -359,69 +317,74 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
   data$Distance = NA
   data$status = "OK"
 
-  avoidmsg = ""
+  # QUERY STRING OPTIMIZATION ----
 
+  #
   if(avoid !=""){
     avoidmsg = paste0("&avoid=", avoid)
+  } else {
+    avoidmsg = ""
   }
 
-  for (i in 1:1:n){
 
-    # Set up URL
+
+  # if model was specified - update string & check duration with traffic
+  if (traffic_model == "None") {
+    traffic_model_string = ''
+    duration_key = 'duration'
+  } else {
+    traffic_model_string = paste0("&traffic_model=", traffic_model)
+    duration_key = 'duration_in_traffic'
+  }
+
+  # ACTION!!! ----
+  for (i in 1:n) {
+
+  # Set up URL
     url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", data$or[i],
                  "&destinations=", data$de[i],
                  "&mode=", mode,
-                 "&sensor=", "false",
                  "&units=metric",
                  "&departure_time=", seconds,
-                   traffic_model_string,
+                 traffic_model_string,
                  avoidmsg)
 
-    # Add Google Maps API key if it exists
-    if (!is.null(key)) {
-      # use https and google maps key (after replacing spaces just in case)
-      key = gsub(" ", "", key)
-      url = paste0("https://", url, "&key=", key)
-    } else {
-      # use http otherwise
-      url = paste0("http://", url)
-    }
+    # use https and google maps key (after replacing spaces just in case)
+    key = gsub(" ", "", key)
+    url = URLencode(paste0("https://", url, "&key=", key))
 
     # Call the Google Maps Webservice and store the XML output in webpageXML
-    webpageXML = xmlParse(getURL(url));
+    webpageXML = XML::xmlParse(RCurl::getURL(url));
 
     # Extract the results from webpageXML
-    results = xmlChildren(xmlRoot(webpageXML))
+    results = XML::xmlChildren(XML::xmlRoot(webpageXML))
 
     # Check the status of the request and throw an error if the request was denied
-    request.status = as(unlist(results$status[[1]]), "character")
+    request.status = methods::as(unlist(results$status[[1]]), "character")
 
     # Check for google API errors
     if (!is.null(results$error_message)) {
-      stop(paste(c("Google API returned an error: ", xmlValue(results$error_message)), sep = ""))
+      stop(paste(c("Google API returned an error: ", XML::xmlValue(results$error_message)), sep = ""))
     }
 
     if (request.status == "REQUEST_DENIED") {
       set.api.key(NULL)
       data$status[i] = "REQUEST_DENIED"
-      # stop(as(results$error_message[1]$text, "character"))
-    }
+     }
 
     # Extract results from results$row
-    rowXML = xmlChildren(results$row[[1L]])
+    rowXML = XML::xmlChildren(results$row[[1L]])
     Status = as(rowXML$status[1]$text, "character")
 
     if (Status == "ZERO_RESULTS") {
-      # stop(paste0("Google Maps is not able to find a route between ", data$or[i]," and ", data$de[i]))
       data$status[i] = "ROUTE_NOT_FOUND"
     }
 
     if (Status == "NOT_FOUND") {
-      # stop("Google Maps is not able to find the origin (", data$or[i],") or destination (", data$de[i], ")")
       data$status[i] = "PLACE_NOT_FOUND"
     }
 
-    # Check whether the user is over their query limit
+    # Check whether the user is over their query limit / likely
     if (Status == "OVER_QUERY_LIMIT") {
       stop("You have exceeded your allocation of API requests for today.")
     }
@@ -429,43 +392,51 @@ gmapsdistance = function(origin, destination, combinations = "all", mode, key = 
     if(data$status[i] == "OK"){
       data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
       data$Time[i] = as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
-    }
-  }
+    } # / end if status OK
+  } # / end for cycle
+
+
+  # PROCESS RESULTS ---
 
   datadist = data[c("or", "de", "Distance")]
   datatime = data[c("or", "de", "Time")]
   datastat = data[c("or", "de", "status")]
 
   if(n > 1){
-    if(shape == "wide" && combinations == "all"){
-      Distance = reshape(datadist,
-                         timevar = "de",
-                         idvar = c("or"),
-                         direction = "wide")
+    if (shape == "wide" && combinations == "all") {
+      Distance <- matrix(
+        datadist$Distance,
+        nrow = sqrt(n),
+        dimnames = list(destination,
+                        origin)
+        )
 
-      Time = reshape(datatime,
-                     timevar = "de",
-                     idvar = c("or"),
-                     direction = "wide")
+      Time <- matrix(
+        datatime$Time,
+        nrow = sqrt(n),
+        dimnames = list(destination,
+                        origin)
+      )
 
-      Stat = reshape(datastat,
-                     timevar = "de",
-                     idvar = c("or"),
-                     direction = "wide")
-
+      Stat <- matrix(
+        datastat$status,
+        nrow = sqrt(n),
+        dimnames = list(destination,
+                        origin)
+      )
 
 
     } else{
       Distance = datadist
       Time = datatime
       Stat = datastat
-    }
+    } # end if wide output
 
-  } else{
-    Distance = data$Distance[i]
-    Time = data$Time[i]
-    Stat = data$status[i]
-  }
+  } else {
+    Distance = data$Distance
+    Time = data$Time
+    Stat = data$status
+  } # end if single pair of points
 
   # Make a list with the results
   output = list(

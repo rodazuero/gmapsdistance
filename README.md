@@ -6,15 +6,11 @@ gmapsdistance
 ![](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gmapsdistance)](https://cran.r-project.org/package=gmapsdistance)
 
-***Interface Between R and Google Maps ***
+# Interface Between R and Google Maps
 
-  
- 
-  
-  The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance(s) and time(s) between two points or two vectors of points. An [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) is necessary to perform the query. Google maps must be able to find both the origin and the destination in order for the function to run. If the origin or destination contains multiple words, they should be separated by a plus sign (+). The distance is returned in meters and the time in seconds. 
+The function `gmapsdistance` uses the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en) to compute the distance(s) and time(s) between two points or two vectors of points. An [API key](https://developers.google.com/maps/documentation/distance-matrix/get-api-key#key) is necessary to perform the query. Google maps must be able to find both the origin and the destination in order for the function to run. The distance is returned in meters and the time in seconds. 
 
 Four different modes of transportation are allowed: `bicycling`, `walking`, `driving`, `transit`. 
-
 
 ## Installation
 
@@ -23,12 +19,7 @@ Four different modes of transportation are allowed: `bicycling`, `walking`, `dri
 install.packages("gmapsdistance")
 
 # Github installation
-# install.packages("devtools")
-# devtools::install_github("rodazuero/gmapsdistance")
-
-#Setting the API key:
-#set.api.key("INSERT-API-KEY")
-
+remotes::install_github("jlacko/gmapsdistance")
 ```
 
 
@@ -36,8 +27,8 @@ install.packages("gmapsdistance")
 In this example we will compute the driving distance between Washington DC, and New York City. The code returns the `Time`, the `Distance` and the `Status` of the query (`OK` if it was successful).
 
 ``` r
-results = gmapsdistance(origin = "Washington+DC", 
-                        destination = "New+York+City+NY", 
+results = gmapsdistance(origin = "Washington DC", 
+                        destination = "New York City NY", 
                         mode = "driving")
 results
 # $Time
@@ -383,25 +374,11 @@ This example computes the travel distance and time between two vectors of cities
 
 ```
 
-## Google Maps API Key
-You can use a Google Maps API Key (which allows you to make a larger volume of calls) by adding your key to the package environment:
-```{r}
-#set.api.key("your-google-maps-api-key")
-```
-
 ## Usage limits
 There are a set of limits to the  number of calls that can be done. These limits are established by the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/usage-limits)
-Currently, in the free version the limits are given by:
-1. 2,500 free elements per day, calculated as the sum of client-side and server-side queries.
-2. Maximum of 25 origins or 25 destinations per request.
-3. 100 elements per request.
-4. 100 elements per second, calculated as the sum of client-side and server-side queries.
-
 
 ## License
 [GNU General Public License v3.0](https://github.com/rodazuero/gmapsdistance/blob/master/LICENSE.md)
-
-[Version 3.3 available in CRAN repository](https://cran.r-project.org/web/packages/gmapsdistance/index.html)
 
 ## How to contribute
 We encourage any kind of suggestions to improve the quality of this code. You can submit pull requests indicating clearly what is the purpose of the change and why we should accept such pull request. Although not necessary, we encourage you to verify that your suggestions are in accordance with the general guidelines established in the CRAN repository by running the R CMD check command. More information about this is available in [this link.](http://r-pkgs.had.co.nz/check.html). 
@@ -413,7 +390,7 @@ Please see the file [CODE_OF_CONDUCT.md](https://github.com/rodazuero/gmapsdista
 ## Authors
 This code was developed originally by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/).
 
-It is currently maintained by Rodrigo Azuero and Demetrio Rodriguez <demetrio.rodriguez.t@gmail.com>.
+It is currently maintained by Jindra Lacko <Jindra.Lacko@gmail.com>.
 
 [AUTHORS.md](AUTHORS.md) have a list of everyone who have contributed to gmapsdistance.
 
