@@ -131,6 +131,7 @@
 #'  }
 #'
 #' @examples
+#' \dontshow{set.api.key(Sys.getenv("GOOGLE_API_KEY"))}
 #' \dontrun{
 #' # distance from Washington DC to NYC
 #' gmapsdistance(origin = "Washington DC",

@@ -135,7 +135,8 @@ For more information about the Google Maps Distance Matrix API go to
 https://developers.google.com/maps/documentation/distance-matrix/intro?hl=en
 }
 \examples{
-\donttest{
+\dontshow{set.api.key(Sys.getenv("GOOGLE_API_KEY"))}
+\dontrun{
 # distance from Washington DC to NYC
 gmapsdistance(origin = "Washington DC",
               destination = "New York City NY")
