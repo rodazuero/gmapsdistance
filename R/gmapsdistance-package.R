@@ -3,10 +3,6 @@
 #' \code{pkg.env} is a package environment that contains the variable
 #' \code{api.key} with the user's Google Maps API key
 #'
-#' @importFrom methods as
-#' @importFrom stats reshape
-#' @import RCurl
-#' @import XML
 #' @keywords internal
 #'
 pkg.env = new.env()

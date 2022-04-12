@@ -8,11 +8,11 @@ gmapsdistance(
     origin,
     destination,
     combinations = "all",
-    mode,
+    mode = "driving",
     key = get.api.key(),
     shape = "wide",
     avoid = "",
-    departure = "now",
+    departure = "",
     dep_date = "",
     dep_time = "",
     traffic_model = "None",
@@ -72,9 +72,7 @@ to have an API key. The key should be inside of quotes. Example:
         dep_time options to set the departure date and time.
 
         If no value is set for departure, dep_date and dep_time, the departure time is
-        set to the present.
-
-        ONLY works with a Google Maps API key AND MUST be according to UCT time.}
+        set to the present.}
 
 \item{dep_date}{Instead of using the departure option, the user can set the
     departure date and time using dep_date and dep_time options.

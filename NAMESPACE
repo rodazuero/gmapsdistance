@@ -2,7 +2,3 @@
 
 export(gmapsdistance)
 export(set.api.key)
-import(RCurl)
-import(XML)
-importFrom(methods,as)
-importFrom(stats,reshape)

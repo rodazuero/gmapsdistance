@@ -11,7 +11,7 @@ Description: Get distance and travel time between two points from Google Maps.
     Four possible modes of transportation (bicycling, walking, driving and
     public transportation).
 License: GPL (>= 3)
-Imports: RCurl, XML, methods, stats
+Imports: RCurl, XML, methods
 RoxygenNote: 7.1.2
 Encoding: UTF-8
 Suggests: 

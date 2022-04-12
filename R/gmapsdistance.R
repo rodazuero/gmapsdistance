@@ -13,11 +13,11 @@
 #'     origin,
 #'     destination,
 #'     combinations = "all",
-#'     mode,
+#'     mode = "driving",
 #'     key = get.api.key(),
 #'     shape = "wide",
 #'     avoid = "",
-#'     departure = "now",
+#'     departure = "",
 #'     dep_date = "",
 #'     dep_time = "",
 #'     traffic_model = "None",
@@ -81,7 +81,6 @@
 #'         If no value is set for departure, dep_date and dep_time, the departure time is
 #'         set to the present.
 #'
-#'         ONLY works with a Google Maps API key AND MUST be according to UCT time.
 #'
 #' @param dep_date Instead of using the departure option, the user can set the
 #'     departure date and time using dep_date and dep_time options.
@@ -190,7 +189,7 @@ gmapsdistance = function(origin,
                          key = get.api.key(),
                          shape = "wide",
                          avoid = "",
-                         departure = "now",
+                         departure = "",
                          dep_date = "",
                          dep_time = "",
                          traffic_model = "None",
@@ -231,25 +230,25 @@ gmapsdistance = function(origin,
     )
   }
 
-  seconds = "now"
-  seconds_arrival = ""
+  seconds <- "now"
+  seconds_arrival <- ""
 
-  min_secs = round(as.numeric(Sys.time()))
+  min_secs <- round(as.numeric(Sys.time()))
 
   # DEPARTURE TIMES ----
   # Convert departure time from date and hour to epoch seconds
   if(nzchar(dep_date) && nzchar(dep_time)){
-    depart = strptime(paste(dep_date, dep_time), "%F %H:%M:%OS", tz="UTC")
-    seconds = round(as.numeric(depart))
+    depart <- strptime(paste(dep_date, dep_time), "%F %H:%M:%OS", tz="UTC")
+    seconds <- round(as.numeric(depart))
   }
 
   # Give priority to 'departure' time, over date and hour
-  if(departure != "now"){
+  if(!departure %in% c("now", "")){
     seconds = departure
   }
 
   # Exceptions when inputs are incorrect
-  if(departure != "now" && departure < min_secs){
+  if(!departure %in% c("now", "") && departure < min_secs){
     stop("The departure time has to be some time in the future!")
   }
 
@@ -265,9 +264,17 @@ gmapsdistance = function(origin,
     stop("The departure time has to be some time in the future!")
   }
 
+  if((dep_date != "" || dep_time != "" || !departure %in% c("now", "")) && (arr_date != "" || arr_time != "" || arrival != "")){
+    stop("Cannot input departure and arrival times. Only one can be used at a time. ")
+  }
+
+  if(combinations == "pairwise" && length(origin) != length(destination)){
+    stop("Size of origin and destination vectors must be the same when using the option: combinations == 'pairwise'")
+  }
+
 
   # ARRIVAL TIMES ----
-  # Convert departure time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
+  # Convert arrrival time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
   if(arr_date != "" && arr_time != ""){
     arriv = strptime(paste(arr_date, arr_time), "%F %H:%M:%OS", tz="UTC")
     seconds_arrival = round(as.numeric(arriv))
@@ -295,27 +302,18 @@ gmapsdistance = function(origin,
     stop("The arrival time has to be some time in the future!")
   }
 
-
-  if((dep_date != "" || dep_time != "" || departure != "now") && (arr_date != "" || arr_time != "" || arrival != "")){
-    stop("Cannot input departure and arrival times. Only one can be used at a time. ")
-  }
-
-  if(combinations == "pairwise" && length(origin) != length(destination)){
-    stop("Size of origin and destination vectors must be the same when using the option: combinations == 'pairwise'")
-  }
-
   if(combinations == "all"){
-    data = expand.grid(or = origin, de = destination)
+    data <- expand.grid(or = origin, de = destination)
   } else if(combinations == "pairwise"){
-    data = data.frame(or = origin, de = destination)
+    data <- data.frame(or = origin, de = destination)
   }
 
-  n = dim(data)
-  n = n[1]
+  n <- dim(data)
+  n <- n[1]
 
-  data$Time = NA
-  data$Distance = NA
-  data$status = "OK"
+  data$Time <- NA
+  data$Distance <- NA
+  data$status <- "OK"
 
   # QUERY STRING OPTIMIZATION ----
 
@@ -323,29 +321,29 @@ gmapsdistance = function(origin,
   if(avoid !=""){
     avoidmsg = paste0("&avoid=", avoid)
   } else {
-    avoidmsg = ""
+    avoidmsg <- ""
   }
 
 
   # if model was specified - update string & check duration with traffic
   if (traffic_model == "None") {
-    traffic_model_string = ''
-    duration_key = 'duration'
+    traffic_model_string <- ''
+    duration_key <- 'duration'
   } else {
     traffic_model_string = paste0("&traffic_model=", traffic_model)
-    duration_key = 'duration_in_traffic'
+    duration_key <- 'duration_in_traffic'
   }
 
   # if model = driving (which is the default) no need to pass it to Google (& incur costs)
   if (mode == "driving" ) {
-    mode_string = ''
+    mode_string <- ''
   } else {
     mode_string <- paste0("&mode=", mode)
   }
 
   # if no departure time was specified = no need to pass it to  Google (& incur costs)
-  if (departure == "now" ) {
-    departure_string = ''
+  if (departure == "" ) {
+    departure_string <- ''
   } else {
     departure_string <- paste0("&departure_time=", seconds)
   }
@@ -381,19 +379,19 @@ gmapsdistance = function(origin,
     }
 
     if (request.status == "REQUEST_DENIED") {
-      data$status[i] = "REQUEST_DENIED"
+      data$status[i] <- "REQUEST_DENIED"
      }
 
     # Extract results from results$row
-    rowXML = XML::xmlChildren(results$row[[1L]])
-    Status = as(rowXML$status[1]$text, "character")
+    rowXML <- XML::xmlChildren(results$row[[1L]])
+    Status <- methods::as(rowXML$status[1]$text, "character")
 
     if (Status == "ZERO_RESULTS") {
-      data$status[i] = "ROUTE_NOT_FOUND"
+      data$status[i] <- "ROUTE_NOT_FOUND"
     }
 
     if (Status == "NOT_FOUND") {
-      data$status[i] = "PLACE_NOT_FOUND"
+      data$status[i] <- "PLACE_NOT_FOUND"
     }
 
     # Check whether the user is over their query limit / likely
@@ -402,8 +400,8 @@ gmapsdistance = function(origin,
     }
 
     if(data$status[i] == "OK"){
-      data$Distance[i] = as(rowXML$distance[1]$value[1]$text, "numeric")
-      data$Time[i] = as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
+      data$Distance[i] <- methods::as(rowXML$distance[1]$value[1]$text, "numeric")
+      data$Time[i] <- methods::as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
     } # / end if status OK
   } # / end for cycle
 
