@@ -378,19 +378,19 @@ This example computes the travel distance and time between two vectors of cities
 There are a set of limits to the  number of calls that can be done. These limits are established by the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/usage-limits)
 
 ## License
-[GNU General Public License v3.0](https://github.com/rodazuero/gmapsdistance/blob/master/LICENSE.md)
+[GNU General Public License v3.0](https://github.com/jlacko/gmapsdistance/blob/master/LICENSE.md)
 
 ## How to contribute
 We encourage any kind of suggestions to improve the quality of this code. You can submit pull requests indicating clearly what is the purpose of the change and why we should accept such pull request. Although not necessary, we encourage you to verify that your suggestions are in accordance with the general guidelines established in the CRAN repository by running the R CMD check command. More information about this is available in [this link.](http://r-pkgs.had.co.nz/check.html). 
 
 ## Code of conduct
-Please see the file [CODE_OF_CONDUCT.md](https://github.com/rodazuero/gmapsdistance/blob/master/CODE_OF_CONDUCT.md) for the Code of Conduct for the Contributor Covenant Code of Conduct. 
+Please see the file [CODE_OF_CONDUCT.md](https://github.com/jlacko/gmapsdistance/blob/master/CODE_OF_CONDUCT.md) for the Code of Conduct for the Contributor Covenant Code of Conduct. 
 
 
 ## Authors
 This code was developed originally by [Rodrigo Azuero](http://rodrigoazuero.com/) and [David Zarruk.](http://www.davidzarruk.com/).
 
-It is currently maintained by Jindra Lacko <Jindra.Lacko@gmail.com>.
+It is currently maintained by [Jindra Lacko](mailto:jindra.lacko@gmail.com).
 
 [AUTHORS.md](AUTHORS.md) have a list of everyone who have contributed to gmapsdistance.
 

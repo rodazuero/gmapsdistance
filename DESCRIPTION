@@ -4,8 +4,8 @@ Title: Distance and Travel Time Between Two Points from Google Maps
 Version: 4.0.0
 Date: 2022-XX-XX
 Author: Rodrigo Azuero Melo & David Zarruk
-URL: https://github.com/rodazuero/gmapsdistance
-Maintainer: Jindra Lacko<Jindra.Lacko@gmail.com>
+URL: https://github.com/jlacko/gmapsdistance
+Maintainer: Jindra Lacko <jindra.lacko@gmail.com>
 Description: Get distance and travel time between two points from Google Maps.
     Four possible modes of transportation (bicycling, walking, driving and
     public transportation).

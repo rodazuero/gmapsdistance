@@ -186,7 +186,7 @@
 gmapsdistance = function(origin,
                          destination,
                          combinations = "all",
-                         mode,
+                         mode = "driving",
                          key = get.api.key(),
                          shape = "wide",
                          avoid = "",
@@ -327,7 +327,6 @@ gmapsdistance = function(origin,
   }
 
 
-
   # if model was specified - update string & check duration with traffic
   if (traffic_model == "None") {
     traffic_model_string = ''
@@ -337,15 +336,29 @@ gmapsdistance = function(origin,
     duration_key = 'duration_in_traffic'
   }
 
+  # if model = driving (which is the default) no need to pass it to Google (& incur costs)
+  if (mode == "driving" ) {
+    mode_string = ''
+  } else {
+    mode_string <- paste0("&mode=", mode)
+  }
+
+  # if no departure time was specified = no need to pass it to  Google (& incur costs)
+  if (departure == "now" ) {
+    departure_string = ''
+  } else {
+    departure_string <- paste0("&departure_time=", seconds)
+  }
+
   # ACTION!!! ----
   for (i in 1:n) {
 
   # Set up URL
     url = paste0("maps.googleapis.com/maps/api/distancematrix/xml?origins=", data$or[i],
                  "&destinations=", data$de[i],
-                 "&mode=", mode,
+                 mode_string,
                  "&units=metric",
-                 "&departure_time=", seconds,
+                 departure_string,
                  traffic_model_string,
                  avoidmsg)
 
@@ -368,7 +381,6 @@ gmapsdistance = function(origin,
     }
 
     if (request.status == "REQUEST_DENIED") {
-      set.api.key(NULL)
       data$status[i] = "REQUEST_DENIED"
      }
 
