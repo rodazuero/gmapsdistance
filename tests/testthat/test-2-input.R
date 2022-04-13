@@ -2,12 +2,10 @@
 test_that("cruel & unusual encoding works", {
   skip_on_cran() # because API key...
 
-  # this should work - the api key is in place
   driving <- gmapsdistance(
     origin = "nábřeží Kapitána Jaroše 1000/7, Prague CZ",
-    destination = "вулиця Хрещатик, 14, Київ, 01001",
-    key = Sys.getenv("GOOGLE_API_KEY"),
-    mode = "driving"
+    destination = "вулиця Хрещатик, Київ",
+    key = Sys.getenv("GOOGLE_API_KEY")
   )
 
   expect_equal(driving$Status, "OK")
@@ -43,5 +41,35 @@ test_that("arrrival date works", {
   )
 
   expect_equal(driving$Status, "OK")
+
+})
+
+test_that("traffic works", {
+  skip_on_cran() # because API key...
+
+  # departure:
+  pessimistic <- gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    dep_date = as.character(Sys.Date() + 3),
+    dep_time = "12:00:00",
+    traffic_model = "pessimistic",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "driving"
+  )
+
+  optimistic <- gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    dep_date = as.character(Sys.Date() + 3),
+    dep_time = "12:00:00",
+    traffic_model = "optimistic",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "driving"
+  )
+
+  # bad traffic = longer time...
+  expect_gt(pessimistic$Time, optimistic$Time)
+
 
 })

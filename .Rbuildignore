@@ -1,7 +1,8 @@
 ^.*\.Rproj$
-^LICENSE.md$
-^CODE_OF_CONDUCT.md$
-^AUTHORS.md$
+^CODE_OF_CONDUCT\.md$
+^AUTHORS\.md$
 ^LICENSE\.md$
 ^\.Rproj\.user$
 ^\.github$
+^generate-vignette\.R$
+^vignette\.Rmd\.orig$

@@ -1,0 +1,437 @@
+---
+title: "gmapsdistance package in use"
+author: "Jindra Lacko"
+date: "2022-04-13"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+self_contained: no
+vignette: >
+  %\VignetteIndexEntry{Examples of using `{gmapsdistance}` package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+## Setting up API key
+The [Google Distance Matrix API](https://mapsplatform.google.com/) requires registration, and an API key is required in each function call. It is possible to store the key for duration of a R session by using `gmapsdistance::set.api.key()` call.
+
+Note that in order to keep the maintainers API key private it has been stored locally in an environment variable; in the most frequent use cases it can be used in plain text.
+
+
+```r
+library(gmapsdistance)
+set.api.key(Sys.getenv("GOOGLE_API_KEY"))
+```
+
+## Distance between cities
+In this example we will compute the driving distance between Washington DC, and New York City. The code returns the `Time`, the `Distance` and the `Status` of the query (`OK` if it was successful). The calculation will be made using the "driving" method, which is the default.
+
+
+```r
+results = gmapsdistance(origin = "Washington DC",
+                        destination = "New York City NY")
+results
+## $Distance
+## [1] 367656
+## 
+## $Time
+## [1] 14523
+## 
+## $Status
+## [1] "OK"
+```
+
+## Walking distance between GPS coordinates
+In this example we will compute the driving distance between the Greek cities of
+Marathon and Athens. We show that the function is able to handle LAT-LONG coordinates.
+
+
+```r
+results = gmapsdistance(origin = "38.1621328 24.0029257",
+                        destination = "37.9908372 23.7383394",
+                        mode = "walking")
+results
+## $Distance
+## [1] 39459
+## 
+## $Time
+## [1] 30024
+## 
+## $Status
+## [1] "OK"
+```
+
+## Distance matrix at a specific departure time
+This example computes the travel distance and time matrices between two vectors of cities at a specific departure time
+
+```r
+results = gmapsdistance(origin = c("Washington DC", "New York NY", "Seattle WA", "Miami FL"),
+                        destination = c("Los Angeles CA", "Austin TX", "Chicago IL", "Philadelphia PA"),
+                        mode = "bicycling",
+                        departure = 1514742000)
+## Error in gmapsdistance(origin = c("Washington DC", "New York NY", "Seattle WA", : The departure time has to be some time in the future!
+results
+## $Distance
+## [1] 39459
+## 
+## $Time
+## [1] 30024
+## 
+## $Status
+## [1] "OK"
+# Equivalently
+results = gmapsdistance(origin = c("Washington DC", "New York NY", "Seattle WA", "Miami FL"),
+                        destination = c("Los Angeles CA", "Austin TX", "Chicago IL", "Philadelphia PA"),
+                        mode = "bicycling",
+                        dep_date = "2022-08-16",
+                        dep_time = "20:40:00")
+
+results
+## $Distance
+##                 Washington DC New York NY Seattle WA Miami FL
+## Los Angeles CA        4521993     2665897    1247092   229701
+## Austin TX             4863932     3155049    1472650   159374
+## Chicago IL            1973073     3611531    3515251  4848182
+## Philadelphia PA       4548048     2316043    2354834  2139132
+## 
+## $Time
+##                 Washington DC New York NY Seattle WA Miami FL
+## Los Angeles CA         843390      505496     243025    45679
+## Austin TX              910636      601436     291173    31533
+## Chicago IL             367313      664116     651979   914279
+## Philadelphia PA        824229      420897     438436   396647
+## 
+## $Status
+##                 Washington DC New York NY Seattle WA Miami FL
+## Los Angeles CA  "OK"          "OK"        "OK"       "OK"    
+## Austin TX       "OK"          "OK"        "OK"       "OK"    
+## Chicago IL      "OK"          "OK"        "OK"       "OK"    
+## Philadelphia PA "OK"          "OK"        "OK"       "OK"
+```
+
+## Long format of distance matrix
+This example computes the travel distance and time matrices between two vectors of cities and return the results in long format
+
+```r
+origin = c("Washington DC", "New York NY", "Seattle WA", "Miami FL")
+destination = c("Los Angeles CA", "Austin TX", "Chicago IL")
+
+results = gmapsdistance(origin, destination, mode = "driving", shape = "long")
+
+results
+## $Distance
+##               or             de Distance
+## 1  Washington DC Los Angeles CA  4294777
+## 2    New York NY Los Angeles CA  4470254
+## 3     Seattle WA Los Angeles CA  1829284
+## 4       Miami FL Los Angeles CA  4397789
+## 5  Washington DC      Austin TX  2450534
+## 6    New York NY      Austin TX  2802661
+## 7     Seattle WA      Austin TX  3410100
+## 8       Miami FL      Austin TX  2171409
+## 9  Washington DC     Chicago IL  1126229
+## 10   New York NY     Chicago IL  1271486
+## 11    Seattle WA     Chicago IL  3322934
+## 12      Miami FL     Chicago IL  2226505
+## 
+## $Time
+##               or             de   Time
+## 1  Washington DC Los Angeles CA 141679
+## 2    New York NY Los Angeles CA 149722
+## 3     Seattle WA Los Angeles CA  64136
+## 4       Miami FL Los Angeles CA 144335
+## 5  Washington DC      Austin TX  81761
+## 6    New York NY      Austin TX  94376
+## 7     Seattle WA      Austin TX 118898
+## 8       Miami FL      Austin TX  72117
+## 9  Washington DC     Chicago IL  39033
+## 10   New York NY     Chicago IL  44038
+## 11    Seattle WA     Chicago IL 109569
+## 12      Miami FL     Chicago IL  72739
+## 
+## $Status
+##               or             de status
+## 1  Washington DC Los Angeles CA     OK
+## 2    New York NY Los Angeles CA     OK
+## 3     Seattle WA Los Angeles CA     OK
+## 4       Miami FL Los Angeles CA     OK
+## 5  Washington DC      Austin TX     OK
+## 6    New York NY      Austin TX     OK
+## 7     Seattle WA      Austin TX     OK
+## 8       Miami FL      Austin TX     OK
+## 9  Washington DC     Chicago IL     OK
+## 10   New York NY     Chicago IL     OK
+## 11    Seattle WA     Chicago IL     OK
+## 12      Miami FL     Chicago IL     OK
+```
+
+## Distance matrix between GPS coordinates
+This example computes the travel distance and time between two vectors of cities. This example shows that the function is able to handle LAT-LONG coordinates and a Google Maps API Key
+
+
+```r
+origin = c("40.431478 -80.0505401", "33.7678359 -84.4906438")
+destination = c("43.0995629 -79.0437609", "41.7096483 -86.9093986")
+
+results = gmapsdistance(origin, destination, mode="bicycling", shape="long")
+
+results
+## $Distance
+##                       or                     de Distance
+## 1  40.431478 -80.0505401 43.0995629 -79.0437609   419316
+## 2 33.7678359 -84.4906438 43.0995629 -79.0437609  1530635
+## 3  40.431478 -80.0505401 41.7096483 -86.9093986   702490
+## 4 33.7678359 -84.4906438 41.7096483 -86.9093986  1112200
+## 
+## $Time
+##                       or                     de   Time
+## 1  40.431478 -80.0505401 43.0995629 -79.0437609  79240
+## 2 33.7678359 -84.4906438 43.0995629 -79.0437609 290466
+## 3  40.431478 -80.0505401 41.7096483 -86.9093986 131837
+## 4 33.7678359 -84.4906438 41.7096483 -86.9093986 209147
+## 
+## $Status
+##                       or                     de status
+## 1  40.431478 -80.0505401 43.0995629 -79.0437609     OK
+## 2 33.7678359 -84.4906438 43.0995629 -79.0437609     OK
+## 3  40.431478 -80.0505401 41.7096483 -86.9093986     OK
+## 4 33.7678359 -84.4906438 41.7096483 -86.9093986     OK
+```
+
+## Combination of distances
+This example computes the travel distance and time between two vectors of cities using the 'combinations' option.
+
+
+```r
+# 1. Pairwise
+
+or = c("Washington DC", "New York NY", "Seattle WA", "Miami FL")
+des = c("Los Angeles CA", "Austin TX", "Chicago IL", "Philadelphia PA")
+
+results = gmapsdistance(origin = or, destination = des, mode = "bicycling", combinations = "pairwise")
+results
+## $Distance
+##              or              de Distance
+## 1 Washington DC  Los Angeles CA  4521993
+## 2   New York NY       Austin TX  3155049
+## 3    Seattle WA      Chicago IL  3515251
+## 4      Miami FL Philadelphia PA  2139132
+## 
+## $Time
+##              or              de   Time
+## 1 Washington DC  Los Angeles CA 843390
+## 2   New York NY       Austin TX 601436
+## 3    Seattle WA      Chicago IL 651979
+## 4      Miami FL Philadelphia PA 396647
+## 
+## $Status
+##              or              de status
+## 1 Washington DC  Los Angeles CA     OK
+## 2   New York NY       Austin TX     OK
+## 3    Seattle WA      Chicago IL     OK
+## 4      Miami FL Philadelphia PA     OK
+
+# 2. All combinations of origins and destinations in wide format
+results = gmapsdistance(origin = or, destination = des, mode = "bicycling", combinations = "all", shape = "wide")
+results
+## $Distance
+##                 Washington DC New York NY Seattle WA Miami FL
+## Los Angeles CA        4521993     2665897    1247092   229701
+## Austin TX             4863932     3155049    1472650   159374
+## Chicago IL            1973073     3611531    3515251  4848182
+## Philadelphia PA       4548048     2316043    2354834  2139132
+## 
+## $Time
+##                 Washington DC New York NY Seattle WA Miami FL
+## Los Angeles CA         843390      505496     243025    45679
+## Austin TX              910636      601436     291173    31533
+## Chicago IL             367313      664116     651979   914279
+## Philadelphia PA        824229      420897     438436   396647
+## 
+## $Status
+##                 Washington DC New York NY Seattle WA Miami FL
+## Los Angeles CA  "OK"          "OK"        "OK"       "OK"    
+## Austin TX       "OK"          "OK"        "OK"       "OK"    
+## Chicago IL      "OK"          "OK"        "OK"       "OK"    
+## Philadelphia PA "OK"          "OK"        "OK"       "OK"
+
+results = gmapsdistance(origin = or, destination = des, mode = "bicycling", combinations = "all", shape = "long")
+results
+## $Distance
+##               or              de Distance
+## 1  Washington DC  Los Angeles CA  4521993
+## 2    New York NY  Los Angeles CA  4863932
+## 3     Seattle WA  Los Angeles CA  1973073
+## 4       Miami FL  Los Angeles CA  4548048
+## 5  Washington DC       Austin TX  2665897
+## 6    New York NY       Austin TX  3155049
+## 7     Seattle WA       Austin TX  3611531
+## 8       Miami FL       Austin TX  2316043
+## 9  Washington DC      Chicago IL  1247092
+## 10   New York NY      Chicago IL  1472650
+## 11    Seattle WA      Chicago IL  3515251
+## 12      Miami FL      Chicago IL  2354834
+## 13 Washington DC Philadelphia PA   229701
+## 14   New York NY Philadelphia PA   159374
+## 15    Seattle WA Philadelphia PA  4848182
+## 16      Miami FL Philadelphia PA  2139132
+## 
+## $Time
+##               or              de   Time
+## 1  Washington DC  Los Angeles CA 843390
+## 2    New York NY  Los Angeles CA 910636
+## 3     Seattle WA  Los Angeles CA 367313
+## 4       Miami FL  Los Angeles CA 824229
+## 5  Washington DC       Austin TX 505496
+## 6    New York NY       Austin TX 601436
+## 7     Seattle WA       Austin TX 664116
+## 8       Miami FL       Austin TX 420897
+## 9  Washington DC      Chicago IL 243025
+## 10   New York NY      Chicago IL 291173
+## 11    Seattle WA      Chicago IL 651979
+## 12      Miami FL      Chicago IL 438436
+## 13 Washington DC Philadelphia PA  45679
+## 14   New York NY Philadelphia PA  31533
+## 15    Seattle WA Philadelphia PA 914279
+## 16      Miami FL Philadelphia PA 396647
+## 
+## $Status
+##               or              de status
+## 1  Washington DC  Los Angeles CA     OK
+## 2    New York NY  Los Angeles CA     OK
+## 3     Seattle WA  Los Angeles CA     OK
+## 4       Miami FL  Los Angeles CA     OK
+## 5  Washington DC       Austin TX     OK
+## 6    New York NY       Austin TX     OK
+## 7     Seattle WA       Austin TX     OK
+## 8       Miami FL       Austin TX     OK
+## 9  Washington DC      Chicago IL     OK
+## 10   New York NY      Chicago IL     OK
+## 11    Seattle WA      Chicago IL     OK
+## 12      Miami FL      Chicago IL     OK
+## 13 Washington DC Philadelphia PA     OK
+## 14   New York NY Philadelphia PA     OK
+## 15    Seattle WA Philadelphia PA     OK
+## 16      Miami FL Philadelphia PA     OK
+```
+
+## Using optional parameters - traffic model and avoidance
+This example show the use of traffic model and avoidance parameters, while setting the API key directly in function call.
+Note that in order to keep the maintainers API key private it has been stored locally in an environment variable; in the most frequent use cases it can be used in plain text.
+
+
+```r
+APIkey <- Sys.getenv("GOOGLE_API_KEY") # your actual API key would go here...
+
+# Time and distance using a 'pessimistic' traffic model.
+results = gmapsdistance(origin = c("Washington DC", "New York NY"),
+                        destination = c("Los Angeles CA", "Austin TX"),
+                        mode = "driving",
+                        dep_date = "2022-08-16",
+                        dep_time = "20:40:00",
+                        traffic_model = "pessimistic",
+                        shape = "long",
+                        key=APIkey)
+## Error in gmapsdistance(origin = c("Washington DC", "New York NY"), destination = c("Los Angeles CA", : Google API returned an error: Invalid request. Missing the 'departure_time' parameter.
+results
+## $Distance
+##               or              de Distance
+## 1  Washington DC  Los Angeles CA  4521993
+## 2    New York NY  Los Angeles CA  4863932
+## 3     Seattle WA  Los Angeles CA  1973073
+## 4       Miami FL  Los Angeles CA  4548048
+## 5  Washington DC       Austin TX  2665897
+## 6    New York NY       Austin TX  3155049
+## 7     Seattle WA       Austin TX  3611531
+## 8       Miami FL       Austin TX  2316043
+## 9  Washington DC      Chicago IL  1247092
+## 10   New York NY      Chicago IL  1472650
+## 11    Seattle WA      Chicago IL  3515251
+## 12      Miami FL      Chicago IL  2354834
+## 13 Washington DC Philadelphia PA   229701
+## 14   New York NY Philadelphia PA   159374
+## 15    Seattle WA Philadelphia PA  4848182
+## 16      Miami FL Philadelphia PA  2139132
+## 
+## $Time
+##               or              de   Time
+## 1  Washington DC  Los Angeles CA 843390
+## 2    New York NY  Los Angeles CA 910636
+## 3     Seattle WA  Los Angeles CA 367313
+## 4       Miami FL  Los Angeles CA 824229
+## 5  Washington DC       Austin TX 505496
+## 6    New York NY       Austin TX 601436
+## 7     Seattle WA       Austin TX 664116
+## 8       Miami FL       Austin TX 420897
+## 9  Washington DC      Chicago IL 243025
+## 10   New York NY      Chicago IL 291173
+## 11    Seattle WA      Chicago IL 651979
+## 12      Miami FL      Chicago IL 438436
+## 13 Washington DC Philadelphia PA  45679
+## 14   New York NY Philadelphia PA  31533
+## 15    Seattle WA Philadelphia PA 914279
+## 16      Miami FL Philadelphia PA 396647
+## 
+## $Status
+##               or              de status
+## 1  Washington DC  Los Angeles CA     OK
+## 2    New York NY  Los Angeles CA     OK
+## 3     Seattle WA  Los Angeles CA     OK
+## 4       Miami FL  Los Angeles CA     OK
+## 5  Washington DC       Austin TX     OK
+## 6    New York NY       Austin TX     OK
+## 7     Seattle WA       Austin TX     OK
+## 8       Miami FL       Austin TX     OK
+## 9  Washington DC      Chicago IL     OK
+## 10   New York NY      Chicago IL     OK
+## 11    Seattle WA      Chicago IL     OK
+## 12      Miami FL      Chicago IL     OK
+## 13 Washington DC Philadelphia PA     OK
+## 14   New York NY Philadelphia PA     OK
+## 15    Seattle WA Philadelphia PA     OK
+## 16      Miami FL Philadelphia PA     OK
+
+# Time and distance avoiding 'tolls'.
+results = gmapsdistance(origin = c("Washington DC", "New York NY"),
+                        destination = c("Los Angeles CA", "Austin TX"),
+                        mode = "driving",
+                        avoid = "tolls",
+                        key=APIkey)
+
+results
+## $Distance
+##                Washington DC New York NY
+## Los Angeles CA       4303253     2459009
+## Austin TX            4514463     2799497
+## 
+## $Time
+##                Washington DC New York NY
+## Los Angeles CA        142087       82169
+## Austin TX             153832       94913
+## 
+## $Status
+##                Washington DC New York NY
+## Los Angeles CA "OK"          "OK"       
+## Austin TX      "OK"          "OK"
+```
+
+## Using "foreign" place names
+It is perfectly possible to use names in non-ASCII characters; care must be made that all characters are encoded in UTF-8 though (this may be a challenge on some Windows environments).
+
+
+```r
+results = gmapsdistance(origin = "вулиця Хрещатик, Київ",
+                        destination = "Майдан Незалежності, Київ",
+                        mode = "walking")
+results
+## $Distance
+## [1] 596
+## 
+## $Time
+## [1] 469
+## 
+## $Status
+## [1] "OK"
+```

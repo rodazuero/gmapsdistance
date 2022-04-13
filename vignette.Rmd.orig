@@ -1,0 +1,154 @@
+---
+title: "gmapsdistance package in use"
+author: "Jindra Lacko"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+self_contained: no
+vignette: >
+  %\VignetteIndexEntry{Examples of using `{gmapsdistance}` package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = T,
+                      fig.align="center",
+                      dpi = 150,
+                      out.width = "100%",
+                      fig.width = 8,
+                      fig.height = 4,
+                      fig.path = "./")
+```
+
+## Setting up API key
+The [Google Distance Matrix API](https://mapsplatform.google.com/) requires registration, and an API key is required in each function call. It is possible to store the key for duration of a R session by using `gmapsdistance::set.api.key()` call.
+
+Note that in order to keep the maintainers API key private it has been stored locally in an environment variable; in the most frequent use cases it can be used in plain text.
+
+``` {r set-up-api}
+library(gmapsdistance)
+set.api.key(Sys.getenv("GOOGLE_API_KEY"))
+```
+
+## Distance between cities
+In this example we will compute the driving distance between Washington DC, and New York City. The code returns the `Time`, the `Distance` and the `Status` of the query (`OK` if it was successful). The calculation will be made using the "driving" method, which is the default.
+
+``` {r plain-vanilla}
+results = gmapsdistance(origin = "Washington DC",
+                        destination = "New York City NY")
+results
+```
+
+## Walking distance between GPS coordinates
+In this example we will compute the driving distance between the Greek cities of
+Marathon and Athens. We show that the function is able to handle LAT-LONG coordinates.
+
+``` {r marathon}
+results = gmapsdistance(origin = "38.1621328 24.0029257",
+                        destination = "37.9908372 23.7383394",
+                        mode = "walking")
+results
+```
+
+## Distance matrix at a specific departure time
+This example computes the travel distance and time matrices between two vectors of cities at a specific departure time
+``` {r matrix-departure}
+results = gmapsdistance(origin = c("Washington DC", "New York NY", "Seattle WA", "Miami FL"),
+                        destination = c("Los Angeles CA", "Austin TX", "Chicago IL", "Philadelphia PA"),
+                        mode = "bicycling",
+                        # departure time as seconds from Unix Epoch (1970-01-01)
+                        departure = 1660682400)
+results
+# Equivalently
+results = gmapsdistance(origin = c("Washington DC", "New York NY", "Seattle WA", "Miami FL"),
+                        destination = c("Los Angeles CA", "Austin TX", "Chicago IL", "Philadelphia PA"),
+                        mode = "bicycling",
+                        dep_date = "2022-08-16",
+                        dep_time = "20:40:00")
+
+results
+```
+
+## Long format of distance matrix
+This example computes the travel distance and time matrices between two vectors of cities and return the results in long format
+``` {r matrix-long}
+origin = c("Washington DC", "New York NY", "Seattle WA", "Miami FL")
+destination = c("Los Angeles CA", "Austin TX", "Chicago IL")
+
+results = gmapsdistance(origin, destination, mode = "driving", shape = "long")
+
+results
+```
+
+## Distance matrix between GPS coordinates
+This example computes the travel distance and time between two vectors of cities. This example shows that the function is able to handle LAT-LONG coordinates and a Google Maps API Key
+
+``` {r matrix-coordinates}
+origin = c("40.431478 -80.0505401", "33.7678359 -84.4906438")
+destination = c("43.0995629 -79.0437609", "41.7096483 -86.9093986")
+
+results = gmapsdistance(origin, destination, mode="bicycling", shape="long")
+
+results
+
+```
+
+## Combination of distances
+This example computes the travel distance and time between two vectors of cities using the 'combinations' option.
+
+``` {r combinations}
+# 1. Pairwise
+
+or = c("Washington DC", "New York NY", "Seattle WA", "Miami FL")
+des = c("Los Angeles CA", "Austin TX", "Chicago IL", "Philadelphia PA")
+
+results = gmapsdistance(origin = or, destination = des, mode = "bicycling", combinations = "pairwise")
+results
+
+# 2. All combinations of origins and destinations in wide format
+results = gmapsdistance(origin = or, destination = des, mode = "bicycling", combinations = "all", shape = "wide")
+results
+
+results = gmapsdistance(origin = or, destination = des, mode = "bicycling", combinations = "all", shape = "long")
+results
+```
+
+## Using optional parameters - traffic model and avoidance
+This example show the use of traffic model and avoidance parameters, while setting the API key directly in function call.
+Note that in order to keep the maintainers API key private it has been stored locally in an environment variable; in the most frequent use cases it can be used in plain text.
+
+``` {r optional-params}
+APIkey <- Sys.getenv("GOOGLE_API_KEY") # your actual API key would go here...
+
+# Time and distance using a 'pessimistic' traffic model.
+results = gmapsdistance(origin = c("Washington DC", "New York NY"),
+                        destination = c("Los Angeles CA", "Austin TX"),
+                        mode = "driving",
+                        dep_date = "2022-08-16",
+                        dep_time = "20:40:00",
+                        traffic_model = "pessimistic",
+                        shape = "long",
+                        key=APIkey)
+results
+
+# Time and distance avoiding 'tolls'.
+results = gmapsdistance(origin = c("Washington DC", "New York NY"),
+                        destination = c("Los Angeles CA", "Austin TX"),
+                        mode = "driving",
+                        avoid = "tolls",
+                        key=APIkey)
+
+results
+```
+
+## Using "foreign" place names
+It is perfectly possible to use names in non-ASCII characters; care must be made that all characters are encoded in UTF-8 though (this may be a challenge on some Windows environments).
+
+``` {r kyiv}
+results = gmapsdistance(origin = "вулиця Хрещатик, Київ",
+                        destination = "Майдан Незалежності, Київ",
+                        mode = "walking")
+results
+```

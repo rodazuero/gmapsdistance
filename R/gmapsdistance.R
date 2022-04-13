@@ -190,6 +190,14 @@ gmapsdistance = function(origin,
     )
   }
 
+  # If traffic_model is not paired with mode drivning and a specific departure time:
+  if (traffic_model %in% c("best_guess",  "pessimistic", "optimistic")
+        & mode != "driving" & (departure != "" | dep_date != "")) {
+    stop(
+      "Traffic models are defined only form mode = 'driving' and a specific departure time."
+    )
+  }
+
   seconds <- "now"
   seconds_arrival <- ""
 
@@ -302,11 +310,12 @@ gmapsdistance = function(origin,
   }
 
   # if no departure time was specified = no need to pass it to  Google (& incur costs)
-  if (departure == "" ) {
+  if (departure == "" & dep_date == "" & dep_time == "") {
     departure_string <- ''
   } else {
     departure_string <- paste0("&departure_time=", seconds)
   }
+
 
   # ACTION!!! ----
   for (i in 1:n) {
@@ -377,22 +386,22 @@ gmapsdistance = function(origin,
       Distance <- matrix(
         datadist$Distance,
         nrow = sqrt(n),
-        dimnames = list(destination,
-                        origin)
+        dimnames = list(origin,
+                        destination)
         )
 
       Time <- matrix(
         datatime$Time,
         nrow = sqrt(n),
-        dimnames = list(destination,
-                        origin)
+        dimnames = list(origin,
+                        destination)
       )
 
       Stat <- matrix(
         datastat$status,
         nrow = sqrt(n),
-        dimnames = list(destination,
-                        origin)
+        dimnames = list(origin,
+                        destination)
       )
 
 
