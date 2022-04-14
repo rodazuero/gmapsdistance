@@ -287,7 +287,7 @@ gmapsdistance = function(origin,
   }
 
   # Exceptions when inputs are incorrect
-  if(seconds_arrival < min_secs){
+  if(seconds_arrival != "" & seconds_arrival < min_secs){
     stop("The arrival time has to be some time in the future!")
   }
 
