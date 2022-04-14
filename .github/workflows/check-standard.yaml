@@ -58,5 +58,5 @@ jobs:
 
       - name: Test coverage
         if: runner.os == 'Linux'
-          run: covr::codecov()
+        run: covr::codecov()
         shell: Rscript {0}
