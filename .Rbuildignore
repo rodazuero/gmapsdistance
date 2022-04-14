@@ -6,3 +6,4 @@
 ^\.github$
 ^generate-vignette\.R$
 ^vignette\.Rmd\.orig$
+^codecov\.yml$

@@ -28,18 +28,9 @@ test_that("missing mandatory inputs", {
     mode = "driving"
   ))
 
-  # illegal model + mode combination
-  expect_error(gmapsdistance(
-    origin = "Washington DC",
-    destination = "New York City NY",
-    dep_date = as.character(Sys.Date() + 3),
-    dep_time = "12:00:00",
-    traffic_model = "pessimistic",
-    key = Sys.getenv("GOOGLE_API_KEY"),
-    mode = "walking"
-  ))
 
 })
+
 test_that("misspelled input", {
   skip_on_cran() # because API key...
 
@@ -87,3 +78,56 @@ test_that("misspelled input", {
 
 })
 
+test_that("illegal combinations", {
+  skip_on_cran() # because API key...
+
+  # illegal departure + arrival combination / either is fine, both is wrong
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    dep_date = as.character(Sys.Date() + 3),
+    dep_time = "12:00:00",
+    arr_date = as.character(Sys.Date() + 3),
+    arr_time = "12:00:00",
+    key = Sys.getenv("GOOGLE_API_KEY")
+  ))
+
+  # illegal model + mode combination
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    dep_date = as.character(Sys.Date() + 3),
+    dep_time = "12:00:00",
+    traffic_model = "pessimistic",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "walking"
+  ))
+
+  # multiple modes of transport
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = c("walking", "driving")
+  ))
+
+  # multiple combinations
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    combinations = c("all", "pairwise")
+  ))
+
+
+  # illegal arrival & mode
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    arr_date = as.character(Sys.Date() + 3),
+    arr_time = "12:00:00",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "driving"
+  ))
+
+})

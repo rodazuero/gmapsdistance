@@ -12,8 +12,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
-
 ## Setting up API key
 The [Google Distance Matrix API](https://mapsplatform.google.com/) requires registration, and an API key is required in each function call. It is possible to store the key for duration of a R session by using `gmapsdistance::set.api.key()` call.
 

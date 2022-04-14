@@ -95,17 +95,22 @@
 #'  If no value is set for departure, dep_date and dep_time, the departure time is
 #'  set to the present.
 #'
-#' @param traffic_model When the mode is set to "driving", the user can find the
-#'  times and distances using different traffic models. Should be a string and
-#'  one of the following: "optimistic", "pessimistic", "best_guess" or "None".
+#' @param traffic_model When the mode is set to "driving" and a departure time
+#'  is provided the user can find the times and distances using different traffic
+#'  models. Should be a string and one of the following: "optimistic",
+#'  "pessimistic", "best_guess" or "None".
 #'
-#'  Default is "None".
+#'  Default is "None". The traffic model is not defined for other modes
+#'  of transport than driving, and providing it for e.g. mode = "walking" is illegal.
 #'
 #'
-#' @param arrival The time and distance can be comptued to arrive at a
-#'  predetermined time. The option arrival is the number of seconds since
-#'  January 1, 1970 00:00:00 UCT. Alternatively, the user can use the
-#'  arr_date and arr_time options to set the arrival date and time.
+#' @param arrival For transportation mode "transit" the time and distance can
+#'  be comptued to arrive at a predetermined time. The option arrival is the
+#'  number of seconds since January 1, 1970 00:00:00 UCT. Alternatively, the
+#'  user can use the arr_date and arr_time options to set the arrival date and time.
+#'
+#'  For transport modes other than "transit" the use of arrival (and arr_date
+#'   + arr_time) is illegal.
 #'
 #'  The user cannot input both departure and arrival times.
 #'
@@ -157,9 +162,10 @@ gmapsdistance = function(origin,
                          arr_date = "",
                          arr_time = "") {
 
+
   ## INPUT VALIDATION ----
   # If mode of transportation not recognized:
-  if (!(mode %in% c("driving",  "walking",  "bicycling",  "transit"))) {
+  if (!all(mode %in% c("driving",  "walking",  "bicycling",  "transit") & length(mode) == 1)) {
     stop(
       "Mode of transportation not recognized. Mode should be one of ",
       "'bicycling', 'transit', 'driving', 'walking' "
@@ -167,7 +173,7 @@ gmapsdistance = function(origin,
   }
 
   # If combinations not recognized:
-  if (!(combinations %in% c("all",  "pairwise"))) {
+  if (!all(combinations %in% c("all",  "pairwise") & length(combinations) == 1)) {
     stop(
       "Combinations between origin and destination not recognized. Combinations should be one of ",
       "'all', 'pairwise' "
@@ -175,7 +181,7 @@ gmapsdistance = function(origin,
   }
 
   # If 'avoid' parameter is not recognized:
-  if (!(avoid %in% c("", "tolls",  "highways",  "ferries",  "indoor"))) {
+  if (!all(avoid %in% c("", "tolls",  "highways",  "ferries",  "indoor"))) {
     stop(
       "Avoid parameters not recognized. Avoid should be one of ",
       "'tolls', 'highways', 'ferries', 'indoor' "
@@ -183,7 +189,7 @@ gmapsdistance = function(origin,
   }
 
   # If traffic_model is not recognized:
-  if (!(traffic_model %in% c("best_guess",  "pessimistic", "optimistic", "None"))) {
+  if (!all(traffic_model %in% c("best_guess",  "pessimistic", "optimistic", "None") & length(traffic_model) == 1)) {
     stop(
       "Traffic model not recognized. Traffic model should be one of ",
       "'best_guess', 'pessimistic', 'optimistic'"
@@ -196,6 +202,18 @@ gmapsdistance = function(origin,
     stop(
       "Traffic models are defined only form mode = 'driving' and a specific departure time."
     )
+  }
+
+  # If arrvival time is paired with other mode than "transit"
+  if (mode != "transit" & (arrival != "" | arr_date != "" | arr_time != "")) {
+    stop(
+      "Arrival times are defined only form mode = 'transit'."
+    )
+  }
+
+  # if multiple avoidance was selected collapse to single string
+  if (length(avoid) > 1) {
+    avoid <- paste(avoid, collapse = "|")
   }
 
   seconds <- "now"

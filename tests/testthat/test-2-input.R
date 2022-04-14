@@ -37,7 +37,7 @@ test_that("arrrival date works", {
     arr_date = as.character(Sys.Date() + 3),
     arr_time = "12:00:00",
     key = Sys.getenv("GOOGLE_API_KEY"),
-    mode = "driving"
+    mode = "transit"
   )
 
   expect_equal(driving$Status, "OK")
@@ -71,5 +71,38 @@ test_that("traffic works", {
   # bad traffic = longer time...
   expect_gt(pessimistic$Time, optimistic$Time)
 
+
+})
+
+test_that("multiple avoid arguments work", {
+  skip_on_cran() # because API key...
+
+  driving <- gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    avoid = c("ferries", "tolls")
+  )
+
+  expect_equal(driving$Status, "OK")
+
+  # avoid ferries (no big deal)
+  ferries <- gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    avoid = "ferries"
+  )
+
+  # avoid tolls = big impact
+  tolls <- gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    avoid = "tolls"
+  )
+
+  # no tolls = longer time...
+  expect_gt(tolls$Time, ferries$Time)
 
 })

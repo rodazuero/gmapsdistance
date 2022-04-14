@@ -87,16 +87,21 @@ Should be inside of double quotes (",") and one of the following: "tolls",
  If no value is set for departure, dep_date and dep_time, the departure time is
  set to the present.}
 
-\item{traffic_model}{When the mode is set to "driving", the user can find the
- times and distances using different traffic models. Should be a string and
- one of the following: "optimistic", "pessimistic", "best_guess" or "None".
+\item{traffic_model}{When the mode is set to "driving" and a departure time
+ is provided the user can find the times and distances using different traffic
+ models. Should be a string and one of the following: "optimistic",
+ "pessimistic", "best_guess" or "None".
 
- Default is "None".}
+ Default is "None". The traffic model is not defined for other modes
+ of transport than driving, and providing it for e.g. mode = "walking" is illegal.}
 
-\item{arrival}{The time and distance can be comptued to arrive at a
- predetermined time. The option arrival is the number of seconds since
- January 1, 1970 00:00:00 UCT. Alternatively, the user can use the
- arr_date and arr_time options to set the arrival date and time.
+\item{arrival}{For transportation mode "transit" the time and distance can
+ be comptued to arrive at a predetermined time. The option arrival is the
+ number of seconds since January 1, 1970 00:00:00 UCT. Alternatively, the
+ user can use the arr_date and arr_time options to set the arrival date and time.
+
+ For transport modes other than "transit" the use of arrival (and arr_date
+  + arr_time) is illegal.
 
  The user cannot input both departure and arrival times.}
 
