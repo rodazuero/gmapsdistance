@@ -47,8 +47,8 @@ jobs:
       - name: Store API key windows
         if: runner.os == 'Windows'
         run: |
-          Add-Content c:\Users\$env:USERNAME\Documents\.Renviron -Value ("GOOGLE_API_KEY='"+ $GOOGLE_API_KEY + "'") -Encoding utf8
-        shell: pwsh
+         echo GOOGLE_API_KEY="$GOOGLE_API_KEY" >> c:\Users\$env:USERNAME\Documents\.Renviron
+        shell: bash
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
