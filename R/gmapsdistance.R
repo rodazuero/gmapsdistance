@@ -290,7 +290,7 @@ gmapsdistance = function(origin,
 
   if(combinations == "all"){
     data <- expand.grid(or = origin, de = destination)
-  } else if(combinations == "pairwise"){
+  } else {
     data <- data.frame(or = origin, de = destination)
   }
 

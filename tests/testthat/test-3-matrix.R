@@ -34,4 +34,30 @@ test_that("long format works", {
   # status = character vector
   expect_vector(driving$Status$status)
 
+  # default combinations = all / i.e. 3x3 = 9
+  expect_gt(length(driving$Status$status), 3)
+
+})
+
+test_that("pairvise works", {
+  skip_on_cran() # because API key...
+
+  # 9 element distance vector
+  driving <- gmapsdistance(
+    origin = c("Washington DC", "Miami FL", "Seattle WA"),
+    destination = c("Washington DC", "Miami FL", "Seattle WA"),
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    shape = "long",
+    combinations = "pairwise"
+  )
+
+  # all cities found
+  expect_true(all(driving$Status$status == "OK"))
+
+  # status = character vector
+  expect_vector(driving$Status$status)
+
+  # pairwise = 3 results only (and not 3x3 = 9)
+  expect_equal(length(driving$Status$status), 3)
+
 })
