@@ -75,6 +75,13 @@ test_that("misspelled input", {
     traffic_model = "bflm"
   ))
 
+  # API Key
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    key = "bflm",
+  ))
+
 
 })
 
@@ -89,7 +96,8 @@ test_that("illegal combinations", {
     dep_time = "12:00:00",
     arr_date = as.character(Sys.Date() + 3),
     arr_time = "12:00:00",
-    key = Sys.getenv("GOOGLE_API_KEY")
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "transit"
   ))
 
   # illegal model + mode combination
@@ -150,7 +158,7 @@ test_that("illegal combinations", {
   expect_error(gmapsdistance(
     origin = "Washington DC",
     destination = "New York City NY",
-    dep_date = as.character(Sys.Date() + 3),
+    arr_date = as.character(Sys.Date() + 3),
     key = Sys.getenv("GOOGLE_API_KEY"),
     mode = "transit"
   ))
@@ -159,9 +167,17 @@ test_that("illegal combinations", {
   expect_error(gmapsdistance(
     origin = "Washington DC",
     destination = "New York City NY",
-    dep_time = "12:00:00",
+    arr_time = "12:00:00",
     key = Sys.getenv("GOOGLE_API_KEY"),
     mode = "transit"
+  ))
+
+  # incompatible lengths in pairwise
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = c("New York City NY", "Miami FL"),
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    combinations = "pairwise"
   ))
 
 })
@@ -184,9 +200,8 @@ test_that("past is past...", {
     destination = "New York City NY",
     arr_date = as.character(Sys.Date() - 3),
     arr_time = "12:00:00",
-    key = Sys.getenv("GOOGLE_API_KEY")
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "transit"
   ))
-
-
 
 })

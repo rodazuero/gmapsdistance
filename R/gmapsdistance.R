@@ -234,7 +234,7 @@ gmapsdistance = function(origin,
   }
 
   # Exceptions when inputs are incorrect
-  if(!departure %in% c("now", "") && departure < min_secs){
+  if(!(departure %in% c("now", "") & departure < min_secs)){
     stop("The departure time has to be some time in the future!")
   }
 
