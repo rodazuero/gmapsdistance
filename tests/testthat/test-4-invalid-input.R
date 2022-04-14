@@ -205,3 +205,50 @@ test_that("past is past...", {
   ))
 
 })
+
+test_that("multiple times", {
+  skip_on_cran() # because API key...
+
+  # departure twice - date
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    dep_date = c(as.character(Sys.Date() + 3),
+                 as.character(Sys.Date() + 4)),
+    dep_time = "12:00:00",
+    key = Sys.getenv("GOOGLE_API_KEY")
+  ))
+
+
+  # departure twice - time
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    dep_date = as.character(Sys.Date() + 3),
+    dep_time = c("12:00:00", "13:00:00"),
+    key = Sys.getenv("GOOGLE_API_KEY")
+  ))
+
+  # arrival twice - date
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    arr_date = c(as.character(Sys.Date() - 3),
+                 as.character(Sys.Date() - 4)),
+    arr_time = "12:00:00",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "transit"
+  ))
+
+  # arrival twice - time
+  expect_error(gmapsdistance(
+    origin = "Washington DC",
+    destination = "New York City NY",
+    arr_date = as.character(Sys.Date() - 3),
+    arr_time = c("12:00:00",
+                 "13:00:00"),
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "transit"
+  ))
+
+})

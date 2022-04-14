@@ -198,14 +198,14 @@ gmapsdistance = function(origin,
 
   # If traffic_model is not paired with mode drivning and a specific departure time:
   if (traffic_model %in% c("best_guess",  "pessimistic", "optimistic")
-        & mode != "driving" & (departure != "" | dep_date != "")) {
+        & mode != "driving" & all(departure != "" || dep_date != "")) {
     stop(
       "Traffic models are defined only form mode = 'driving' and a specific departure time."
     )
   }
 
-  # If arrvival time is paired with other mode than "transit"
-  if (mode != "transit" & (arrival != "" | arr_date != "" | arr_time != "")) {
+  # If arrival time is paired with other mode than "transit"
+  if (mode != "transit" & all(arrival != "" || arr_date != "" || arr_time != "")) {
     stop(
       "Arrival times are defined only form mode = 'transit'."
     )
@@ -215,6 +215,21 @@ gmapsdistance = function(origin,
   if (length(avoid) > 1) {
     avoid <- paste(avoid, collapse = "|")
   }
+
+  # one departure only
+  if (length(departure)>1 | length(dep_date)>1  | length(dep_time)>1 ) {
+    stop(
+      "A single departure time is expected."
+    )
+  }
+
+  # one arrival only
+  if (length(arrival)>1 | length(arr_date)>1  | length(arr_time)>1 ) {
+    stop(
+      "A single arrival time is expected."
+    )
+  }
+
 
   seconds <- "now"
   seconds_arrival <- ""
@@ -272,7 +287,7 @@ gmapsdistance = function(origin,
   }
 
   # Exceptions when inputs are incorrect
-  if(arrival != "" && arrival < min_secs){
+  if(seconds_arrival < min_secs){
     stop("The arrival time has to be some time in the future!")
   }
 
