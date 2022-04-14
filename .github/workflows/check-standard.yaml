@@ -21,6 +21,7 @@ jobs:
         config:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-20.04, r: 'devel'}
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
@@ -37,10 +38,17 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Create and populate .Renviron file
+      - name: Store API key unix-alike
+        if: runner.os != 'Windows'
         run: |
           echo GOOGLE_API_KEY="$GOOGLE_API_KEY" >> ~/.Renviron
         shell: bash
+
+      - name: Store API key windows
+        if: runner.os == 'Windows'
+        run: |
+          Add-Content c:\Users\$env:USERNAME\Documents\.Renviron "GOOGLE_API_KEY='"+ $GOOGLE_API_KEY + "'" -Encoding utf-8
+        shell: pwsh
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
