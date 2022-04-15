@@ -164,6 +164,21 @@ gmapsdistance = function(origin,
 
 
   ## INPUT VALIDATION ----
+
+  # one departure only
+  if (length(departure)>1 | length(dep_date)>1  | length(dep_time)>1 ) {
+    stop(
+      "A single departure time is expected."
+    )
+  }
+
+  # one arrival only
+  if (length(arrival)>1 | length(arr_date)>1  | length(arr_time)>1 ) {
+    stop(
+      "A single arrival time is expected."
+    )
+  }
+
   # If mode of transportation not recognized:
   if (!all(mode %in% c("driving",  "walking",  "bicycling",  "transit") & length(mode) == 1)) {
     stop(
@@ -215,21 +230,6 @@ gmapsdistance = function(origin,
   if (length(avoid) > 1) {
     avoid <- paste(avoid, collapse = "|")
   }
-
-  # one departure only
-  if (length(departure)>1 | length(dep_date)>1  | length(dep_time)>1 ) {
-    stop(
-      "A single departure time is expected."
-    )
-  }
-
-  # one arrival only
-  if (length(arrival)>1 | length(arr_date)>1  | length(arr_time)>1 ) {
-    stop(
-      "A single arrival time is expected."
-    )
-  }
-
 
   seconds <- "now"
   seconds_arrival <- ""
