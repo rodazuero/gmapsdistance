@@ -249,7 +249,7 @@ gmapsdistance = function(origin,
   }
 
   # Exceptions when inputs are incorrect
-  if(!(departure %in% c("now", "") & departure < min_secs)){
+  if((!(departure %in% c("now", "")) & departure < min_secs)){
     stop("The departure time has to be some time in the future!")
   }
 
@@ -349,7 +349,6 @@ gmapsdistance = function(origin,
     departure_string <- paste0("&departure_time=", seconds)
   }
 
-
   # ACTION!!! ----
   for (i in 1:n) {
 
@@ -402,8 +401,22 @@ gmapsdistance = function(origin,
     }
 
     if(data$status[i] == "OK"){
+
+      # distance = always provided
       data$Distance[i] <- methods::as(rowXML$distance[1]$value[1]$text, "numeric")
-      data$Time[i] <- methods::as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
+
+      # duration = try what was reqested, if not possible = fallback to default (plain vanilla duration)
+      if(is.null(methods::as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric"))) {
+
+        data$Time[i] <- methods::as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
+
+      } else {
+
+        data$Time[i] <-methods::as(rowXML[["duration"]][1L]$value[1L]$text, "numeric")
+
+      } # / end if duration
+
+
     } # / end if status OK
   } # / end for cycle
 

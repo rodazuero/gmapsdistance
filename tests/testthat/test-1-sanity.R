@@ -1,47 +1,37 @@
-
-# somewhere in London...
-places <- data.frame(
-  place = c("King's Cross St. Pancras",
-            "Piccadilly Circus",
-            "Null Island"),
-  lat = c(51.53061, 51.50979, 0),
-  long = c(-0.1239491,-0.1344288, 0)
-)
-
 test_that("modes work", {
   skip_on_cran() # because API key...
 
   driving <- gmapsdistance(
-      origin = paste0(places$lat[1], "+", places$long[1]),
-      destination = paste0(places$lat[2], "+", places$long[2]),
+      origin = "King's Cross St. Pancras",
+      destination = "Piccadilly Circus",
       key = Sys.getenv("GOOGLE_API_KEY"),
       mode = "driving"
     )
 
   walking <- gmapsdistance(
-      origin = paste0(places$lat[1], "+", places$long[1]),
-      destination = paste0(places$lat[2], "+", places$long[2]),
+      origin = "King's Cross St. Pancras",
+      destination = "Piccadilly Circus",
       key = Sys.getenv("GOOGLE_API_KEY"),
       mode = "walking"
     )
 
   transit <- gmapsdistance(
-      origin = paste0(places$lat[1], "+", places$long[1]),
-      destination = paste0(places$lat[2], "+", places$long[2]),
+      origin = "King's Cross St. Pancras",
+      destination = "Piccadilly Circus",
       key = Sys.getenv("GOOGLE_API_KEY"),
       mode = "transit"
     )
 
   bicycling <- gmapsdistance(
-      origin = paste0(places$lat[1], "+", places$long[1]),
-      destination = paste0(places$lat[2], "+", places$long[2]),
+      origin = "King's Cross St. Pancras",
+      destination = "Piccadilly Circus",
       key = Sys.getenv("GOOGLE_API_KEY"),
       mode = "bicycling"
     )
 
   nonsense <- gmapsdistance(
-    origin = paste0(places$lat[1], "+", places$long[1]),
-    destination = paste0(places$lat[3], "+", places$long[3]),
+    origin = "King's Cross St. Pancras",
+    destination = "0,0",
     key = Sys.getenv("GOOGLE_API_KEY"),
     mode = "driving"
   )

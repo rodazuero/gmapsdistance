@@ -61,3 +61,23 @@ test_that("pairvise works", {
   expect_equal(length(driving$Status$status), 3)
 
 })
+
+test_that("one bad apple doesn' break whole pipe", {
+  skip_on_cran() # because API key...
+
+  # 3 x 3 distance matrix
+  driving <- gmapsdistance(
+    origin = c("Washington DC", "psvz", "Seattle WA"),
+    destination = c("Washington DC", "psvz", "Seattle WA"),
+    key = Sys.getenv("GOOGLE_API_KEY")
+  )
+
+  # status = 3x3 distance matrix
+  expect_equal(dim(driving$Status), c(3, 3))
+
+  # 2 found, 3 identity, 4 no idea
+  expect_equal(sum(driving$Status == "OK"), 2+3)
+  expect_equal(sum(driving$Status == "ROUTE_NOT_FOUND"), 4)
+
+})
+
