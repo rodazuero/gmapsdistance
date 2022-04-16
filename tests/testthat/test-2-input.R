@@ -106,16 +106,3 @@ test_that("multiple avoid arguments work", {
   expect_gt(tolls$Time, ferries$Time)
 
 })
-
-test_that("multiple avoid arguments work", {
-  skip_on_cran() # because API key...
-
-  results = gmapsdistance(origin = c("Washington DC", "New York NY"),
-                          destination = c("Los Angeles CA", "Austin TX"),
-                          mode = "driving",
-                          dep_date = "2022-08-16",
-                          dep_time = "20:40:00",
-                          traffic_model = "pessimistic",
-                          shape = "long",
-                          key = Sys.getenv("GOOGLE_API_KEY"))
-})

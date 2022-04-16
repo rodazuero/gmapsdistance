@@ -60,16 +60,16 @@ test_that("environment variable works", {
 
   # this should break - no api key is set (yet)
   expect_error(driving <- gmapsdistance(
-    origin = paste0(places$lat[1], "+", places$long[1]),
-    destination = paste0(places$lat[2], "+", places$long[2])
+    origin = "King's Cross St. Pancras",
+    destination = "Piccadilly Circus",
   ))
 
   set.api.key(Sys.getenv("GOOGLE_API_KEY"))
 
   # this should work - the api key is in place
   driving <- gmapsdistance(
-    origin = paste0(places$lat[1], "+", places$long[1]),
-    destination = paste0(places$lat[2], "+", places$long[2])
+    origin = "King's Cross St. Pancras",
+    destination = "Piccadilly Circus",
   )
 
   expect_equal(driving$Status, "OK")
