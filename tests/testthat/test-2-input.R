@@ -49,28 +49,29 @@ test_that("traffic works", {
 
   # departure:
   pessimistic <- gmapsdistance(
-    origin = "Washington DC",
-    destination = "New York City NY",
+    origin = "King's Cross St. Pancras",
+    destination = "Piccadilly Circus",
     dep_date = as.character(Sys.Date() + 3),
-    dep_time = "12:00:00",
+    dep_time = "8:00:00",
     traffic_model = "pessimistic",
     key = Sys.getenv("GOOGLE_API_KEY"),
     mode = "driving"
   )
 
   optimistic <- gmapsdistance(
-    origin = "Washington DC",
-    destination = "New York City NY",
+    origin = "King's Cross St. Pancras",
+    destination = "Piccadilly Circus",
     dep_date = as.character(Sys.Date() + 3),
-    dep_time = "12:00:00",
+    dep_time = "8:00:00",
     traffic_model = "optimistic",
     key = Sys.getenv("GOOGLE_API_KEY"),
     mode = "driving"
   )
 
   # bad traffic = longer time...
-  expect_gt(pessimistic$Time, optimistic$Time)
-
+  expect_gte(pessimistic$Time, optimistic$Time)
+  # gt would be better in principle, but in practice API _can_
+  # return equal times for good & bad traffic (should not, but does...)
 
 })
 
