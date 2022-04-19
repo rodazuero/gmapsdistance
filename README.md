@@ -29,13 +29,14 @@ install.packages("gmapsdistance")
 remotes::install_github("jlacko/gmapsdistance")
 ```
 
-## Example 1
+## Examples of use
 In this example we will compute the driving distance between Washington DC, and New York City. The code returns the `Time`, the `Distance` and the `Status` of the query (`OK` if it was successful).
 
 ``` r
 results <- gmapsdistance(origin = "Washington DC", 
                         destination = "New York City NY", 
-                        mode = "driving")
+                        mode = "driving",
+                        key = Sys.getenv("GOOGLE_API_KEY")) # your actual API key comes here...
 results
 # $Time
 # [1] 14523
@@ -47,55 +48,29 @@ results
 # [1] "OK"
 ```
 
-## Example 2
-In this example we will compute the driving distance between the Greek cities of 
-Marathon and Athens. We show that the function is able to handle LAT-LONG coordinates. 
-``` r
-results <- gmapsdistance(origin = "38.1621328+24.0029257",
-                        destination = "37.9908372+23.7383394",
-                        mode = "walking")
-results
-# $Time
-# [1] 30024
-# 
-# $Distance
-# [1] 39459
-# 
-# $Status
-# [1] "OK"
-```
-
-## Example 3
-This example computes the travel distance and time matrices between two vectors of cities at a specific departure time.
+This example computes distance matrix between two vectors of cities at a specific departure time. The code displays resulting distance matrices using time (in seconds) and travel distance (in meters) as metrics.
 
 ``` r
 results <- gmapsdistance(origin = c("Washington DC", "New York NY", "Seattle WA", "Miami FL"), 
-                         destination = c("Los Angeles CA", "Austin TX", "Chicago IL", "Philadelphia PA"), 
+                         destination = c("Washington DC", "New York NY", "Seattle WA", "Miami FL"), 
                          mode = "bicycling",
                          dep_date = "2022-05-31", # provided as string in ISO 8601 format
-                         dep_time = "12:00:00") # provided as string in HH:MM:SS format
+                         dep_time = "12:00:00", # provided as string in HH:MM:SS format
+                         key = Sys.getenv("GOOGLE_API_KEY")) # your actual API key comes here...
                         
-results
-# $Time
-#                 Washington DC New York NY Seattle WA Miami FL
-# Los Angeles CA         843390      505496     243025    45679
-# Austin TX              910636      601436     291173    31533
-# Chicago IL             367313      664116     651979   914279
-# Philadelphia PA        824229      420897     438436   396647
-# 
-# $Distance
-#                 Washington DC New York NY Seattle WA Miami FL
-# Los Angeles CA        4521993     2665897    1247092   229701
-# Austin TX             4863932     3155049    1472650   159374
-# Chicago IL            1973073     3611531    3515251  4848182
-# Philadelphia PA       4548048     2316043    2354834  2139132
-# 
-# $Status
-#                 Washington DC New York NY Seattle WA Miami FL
-# Los Angeles CA  "OK"          "OK"        "OK"       "OK"    
-# Austin TX       "OK"          "OK"        "OK"       "OK"    
-# Chicago IL      "OK"          "OK"        "OK"       "OK"    
-# Philadelphia PA "OK"          "OK"        "OK"       "OK"  
+results$Time
+#               Washington DC New York NY Seattle WA Miami FL
+# Washington DC             0       76753     893416   353377
+# New York NY           76537           0     917724   429533
+# Seattle WA           890818      922255          0  1045150
+# Miami FL             350851      427721    1048150        0
+
+results$Distance
+#               Washington DC New York NY Seattle WA Miami FL
+# Washington DC             0      388695    4762468  1919628
+# New York NY          384224           0    5028313  2303263
+# Seattle WA          4754835     5049618          0  5638340
+# Miami FL            1909272     2298117    5651681        0
 ```
 ## Usage limits
 There are a set of limits to the  number of calls that can be done. These limits are established by the [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/usage-limits)
