@@ -296,10 +296,6 @@ gmapsdistance = function(origin,
     stop("You should also specify an arrival date in the format YYYY-MM-DD UTC")
   }
 
-  if(arr_date != "" && arr_time != "" && seconds_arrival < min_secs){
-    stop("The arrival time has to be some time in the future!")
-  }
-
   if(combinations == "all"){
     data <- expand.grid(or = origin, de = destination)
   } else {
