@@ -365,8 +365,27 @@ gmapsdistance = function(origin,
     key = gsub(" ", "", key)
     url = utils::URLencode(paste0("https://", url, "&key=", key))
 
-    # Call the Google Maps Webservice and store the XML output in webpageXML
-    webpageXML = XML::xmlParse(RCurl::getURL(url));
+    # Call the Google Maps Webservice, catching errors along the way
+    url_result <- tryCatch(
+
+      RCurl::getURL(url),
+
+      warning = function(e) {
+        return(NULL)
+      },
+      error = function(e) {
+        return(NULL)
+      }
+    )
+
+    # if the API call failed >> fail the function, but gracefully
+    if(is.null(url_result)) {
+      message("Google API call failed; check your internet connection")
+      return(NULL)
+    }
+
+    # all is well - proceed as planned
+    webpageXML = XML::xmlParse(url_result)
 
     # Extract the results from webpageXML
     results = XML::xmlChildren(XML::xmlRoot(webpageXML))
