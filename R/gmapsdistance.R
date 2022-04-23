@@ -362,42 +362,28 @@ gmapsdistance = function(origin,
     key = gsub(" ", "", key)
     url = utils::URLencode(paste0("https://", url, "&key=", key))
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ab6120a24a76bda805f293670ff90879e961fa0f
     # Call the Google Maps Webservice, catching errors along the way
     url_result <- tryCatch(
 
       RCurl::getURL(url),
-<<<<<<< HEAD
       # nocov start
-=======
-
->>>>>>> ab6120a24a76bda805f293670ff90879e961fa0f
       warning = function(e) {
         return(NULL)
       },
       error = function(e) {
         return(NULL)
       }
-<<<<<<< HEAD
       # nocov end
-=======
->>>>>>> ab6120a24a76bda805f293670ff90879e961fa0f
     )
 
     # if the API call failed >> fail the function, but gracefully
     if(is.null(url_result)) {
-<<<<<<< HEAD
+
       # nocov start
       message("Google API call failed; check your internet connection")
       return(NA)
       # nocov end
-=======
-      message("Google API call failed; check your internet connection")
-      return(NULL)
->>>>>>> ab6120a24a76bda805f293670ff90879e961fa0f
+
     }
 
     # all is well - proceed as planned
