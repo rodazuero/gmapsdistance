@@ -107,3 +107,21 @@ test_that("multiple avoid arguments work", {
   expect_gt(tolls$Time, ferries$Time)
 
 })
+
+test_that("duration_key works", {
+  skip_on_cran() # because API key...
+
+  # request time in traffic - should produce time in traffic (i.e. not plain time)
+  driving <- gmapsdistance(
+    origin = "King's Cross St. Pancras",
+    destination = "Piccadilly Circus",
+    dep_date = as.character(Sys.Date() + 1),
+    dep_time = "8:00:00",
+    traffic_model = "best_guess",
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "driving"
+  )
+
+  expect_equal(driving$Status, "OK")
+
+})

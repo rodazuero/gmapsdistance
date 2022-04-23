@@ -165,6 +165,7 @@ gmapsdistance = function(origin,
 
   ## INPUT VALIDATION ----
 
+
   # one departure only
   if (length(departure)>1 | length(dep_date)>1  | length(dep_time)>1 ) {
     stop(
@@ -249,10 +250,6 @@ gmapsdistance = function(origin,
   }
 
   # Exceptions when inputs are incorrect
-  if((!(departure %in% c("now", "")) & departure < min_secs)){
-    stop("The departure time has to be some time in the future!")
-  }
-
   if(dep_date != "" && dep_time == ""){
     stop("You should also specify a departure time in the format HH:MM:SS UTC")
   }
@@ -365,8 +362,31 @@ gmapsdistance = function(origin,
     key = gsub(" ", "", key)
     url = utils::URLencode(paste0("https://", url, "&key=", key))
 
-    # Call the Google Maps Webservice and store the XML output in webpageXML
-    webpageXML = XML::xmlParse(RCurl::getURL(url));
+
+    # Call the Google Maps Webservice, catching errors along the way
+    url_result <- tryCatch(
+
+      RCurl::getURL(url),
+      # nocov start
+      warning = function(e) {
+        return(NULL)
+      },
+      error = function(e) {
+        return(NULL)
+      }
+      # nocov end
+    )
+
+    # if the API call failed >> fail the function, but gracefully
+    if(is.null(url_result)) {
+      # nocov start
+      message("Google API call failed; check your internet connection")
+      return(NA)
+      # nocov end
+    }
+
+    # all is well - proceed as planned
+    webpageXML = XML::xmlParse(url_result)
 
     # Extract the results from webpageXML
     results = XML::xmlChildren(XML::xmlRoot(webpageXML))
@@ -406,7 +426,7 @@ gmapsdistance = function(origin,
       data$Distance[i] <- methods::as(rowXML$distance[1]$value[1]$text, "numeric")
 
       # duration = try what was reqested, if not possible = fallback to default (plain vanilla duration)
-      if(is.null(methods::as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric"))) {
+      if(length(methods::as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric"))>0) {
 
         data$Time[i] <- methods::as(rowXML[[duration_key]][1L]$value[1L]$text, "numeric")
 
