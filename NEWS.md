@@ -1,4 +1,4 @@
-## version 4.0.0
+## version 4.0.0 (2022-04-26)
  
  - [!] change of package maintainer / from Rodrigo Azuelo to Jindra Lacko
  - [!] API call optimized to prioritize Distance Matrix over Distance Matrix Advanced calls
