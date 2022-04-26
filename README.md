@@ -95,7 +95,7 @@ It is currently maintained by [Jindra Lacko](mailto:jindra.lacko@gmail.com).
 [AUTHORS.md](https://github.com/jlacko/gmapsdistance/blob/master/AUTHORS.md) have a list of everyone who have contributed to gmapsdistance.
 
 ## Where has gmapsdistance be used/mentioned.
-We like to keep track of the projects where gmapsdistance has been used. This will help us identify how to better improve the code. Let us know if you use gmapsditance! Below you will find links to some of the projects and some of the references to gmapsdistance that we have found. 
+We like to keep track of the projects where gmapsdistance has been used. This will help us identify how to better improve the code. Let us know if you use gmapsdistance! Below you will find links to some of the projects and some of the references to gmapsdistance that we have found. 
 
 1. Proximity to pediatric cardiac specialty care for adolescents with congenital heart defects. [Link to article](https://onlinelibrary.wiley.com/doi/10.1002/bdr2.1129). 
 

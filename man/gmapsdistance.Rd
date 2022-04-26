@@ -23,7 +23,7 @@ gmapsdistance(
 }
 \arguments{
 \item{origin}{A string or vector of strings containing the description of the
- starting point(s). Should be inside of quoutes ("").
+ starting point(s). Should be inside of quotes ("").
 
  Coordinates in LAT-LONG format are also a valid input as long as they
  can be identified by Google Maps.}
@@ -63,9 +63,9 @@ distance of the route by avoiding tolls, highways, indoor and ferries.
 Should be inside of double quotes (",") and one of the following: "tolls",
 "highways", "ferries", "indoor".}
 
-\item{departure}{The time and distance can be comptued at the desired time of
+\item{departure}{The time and distance can be computed at the desired time of
  departure. The option departure is the number of seconds since January
- 1, 1970 00:00:00 UCT. Alternatively, the user can use the dep_date and
+ 1, 1970 00:00:00 UTC. Alternatively, the user can use the dep_date and
  dep_time options to set the departure date and time.
 
  If no value is set for departure, dep_date and dep_time, the departure time is
@@ -96,8 +96,8 @@ Should be inside of double quotes (",") and one of the following: "tolls",
  of transport than driving, and providing it for e.g. mode = "walking" is illegal.}
 
 \item{arrival}{For transportation mode "transit" the time and distance can
- be comptued to arrive at a predetermined time. The option arrival is the
- number of seconds since January 1, 1970 00:00:00 UCT. Alternatively, the
+ be computed to arrive at a predetermined time. The option arrival is the
+ number of seconds since January 1, 1970 00:00:00 UTC. Alternatively, the
  user can use the arr_date and arr_time options to set the arrival date and time.
 
  For transport modes other than "transit" the use of arrival (and arr_date

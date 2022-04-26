@@ -29,7 +29,7 @@
 #' @export
 #'
 #' @param origin A string or vector of strings containing the description of the
-#'  starting point(s). Should be inside of quoutes ("").
+#'  starting point(s). Should be inside of quotes ("").
 #'
 #'  Coordinates in LAT-LONG format are also a valid input as long as they
 #'  can be identified by Google Maps.
@@ -71,9 +71,9 @@
 #'  "highways", "ferries", "indoor".
 #'
 #'
-#' @param departure The time and distance can be comptued at the desired time of
+#' @param departure The time and distance can be computed at the desired time of
 #'  departure. The option departure is the number of seconds since January
-#'  1, 1970 00:00:00 UCT. Alternatively, the user can use the dep_date and
+#'  1, 1970 00:00:00 UTC. Alternatively, the user can use the dep_date and
 #'  dep_time options to set the departure date and time.
 #'
 #'  If no value is set for departure, dep_date and dep_time, the departure time is
@@ -105,8 +105,8 @@
 #'
 #'
 #' @param arrival For transportation mode "transit" the time and distance can
-#'  be comptued to arrive at a predetermined time. The option arrival is the
-#'  number of seconds since January 1, 1970 00:00:00 UCT. Alternatively, the
+#'  be computed to arrive at a predetermined time. The option arrival is the
+#'  number of seconds since January 1, 1970 00:00:00 UTC. Alternatively, the
 #'  user can use the arr_date and arr_time options to set the arrival date and time.
 #'
 #'  For transport modes other than "transit" the use of arrival (and arr_date
@@ -272,7 +272,7 @@ gmapsdistance = function(origin,
 
 
   # ARRIVAL TIMES ----
-  # Convert arrrival time from date and hour to seconds after Jan 1, 1970, 00:00:00 UCT
+  # Convert arrrival time from date and hour to seconds after Jan 1, 1970, 00:00:00 UTC
   if(arr_date != "" && arr_time != ""){
     arriv = strptime(paste(arr_date, arr_time), "%F %H:%M:%OS", tz="UTC")
     seconds_arrival = round(as.numeric(arriv))
