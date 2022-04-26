@@ -7,3 +7,4 @@
 ^generate-vignette\.R$
 ^vignette\.Rmd\.orig$
 ^codecov\.yml$
+^cran-comments\.md$
