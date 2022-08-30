@@ -65,7 +65,7 @@ test_that("pairwise works", {
 test_that("question re web address / issue #1", {
   skip_on_cran() # because API key...
 
-  # 9 element distance vector
+  # 2 element distance vector & pairwise
   driving <- gmapsdistance(
     origin = c("126+Wells+Ave+S+Renton+Washington+State+98057-2152",
                "6650+SW+Redwood+Ln+Ste+160+Portland+Oregon+97224-7184"),
@@ -82,7 +82,7 @@ test_that("question re web address / issue #1", {
   # status = character vector
   expect_vector(driving$Status$status)
 
-  # pairwise = 3 results only (and not 3x3 = 9)
+  # pairwise = 2 results for 2+2 cities
   expect_equal(length(driving$Status$status), 2)
 
 })
