@@ -1,7 +1,7 @@
 ---
 title: "gmapsdistance package in use"
 author: "Jindra Lacko"
-date: "2022-04-26"
+date: "2022-08-30"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -34,10 +34,10 @@ results = gmapsdistance(origin = "Washington DC",
                         destination = "New York City NY")
 results
 ## $Distance
-## [1] 361947
+## [1] 361961
 ## 
 ## $Time
-## [1] 14145
+## [1] 15524
 ## 
 ## $Status
 ## [1] "OK"
@@ -57,7 +57,7 @@ results
 ## [1] 39459
 ## 
 ## $Time
-## [1] 30024
+## [1] 29929
 ## 
 ## $Status
 ## [1] "OK"
@@ -73,21 +73,21 @@ results = gmapsdistance(origin = c("Washington DC", "New York NY",
                                         "Chicago IL", "Philadelphia PA"),
                         mode = "bicycling",
                         # departure time as seconds from Unix Epoch (1970-01-01)
-                        departure = 1660682400)
+                        departure = 1690682400)
 results
 ## $Distance
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
-## Washington DC        4522001   2564719    1247092          229701
-## New York NY          4863939   3155049    1472649          159373
-## Seattle WA           1970574   3605562    3509269         4842242
-## Miami FL             4548054   2316043    2354834         2139123
+## Washington DC        4530310   2564839    1248646          230081
+## New York NY          4864544   3155243    1474289          159383
+## Seattle WA           1970458   3588907    3471263         4814940
+## Miami FL             4547832   2307421    2357058         2140028
 ## 
 ## $Time
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
-## Washington DC         843375    477113     243025           45679
-## New York NY           910603    601417     291156           31515
-## Seattle WA            366893    662544     650403          912709
-## Miami FL              824214    420898     438438          396648
+## Washington DC         846180    476863     243696           45691
+## New York NY           910628    601558     290960           31430
+## Seattle WA            366549    662136     640376          902008
+## Miami FL              824165    417918     439225          396622
 ## 
 ## $Status
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
@@ -101,23 +101,23 @@ results = gmapsdistance(origin = c("Washington DC", "New York NY",
                         destination = c("Los Angeles CA", "Austin TX",
                                         "Chicago IL", "Philadelphia PA"),
                         mode = "bicycling",
-                        dep_date = "2022-08-16",
+                        dep_date = "2023-07-30",
                         dep_time = "20:40:00")
 
 results
 ## $Distance
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
-## Washington DC        4522001   2564719    1247092          229701
-## New York NY          4863939   3155049    1472649          159373
-## Seattle WA           1970574   3605562    3509269         4842242
-## Miami FL             4548054   2316043    2354834         2139123
+## Washington DC        4530310   2564839    1248646          230081
+## New York NY          4864544   3155243    1474289          159383
+## Seattle WA           1970458   3588907    3471263         4814940
+## Miami FL             4547832   2307421    2357058         2140028
 ## 
 ## $Time
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
-## Washington DC         843375    477113     243025           45679
-## New York NY           910603    601417     291156           31515
-## Seattle WA            366893    662544     650403          912709
-## Miami FL              824214    420898     438438          396648
+## Washington DC         846180    476863     243696           45691
+## New York NY           910628    601558     290960           31430
+## Seattle WA            366549    662136     640376          902008
+## Miami FL              824165    417918     439225          396622
 ## 
 ## $Status
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
@@ -142,33 +142,33 @@ results = gmapsdistance(origin,
 results
 ## $Distance
 ##               or             de Distance
-## 1  Washington DC Los Angeles CA  4294771
-## 2    New York NY Los Angeles CA  4488869
-## 3     Seattle WA Los Angeles CA  1829079
-## 4       Miami FL Los Angeles CA  4395889
-## 5  Washington DC      Austin TX  2450830
-## 6    New York NY      Austin TX  2802946
-## 7     Seattle WA      Austin TX  3410101
-## 8       Miami FL      Austin TX  2169394
+## 1  Washington DC Los Angeles CA  4295007
+## 2    New York NY Los Angeles CA  4489116
+## 3     Seattle WA Los Angeles CA  1829362
+## 4       Miami FL Los Angeles CA  4400701
+## 5  Washington DC      Austin TX  2451874
+## 6    New York NY      Austin TX  2806295
+## 7     Seattle WA      Austin TX  3409435
+## 8       Miami FL      Austin TX  2171447
 ## 9  Washington DC     Chicago IL  1126224
-## 10   New York NY     Chicago IL  1271482
-## 11    Seattle WA     Chicago IL  3287320
-## 12      Miami FL     Chicago IL  2224611
+## 10   New York NY     Chicago IL  1271459
+## 11    Seattle WA     Chicago IL  3321590
+## 12      Miami FL     Chicago IL  2226792
 ## 
 ## $Time
 ##               or             de   Time
-## 1  Washington DC Los Angeles CA 141533
-## 2    New York NY Los Angeles CA 149725
-## 3     Seattle WA Los Angeles CA  63629
-## 4       Miami FL Los Angeles CA 143548
-## 5  Washington DC      Austin TX  81991
-## 6    New York NY      Austin TX  94615
-## 7     Seattle WA      Austin TX 118530
-## 8       Miami FL      Austin TX  71963
-## 9  Washington DC     Chicago IL  39063
-## 10   New York NY     Chicago IL  44074
-## 11    Seattle WA     Chicago IL 109203
-## 12      Miami FL     Chicago IL  72676
+## 1  Washington DC Los Angeles CA 140445
+## 2    New York NY Los Angeles CA 148464
+## 3     Seattle WA Los Angeles CA  63876
+## 4       Miami FL Los Angeles CA 141196
+## 5  Washington DC      Austin TX  81370
+## 6    New York NY      Austin TX  94904
+## 7     Seattle WA      Austin TX 117229
+## 8       Miami FL      Austin TX  70176
+## 9  Washington DC     Chicago IL  39752
+## 10   New York NY     Chicago IL  44571
+## 11    Seattle WA     Chicago IL 107397
+## 12      Miami FL     Chicago IL  72513
 ## 
 ## $Status
 ##               or             de status
@@ -187,7 +187,7 @@ results
 ```
 
 ## Distance matrix between GPS coordinates
-This example computes the travel distance and time between two vectors of cities. This example shows that the function is able to handle LAT-LONG coordinates and a Google Maps API Key
+This example computes the travel distance and time between two vectors of cities defined as LAT-LONG coordinates.
 
 
 ```r
@@ -202,17 +202,17 @@ results = gmapsdistance(origin,
 results
 ## $Distance
 ##                       or                     de Distance
-## 1  40.431478 -80.0505401 43.0995629 -79.0437609   418445
-## 2 33.7678359 -84.4906438 43.0995629 -79.0437609  1529807
-## 3  40.431478 -80.0505401 41.7096483 -86.9093986   702490
-## 4 33.7678359 -84.4906438 41.7096483 -86.9093986  1112200
+## 1  40.431478 -80.0505401 43.0995629 -79.0437609   417779
+## 2 33.7678359 -84.4906438 43.0995629 -79.0437609  1529176
+## 3  40.431478 -80.0505401 41.7096483 -86.9093986   704112
+## 4 33.7678359 -84.4906438 41.7096483 -86.9093986  1114453
 ## 
 ## $Time
 ##                       or                     de   Time
-## 1  40.431478 -80.0505401 43.0995629 -79.0437609  78872
-## 2 33.7678359 -84.4906438 43.0995629 -79.0437609 290087
-## 3  40.431478 -80.0505401 41.7096483 -86.9093986 131837
-## 4 33.7678359 -84.4906438 41.7096483 -86.9093986 209147
+## 1  40.431478 -80.0505401 43.0995629 -79.0437609  78758
+## 2 33.7678359 -84.4906438 43.0995629 -79.0437609 290012
+## 3  40.431478 -80.0505401 41.7096483 -86.9093986 131437
+## 4 33.7678359 -84.4906438 41.7096483 -86.9093986 209954
 ## 
 ## $Status
 ##                       or                     de status
@@ -239,17 +239,17 @@ results = gmapsdistance(origin = or,
 results
 ## $Distance
 ##              or              de Distance
-## 1 Washington DC  Los Angeles CA  4522001
-## 2   New York NY       Austin TX  3155049
-## 3    Seattle WA      Chicago IL  3509269
-## 4      Miami FL Philadelphia PA  2139123
+## 1 Washington DC  Los Angeles CA  4530310
+## 2   New York NY       Austin TX  3155243
+## 3    Seattle WA      Chicago IL  3471263
+## 4      Miami FL Philadelphia PA  2140028
 ## 
 ## $Time
 ##              or              de   Time
-## 1 Washington DC  Los Angeles CA 843375
-## 2   New York NY       Austin TX 601417
-## 3    Seattle WA      Chicago IL 650403
-## 4      Miami FL Philadelphia PA 396648
+## 1 Washington DC  Los Angeles CA 846180
+## 2   New York NY       Austin TX 601558
+## 3    Seattle WA      Chicago IL 640376
+## 4      Miami FL Philadelphia PA 396622
 ## 
 ## $Status
 ##              or              de status
@@ -267,17 +267,17 @@ results = gmapsdistance(origin = or,
 results
 ## $Distance
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
-## Washington DC        4522001   2564719    1247092          229701
-## New York NY          4863939   3155049    1472649          159373
-## Seattle WA           1970574   3605562    3509269         4842242
-## Miami FL             4548054   2316043    2354834         2139123
+## Washington DC        4530310   2564839    1248646          230081
+## New York NY          4864544   3155243    1474289          159383
+## Seattle WA           1970458   3588907    3471263         4814940
+## Miami FL             4547832   2307421    2357058         2140028
 ## 
 ## $Time
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
-## Washington DC         843375    477113     243025           45679
-## New York NY           910603    601417     291156           31515
-## Seattle WA            366893    662544     650403          912709
-## Miami FL              824214    420898     438438          396648
+## Washington DC         846180    476863     243696           45691
+## New York NY           910628    601558     290960           31430
+## Seattle WA            366549    662136     640376          902008
+## Miami FL              824165    417918     439225          396622
 ## 
 ## $Status
 ##               Los Angeles CA Austin TX Chicago IL Philadelphia PA
@@ -294,41 +294,41 @@ results = gmapsdistance(origin = or,
 results
 ## $Distance
 ##               or              de Distance
-## 1  Washington DC  Los Angeles CA  4522001
-## 2    New York NY  Los Angeles CA  4863939
-## 3     Seattle WA  Los Angeles CA  1970574
-## 4       Miami FL  Los Angeles CA  4548054
-## 5  Washington DC       Austin TX  2564719
-## 6    New York NY       Austin TX  3155049
-## 7     Seattle WA       Austin TX  3605562
-## 8       Miami FL       Austin TX  2316043
-## 9  Washington DC      Chicago IL  1247092
-## 10   New York NY      Chicago IL  1472649
-## 11    Seattle WA      Chicago IL  3509269
-## 12      Miami FL      Chicago IL  2354834
-## 13 Washington DC Philadelphia PA   229701
-## 14   New York NY Philadelphia PA   159373
-## 15    Seattle WA Philadelphia PA  4842242
-## 16      Miami FL Philadelphia PA  2139123
+## 1  Washington DC  Los Angeles CA  4530310
+## 2    New York NY  Los Angeles CA  4864544
+## 3     Seattle WA  Los Angeles CA  1970458
+## 4       Miami FL  Los Angeles CA  4547832
+## 5  Washington DC       Austin TX  2564839
+## 6    New York NY       Austin TX  3155243
+## 7     Seattle WA       Austin TX  3588907
+## 8       Miami FL       Austin TX  2307421
+## 9  Washington DC      Chicago IL  1248646
+## 10   New York NY      Chicago IL  1474289
+## 11    Seattle WA      Chicago IL  3471263
+## 12      Miami FL      Chicago IL  2357058
+## 13 Washington DC Philadelphia PA   230081
+## 14   New York NY Philadelphia PA   159383
+## 15    Seattle WA Philadelphia PA  4814940
+## 16      Miami FL Philadelphia PA  2140028
 ## 
 ## $Time
 ##               or              de   Time
-## 1  Washington DC  Los Angeles CA 843375
-## 2    New York NY  Los Angeles CA 910603
-## 3     Seattle WA  Los Angeles CA 366893
-## 4       Miami FL  Los Angeles CA 824214
-## 5  Washington DC       Austin TX 477113
-## 6    New York NY       Austin TX 601417
-## 7     Seattle WA       Austin TX 662544
-## 8       Miami FL       Austin TX 420898
-## 9  Washington DC      Chicago IL 243025
-## 10   New York NY      Chicago IL 291156
-## 11    Seattle WA      Chicago IL 650403
-## 12      Miami FL      Chicago IL 438438
-## 13 Washington DC Philadelphia PA  45679
-## 14   New York NY Philadelphia PA  31515
-## 15    Seattle WA Philadelphia PA 912709
-## 16      Miami FL Philadelphia PA 396648
+## 1  Washington DC  Los Angeles CA 846180
+## 2    New York NY  Los Angeles CA 910628
+## 3     Seattle WA  Los Angeles CA 366549
+## 4       Miami FL  Los Angeles CA 824165
+## 5  Washington DC       Austin TX 476863
+## 6    New York NY       Austin TX 601558
+## 7     Seattle WA       Austin TX 662136
+## 8       Miami FL       Austin TX 417918
+## 9  Washington DC      Chicago IL 243696
+## 10   New York NY      Chicago IL 290960
+## 11    Seattle WA      Chicago IL 640376
+## 12      Miami FL      Chicago IL 439225
+## 13 Washington DC Philadelphia PA  45691
+## 14   New York NY Philadelphia PA  31430
+## 15    Seattle WA Philadelphia PA 902008
+## 16      Miami FL Philadelphia PA 396622
 ## 
 ## $Status
 ##               or              de status
@@ -362,7 +362,7 @@ APIkey <- Sys.getenv("GOOGLE_API_KEY") # your actual API key would go here...
 results = gmapsdistance(origin = c("Washington DC", "New York NY"),
                         destination = c("Los Angeles CA", "Austin TX"),
                         mode = "driving",
-                        dep_date = "2022-08-16",
+                        dep_date = "2023-07-30",
                         dep_time = "20:40:00",
                         traffic_model = "pessimistic",
                         shape = "long",
@@ -370,17 +370,17 @@ results = gmapsdistance(origin = c("Washington DC", "New York NY"),
 results
 ## $Distance
 ##              or             de Distance
-## 1 Washington DC Los Angeles CA  4294771
-## 2   New York NY Los Angeles CA  4488869
-## 3 Washington DC      Austin TX  2450830
-## 4   New York NY      Austin TX  2802946
+## 1 Washington DC Los Angeles CA  4295065
+## 2   New York NY Los Angeles CA  4489073
+## 3 Washington DC      Austin TX  2451874
+## 4   New York NY      Austin TX  2803934
 ## 
 ## $Time
 ##              or             de   Time
-## 1 Washington DC Los Angeles CA 141533
-## 2   New York NY Los Angeles CA 149725
-## 3 Washington DC      Austin TX  81991
-## 4   New York NY      Austin TX  94615
+## 1 Washington DC Los Angeles CA 140478
+## 2   New York NY Los Angeles CA 148456
+## 3 Washington DC      Austin TX  81370
+## 4   New York NY      Austin TX  94830
 ## 
 ## $Status
 ##              or             de status
@@ -399,13 +399,13 @@ results = gmapsdistance(origin = c("Washington DC", "New York NY"),
 results
 ## $Distance
 ##               Los Angeles CA Austin TX
-## Washington DC        4303247   2459306
-## New York NY          4514460   2799783
+## Washington DC        4303483   2460350
+## New York NY          4607603   2800819
 ## 
 ## $Time
 ##               Los Angeles CA Austin TX
-## Washington DC         141940     82398
-## New York NY           154004     95151
+## Washington DC         140838     81763
+## New York NY           153457     95391
 ## 
 ## $Status
 ##               Los Angeles CA Austin TX
@@ -426,7 +426,7 @@ results
 ## [1] 596
 ## 
 ## $Time
-## [1] 469
+## [1] 471
 ## 
 ## $Status
 ## [1] "OK"

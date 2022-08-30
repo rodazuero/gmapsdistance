@@ -1,3 +1,8 @@
+## version 4.0.1 (2022-08-30)
+
+- push the dates in vignette back to the future (the code won't run in the past)
+- update of unit tests
+
 ## version 4.0.0 (2022-04-26)
  
  - [!] change of package maintainer / from Rodrigo Azuelo to Jindra Lacko

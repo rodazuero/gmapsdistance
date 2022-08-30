@@ -1,8 +1,8 @@
 Package: gmapsdistance
 Type: Package
 Title: Distance and Travel Time Between Two Points from Google Maps
-Version: 4.0.0
-Date: 2022-04-26
+Version: 4.0.1
+Date: 2022-08-30
 Author: Rodrigo Azuero Melo & David Zarruk
 Maintainer: Jindra Lacko <jindra.lacko@gmail.com>
 URL: https://github.com/jlacko/gmapsdistance
@@ -12,7 +12,7 @@ Description: Get distance and travel time between two points from Google Maps.
     public transportation).
 License: GPL (>= 3)
 Imports: RCurl, XML, methods
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8
 Suggests: 
     covr,

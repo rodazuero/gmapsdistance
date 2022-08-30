@@ -20,7 +20,8 @@ test_that("pesky troublemaker", {
                                 "Chicago IL", "Philadelphia PA"),
                 mode = "bicycling",
                 # departure time as seconds from Unix Epoch (1970-01-01)
-                departure = 1660682400,
+                # checkt that it is in future! = as.POSIXct(1660682400, origin="1970-01-01")
+                departure = 1690682400,
                 key = Sys.getenv("GOOGLE_API_KEY"))
 
   expect_equal(unique(results$Status$status), "OK")

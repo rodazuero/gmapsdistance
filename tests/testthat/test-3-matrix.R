@@ -39,15 +39,15 @@ test_that("long format works", {
 
 })
 
-test_that("pairvise works", {
+test_that("pairwise works", {
   skip_on_cran() # because API key...
 
   # 9 element distance vector
   driving <- gmapsdistance(
     origin = c("Washington DC", "Miami FL", "Seattle WA"),
-    destination = c("Washington DC", "Miami FL", "Seattle WA"),
+    destination = c("Miami FL", "Seattle WA", "Washington DC"),
     key = Sys.getenv("GOOGLE_API_KEY"),
-    shape = "long",
+    mode = "driving",
     combinations = "pairwise"
   )
 
