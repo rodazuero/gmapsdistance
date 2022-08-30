@@ -62,6 +62,31 @@ test_that("pairwise works", {
 
 })
 
+test_that("question re web address / issue #1", {
+  skip_on_cran() # because API key...
+
+  # 9 element distance vector
+  driving <- gmapsdistance(
+    origin = c("126+Wells+Ave+S+Renton+Washington+State+98057-2152",
+               "6650+SW+Redwood+Ln+Ste+160+Portland+Oregon+97224-7184"),
+    destination = c("West+Linn+Oregon+97068-9502",
+                    "San+Mateo+California+94403-1332"),
+    key = Sys.getenv("GOOGLE_API_KEY"),
+    mode = "driving",
+    combinations = "pairwise"
+  )
+
+  # all cities found
+  expect_true(all(driving$Status$status == "OK"))
+
+  # status = character vector
+  expect_vector(driving$Status$status)
+
+  # pairwise = 3 results only (and not 3x3 = 9)
+  expect_equal(length(driving$Status$status), 2)
+
+})
+
 test_that("one bad apple doesn' break whole pipe", {
   skip_on_cran() # because API key...
 
