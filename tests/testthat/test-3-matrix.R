@@ -87,7 +87,7 @@ test_that("question re web address / issue #1", {
 
 })
 
-test_that("one bad apple doesn' break whole pipe", {
+test_that("one bad apple doesn't break whole pipe", {
   skip_on_cran() # because API key...
 
   # 3 x 3 distance matrix
@@ -101,8 +101,8 @@ test_that("one bad apple doesn' break whole pipe", {
   expect_equal(dim(driving$Status), c(3, 3))
 
   # 2 found, 3 identity, 4 no idea
-  expect_equal(sum(driving$Status == "OK"), 2+3)
-  expect_equal(sum(driving$Status == "ROUTE_NOT_FOUND"), 4)
+  expect_equal(sum(driving$Status == "OK"), 2*2)
+  expect_equal(sum(driving$Status == "PLACE_NOT_FOUND"), 5)
 
 })
 
