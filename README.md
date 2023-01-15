@@ -5,7 +5,7 @@ gmapsdistance
 ![Downloads-total](https://cranlogs.r-pkg.org/badges/grand-total/gmapsdistance?color=brightgreen)
 ![License](https://img.shields.io/badge/license-GPL--3-brightgreen.svg?style=flat)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/gmapsdistance)](https://cran.r-project.org/package=gmapsdistance)
-[![CRAN-checks](https://cranchecks.info/badges/summary/gmapsdistance)](https://cran.r-project.org/web/checks/check_results_gmapsdistance.html)
+[![CRAN-checks](https://badges.cranchecks.info/summary/gmapsdistance.svg)](https://cran.r-project.org/web/checks/check_results_gmapsdistance.html)
 [![Codecov test coverage](https://codecov.io/gh/jlacko/gmapsdistance/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jlacko/gmapsdistance?branch=master)
 
 # Interface Between R and Google Maps
