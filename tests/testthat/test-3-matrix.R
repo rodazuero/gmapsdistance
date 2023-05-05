@@ -101,8 +101,8 @@ test_that("one bad apple doesn't break whole pipe", {
   expect_equal(dim(driving$Status), c(3, 3))
 
   # 2 found, 3 identity, 4 no idea
-  expect_equal(sum(driving$Status == "OK"), 2*2)
-  expect_equal(sum(driving$Status == "PLACE_NOT_FOUND"), 5)
+  expect_equal(sum(driving$Status == "OK"), 2*2 + 1) # known points + psvz to itself
+  expect_equal(sum(driving$Status == "ROUTE_NOT_FOUND"), 4)
 
 })
 
