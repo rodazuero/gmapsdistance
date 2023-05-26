@@ -1,3 +1,7 @@
+## version 4.0.2 (2023-05-26)
+
+- consider arrival date & time when creating url for API call when using public transport / #5
+
 ## version 4.0.1 (2022-08-30)
 
 - push the dates in vignette back to the future (the code won't run in the past)
